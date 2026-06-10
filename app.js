@@ -185,3 +185,11 @@ function infoItem(label, value) {
 }
 
 initApp();
+document.addEventListener('click', function (e) {
+    if (e.target.closest('#menuToggle')) {
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) sidebar.classList.toggle('active');
+    } else if (sidebar && !sidebar.contains(e.target)) {
+        sidebar.classList.remove('active');
+    }
+});

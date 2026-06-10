@@ -472,3 +472,4 @@ tbody tr td:nth-child(2) .badge{margin-left:6px;font-size:10px;vertical-align:mi
         width: 100% !important;
     }
 }
+.menu-toggle i { pointer-events: none !important; }
