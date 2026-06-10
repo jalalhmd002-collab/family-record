@@ -445,14 +445,35 @@ tbody tr td:nth-child(2) .badge{margin-left:6px;font-size:10px;vertical-align:mi
 .settings-card{max-width:500px}
 .settings-card .form-group{margin-bottom:20px}
 
+/* إصلاح شامل لتهيئة شاشات الهواتف الذكية ومنع التكبير */
 @media (max-width: 768px) {
+    html, body {
+        width: 100% !important;
+        overflow-x: hidden !important; /* يمنع الصفحة من الخروج عن حدود شاشة الجوال نهائياً */
+    }
+
+    .app-shell {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
     .sidebar {
-        right: -100% !important;
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important; /* إخفاء القائمة الجانبية تماماً خارج الشاشة افتراضياً */
+        width: 280px !important;
+        height: 100vh !important;
+        z-index: 9999 !important;
+        transition: right 0.3s ease-in-out !important;
     }
+
     .sidebar.active {
-        right: 0 !important;
+        right: 0 !important; /* إظهار القائمة بسلاسة عند الضغط على زر القائمة */
     }
+
     .main-content {
-        margin-right: 0 !important;
+        margin-right: 0 !important; /* إلغاء التباعد الثابت لتوسيع محتوى الصفحة ليتناسب مع الجوال */
+        width: 100% !important;
     }
 }
