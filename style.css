@@ -474,22 +474,20 @@ tbody tr td:nth-child(2) .badge{margin-left:6px;font-size:10px;vertical-align:mi
 }
 .menu-toggle i { pointer-events: none !important; }
 
-/* تنسيق مستقل للأزرار العلوية المتداخلة على الهاتف */
+/* تنسيق خاص بصفحة جدول الأفراد فقط دون الاستمارات */
 @media (max-width: 768px) {
-    .content-area div[style*="display: flex"], 
-    .content-area > div:first-child,
-    .content-area .btn-group {
+    [data-page="all-members"] .content-area > div:first-child,
+    [data-page="all-members"] .actions-bar {
         display: flex !important;
         flex-wrap: wrap !important;
         gap: 8px !important;
         width: 100% !important;
     }
-
-    .content-area .btn {
+    [data-page="all-members"] .content-area .btn,
+    [data-page="all-members"] .actions-bar .btn {
         flex: 1 1 calc(50% - 8px) !important;
         font-size: 11px !important;
         padding: 8px 6px !important;
         white-space: nowrap !important;
         text-align: center !important;
     }
-}
