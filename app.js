@@ -189,7 +189,7 @@ document.addEventListener('click', function (e) {
     const sidebar = document.getElementById('sidebar');
     if (e.target.closest('#menuToggle')) {
         if (sidebar) sidebar.classList.toggle('active');
-    } else if (sidebar && !sidebar.contains(e.target)) {
+    } else if (sidebar && sidebar.classList.contains('active') && !sidebar.contains(e.target)) {
         sidebar.classList.remove('active');
     }
 });
