@@ -186,18 +186,15 @@ function infoItem(label, value) {
 
 initApp();
 
-// كود تشغيل وتفعيل زر القائمة الجانبية للهواتف
+// قم بحذف هذا الجزء بالكامل من ملف app.js
 document.addEventListener("DOMContentLoaded", function() {
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
-
     if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             sidebar.classList.toggle('active');
         });
-
-        // إغلاق القائمة عند الضغط في أي مكان خارجها
         document.addEventListener('click', function(e) {
             if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
                 sidebar.classList.remove('active');
