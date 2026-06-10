@@ -112,7 +112,7 @@ async function renderMemberForm(params) {
 
         const data = {
             fullName: document.getElementById('fName').value.trim(),
-            familyName: document.getElementById('fFamilyName').value.trim(),
+familyName: document.getElementById('fFamilyName')?.value?.trim() || '',
             nationalId: document.getElementById('fNatId').value.trim(),
             gender: document.getElementById('fGender').value,
             birthDate: document.getElementById('fBirth').value,
@@ -706,4 +706,3 @@ window.handleRowClick = function(event, id, role) {
         navigate('edit-member', { memberId: id });
     }
 };
-EOF

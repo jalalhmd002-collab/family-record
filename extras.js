@@ -221,7 +221,11 @@ window.openAddDocumentModal = async function(memberId, familyId, role) {
                     }
                 }
             };
-            reader.readAsDataURL(files);
+if (fileInput.files && fileInput.files[0]) {
+    reader.readAsDataURL(fileInput.files[0]);
+} else {
+    showToast('يرجى اختيار ملف أولاً', 'error');
+}
         };
 
         btnConfirm.onclick = processUpload;
