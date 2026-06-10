@@ -185,20 +185,3 @@ function infoItem(label, value) {
 }
 
 initApp();
-
-// قم بحذف هذا الجزء بالكامل من ملف app.js
-document.addEventListener("DOMContentLoaded", function() {
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            sidebar.classList.toggle('active');
-        });
-        document.addEventListener('click', function(e) {
-            if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
-                sidebar.classList.remove('active');
-            }
-        });
-    }
-});
