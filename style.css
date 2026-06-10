@@ -470,6 +470,19 @@ tbody tr td:nth-child(2) .badge{margin-left:6px;font-size:10px;vertical-align:mi
     .main-content {
         margin-right: 0 !important;
         width: 100% !important;
-    }
+/* تنسيق الأزرار العلوية المتداخلة على الهاتف */
+.top-bar-actions, .actions-bar, .buttons-container, [class*="actions"] {
+    display: flex !important;
+    flex-wrap: wrap !important; /* جعل الأزرار تنزل على سطرين تلقائياً عند ضيق الشاشة */
+    gap: 8px !important;
+    width: 100% !important;
+}
+
+.top-bar-actions .btn, .actions-bar .btn, .buttons-container .btn, [class*="actions"] .btn {
+    flex: 1 1 calc(50% - 8px) !important; /* جعل كل زرين بجانب بعضهما بشكل متناسق */
+    font-size: 12px !important; /* تصغير حجم الخط ليصبح متناسباً ومقروءاً */
+    padding: 6px 10px !important;
+    white-space: nowrap !important;
+}
 }
 .menu-toggle i { pointer-events: none !important; }
