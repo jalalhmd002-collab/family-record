@@ -54,7 +54,6 @@ async function renderMemberForm(params) {
 
             <form id="memberForm" style="padding:0 16px 16px 16px">
                 <div class="form-group"><label>الاسم الكامل *</label><input type="text" id="fName" value="${member.fullName||''}" required style="padding:8px 12px;font-size:13px"></div>
-                <div class="form-group"><label>اسم العائلة</label><input type="text" id="fFamilyName" value="${member.familyName||''}" style="padding:8px 12px;font-size:13px"></div>
                 <div class="form-row" style="gap:10px">
                     <div class="form-group" style="flex:1"><label>رقم الهوية</label><input type="text" id="fNatId" value="${member.nationalId||''}" style="padding:8px 12px;font-size:13px"></div>
                     <div class="form-group" style="flex:1"><label>الجنس *</label><select id="fGender" required style="padding:8px 12px;font-size:13px"><option value="">اختر</option><option value="male" ${member.gender==='male'?'selected':''}>ذكر</option><option value="female" ${member.gender==='female'?'selected':''}>أنثى</option></select></div>
