@@ -444,3 +444,15 @@ tbody tr td:nth-child(2) .badge{margin-left:6px;font-size:10px;vertical-align:mi
 /* ===== Settings ===== */
 .settings-card{max-width:500px}
 .settings-card .form-group{margin-bottom:20px}
+
+@media (max-width: 768px) {
+    .sidebar {
+        right: -100% !important;
+    }
+    .sidebar.active {
+        right: 0 !important;
+    }
+    .main-content {
+        margin-right: 0 !important;
+    }
+}
