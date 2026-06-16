@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>السجل المدني</title>
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlNlZ2lsIE1hZGFuaSIsCiAgInNob3J0X25hbWUiOiAiU2VnaWwiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBhMGExMiIsCiAgImljb25zIjogW3sKICAgICJzcmMiOiAiaHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS9mYXZpY29uLmljbyIsCiAgICAic2l6ZXMiOiAiNjR4NjQiLAogICAgInR5cGUiOiAiaW1hZ2UveC1pY29uIgogIH1dfQ==">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a12;
+            --neon-blue: #00f2ff;
+            --neon-purple: #bc13fe;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-dim: #a0a0b0;
+            --danger-neon: #ff0055;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(188, 19, 254, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 242, 255, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+        }
+
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+
+        .search-section {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .search-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 10px 10px;
+            color: white;
+            font-family: 'Cairo';
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.1);
+        }
+
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 10px 15px;
+            font-family: 'Cairo';
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .btn-search {
+            background: linear-gradient(45deg, var(--neon-blue), #00a2ff);
+            color: #000;
+            width: 100%;
+        }
+
+        .btn-add {
+            background: linear-gradient(45deg, var(--neon-purple), #9d00ff);
+            color: white;
+            box-shadow: 0 4px 15px rgba(188, 19, 254, 0.2);
+        }
+
+        .results-header {
+            padding: 10px 18px;
+            margin-bottom: 5px;
+            display: none; 
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--neon-blue);
+        }
+
+        .header-labels {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            padding-right: 15px;
+            padding-left: 25px;
+        }
+
+        .record-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px 18px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .record-card::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--neon-blue);
+            box-shadow: 0 0 12px var(--neon-blue);
+            opacity: 0.8;
+        }
+
+        .record-info {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            padding-right: 15px;
+            padding-left: 25px;
+            align-items: center;
+        }
+
+        .record-info h4 { 
+            font-size: 16px; 
+            font-weight: 700;
+            color: var(--text-main);
+            width: 55%;
+        }
+
+        .record-meta {
+            width: 45%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .record-info p { 
+            font-size: 16px; 
+            color: var(--neon-blue); 
+            font-family: 'Courier New', Courier, monospace; 
+            font-weight: 900;
+            background: rgba(0, 242, 255, 0.07);
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 242, 255, 0.15);
+            letter-spacing: 1px;
+            margin: 0;
+            text-align: left;
+        }
+
+        .family-badge {
+            font-size: 14px;
+            background: rgba(188, 19, 254, 0.12);
+            color: #d946ef;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(188, 19, 254, 0.3);
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .custom-checkbox {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--neon-blue);
+            border-radius: 6px;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .custom-checkbox:checked { 
+            background: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .custom-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            color: black;
+            font-size: 14px;
+            font-weight: 900;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+            max-width: 570px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .slide-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide-panel {
+            width: 100%;
+            max-width: 460px;
+            background: #0f0f1a;
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 25px;
+            overflow-y: auto;
+            max-height: 85vh;
+        }
+
+        .form-section-title {
+            color: var(--neon-blue);
+            font-size: 14px;
+            font-weight: 900;
+            margin: 20px 0 12px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 6px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+            font-family: 'Cairo';
+            font-size: 14px;
+        }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        #bulkBar {
+            position: fixed;
+            bottom: 80px;
+            left: 15px;
+            right: 15px;
+            max-width: 570px;
+            margin: 0 auto;
+            padding: 12px 18px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
+        }
+
+        #syncSpinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header class="header glass">
+        <div class="logo-area">
+            <div class="logo">السجل المدني</div>
+        </div>
+        <div id="statsInfo" style="font-size: 14px; color: var(--neon-blue); font-weight: 900;">
+            <span id="totalCount">0</span>
+        </div>
+    </header>
+
+    <section class="search-section glass">
+        <div class="search-row">
+            <div class="input-group">
+                <input type="text" id="searchName" placeholder="الاسم">
+            </div>
+            <div class="input-group">
+                <input type="text" inputmode="numeric" id="searchId" placeholder="الهوية">
+            </div>
+        </div>
+        <button class="btn btn-search" id="searchBtn">بحث</button>
+    </section>
+
+    <main class="main-content">
+        <div id="resultsHeader" class="results-header glass">
+            <div class="header-labels">
+                <span>الاسم</span>
+                <span>الهوية</span>
+            </div>
+            <input type="checkbox" id="selectAll" class="custom-checkbox" style="width: 18px; height: 18px;">
+        </div>
+
+        <div id="emptyState" style="text-align: center; padding: 50px 20px; color: var(--text-dim);">
+            <p>أدخل بيانات البحث</p>
+        </div>
+        
+        <div id="resultsList"></div>
+    </main>
+
+    <div id="bulkBar" class="glass" style="border-color: var(--neon-blue);">
+        <span id="selectedCount" style="font-size: 14px; font-weight: 900; color: var(--neon-blue);">0</span>
+        <div style="display: flex; gap: 8px;">
+            <button class="btn" id="exportSelectedBtn" style="padding: 6px 12px; background: rgba(0, 242, 255, 0.1); color: var(--neon-blue); border: 1px solid var(--neon-blue);">تصدير</button>
+            <button class="btn" id="deleteSelectedBtn" style="padding: 6px 12px; background: rgba(255, 0, 85, 0.1); color: var(--danger-neon); border: 1px solid var(--danger-neon);">حذف</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <button class="btn glass" id="syncBtn" style="color: white; gap: 8px;">
+            <span id="syncText">مزامنة</span>
+            <div id="syncSpinner"></div>
+        </button>
+        <button class="btn btn-add" id="addBtn">إضافة</button>
+    </div>
+</div>
+
+<div class="slide-overlay" id="slideOverlay">
+    <div class="slide-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 id="panelTitle" style="color: var(--neon-blue); font-size: 20px; font-weight: 900;">إضافة</h2>
+            <button id="closePanelBtn" class="btn" style="background: rgba(255,255,255,0.05); color: white; border-radius: 50%; width: 38px; height: 38px; padding: 0;">✕</button>
+        </div>
+        
+        <form id="personForm" onsubmit="return false;">
+            <input type="hidden" id="editTargetId">
+            
+            <div class="form-section-title">البيانات الأساسية</div>
+            <div style="margin-bottom: 15px;" class="form-group">
+                <input type="text" id="fullName" placeholder="الاسم الكامل" required>
+            </div>
+            <div style="margin-bottom: 15px;" class="form-group">
+                <input type="text" inputmode="numeric" id="nationalId" placeholder="رقم الهوية" required style="font-weight: 900; letter-spacing: 1px;">
+            </div>
+            
+            <div class="form-row form-group">
+                <select id="gender"><option>ذكر</option><option>أنثى</option></select>
+                <input type="date" id="birthDate">
+            </div>
+            
+            <div class="form-row form-group" style="margin-top: 15px;">
+                <select id="maritalStatus"><option>أعزب</option><option>متزوج</option><option>مطلق</option><option>أرمل</option></select>
+                <input type="number" inputmode="numeric" id="familyCount" placeholder="أفراد الأسرة" min="0">
+            </div>
+
+            <div class="form-section-title">العائلة</div>
+            <div style="margin-bottom: 15px;" class="form-group">
+                <input type="text" id="motherName" placeholder="اسم الأم">
+            </div>
+            <div class="form-row form-group" style="margin-bottom: 15px;">
+                <input type="text" id="wifeName" placeholder="الزوجة">
+                <input type="text" inputmode="numeric" id="wifeNationalId" placeholder="هوية الزوجة">
+            </div>
+
+            <div class="form-section-title">التواصل</div>
+            <div class="form-row form-group">
+                <input type="text" inputmode="numeric" id="mobile" placeholder="الجوال">
+                <input type="text" inputmode="numeric" id="altPhone" placeholder="بديل">
+            </div>
+            <div class="form-group">
+                <textarea id="address" rows="2" placeholder="العنوان" style="margin-top: 15px;"></textarea>
+            </div>
+
+            <div class="form-section-title">ملاحظات</div>
+            <div class="form-group">
+                <textarea id="notes" rows="2" placeholder="ملاحظات..."></textarea>
+            </div>
+
+            <div style="margin-top: 30px; display: flex; gap: 12px;">
+                <button class="btn btn-add" id="saveBtn" style="flex: 2; height: 50px;">حفظ</button>
+                <button class="btn glass" id="cancelBtn" style="flex: 1; color: white;">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        const swCode = `
+            const CACHE_NAME = 'sijil-cache-v1';
+            self.addEventListener('install', (e) => {
+                e.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll([location.href])));
+            });
+            self.addEventListener('fetch', (e) => {
+                e.respondWith(caches.match(e.request).then((res) => res || fetch(e.request)));
+            });
+        `;
+        const blob = new Blob([swCode], { type: 'application/javascript' });
+        navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(console.error);
+    }
+
+    (function() {
+        const STORAGE_KEY = 'civil_registry_data';
+        const SHEET_ID = '1t88M3eCknFxWpRwVXGjO-mrvtG6IVJqKDhWBzjenkOw';
+        
+        let persons = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        let viewFiltered = [];
+
+        const elements = {
+            searchName: document.getElementById('searchName'),
+            searchId: document.getElementById('searchId'),
+            searchBtn: document.getElementById('searchBtn'),
+            resultsList: document.getElementById('resultsList'),
+            resultsHeader: document.getElementById('resultsHeader'),
+            emptyState: document.getElementById('emptyState'),
+            totalCount: document.getElementById('totalCount'),
+            addBtn: document.getElementById('addBtn'),
+            syncBtn: document.getElementById('syncBtn'),
+            syncText: document.getElementById('syncText'),
+            syncSpinner: document.getElementById('syncSpinner'),
+            slideOverlay: document.getElementById('slideOverlay'),
+            closePanelBtn: document.getElementById('closePanelBtn'),
+            saveBtn: document.getElementById('saveBtn'),
+            cancelBtn: document.getElementById('cancelBtn'),
+            personForm: document.getElementById('personForm'),
+            bulkBar: document.getElementById('bulkBar'),
+            selectedCount: document.getElementById('selectedCount'),
+            selectAll: document.getElementById('selectAll')
+        };
+
+        function updateStats() { elements.totalCount.textContent = persons.length; }
+
+        function renderList() {
+            elements.resultsList.innerHTML = '';
+            if (viewFiltered.length === 0) {
+                elements.emptyState.style.display = 'block';
+                elements.resultsHeader.style.display = 'none';
+                elements.bulkBar.style.display = 'none';
+            } else {
+                elements.emptyState.style.display = 'none';
+                elements.resultsHeader.style.display = 'flex';
+                viewFiltered.forEach(person => {
+                    const card = document.createElement('div');
+                    card.className = 'record-card';
+                    card.innerHTML = `
+                        <div class="record-info">
+                            <h4>${escapeHtml(person.fullName)}</h4>
+                            <div class="record-meta">
+                                <span class="family-badge">${escapeHtml(person.familyCount || '0')}</span>
+                                <p>${escapeHtml(person.nationalId)}</p>
+                            </div>
+                        </div>
+                        <input type="checkbox" class="custom-checkbox row-checkbox" value="${person.nationalId}">
+                    `;
+                    card.addEventListener('click', (e) => {
+                        if (e.target.type === 'checkbox') { updateBulkActions(); return; }
+                        openEdit(person.nationalId);
+                    });
+                    elements.resultsList.appendChild(card);
+                });
+            }
+            updateStats();
+        }
+
+        function updateBulkActions() {
+            const checked = document.querySelectorAll('.row-checkbox:checked');
+            elements.bulkBar.style.display = checked.length > 0 ? 'flex' : 'none';
+            elements.selectedCount.textContent = checked.length;
+            elements.selectAll.checked = checked.length > 0 && checked.length === document.querySelectorAll('.row-checkbox').length;
+        }
+
+        elements.selectAll.addEventListener('change', (e) => {
+            document.querySelectorAll('.row-checkbox').forEach(cb => cb.checked = e.target.checked);
+            updateBulkActions();
+        });
+
+        function fireSearch() {
+            const name = elements.searchName.value.trim().toLowerCase();
+            const id = elements.searchId.value.trim();
+            if (!name && !id) { viewFiltered = []; } 
+            else {
+                viewFiltered = persons.filter(p => 
+                    (name ? p.fullName.toLowerCase().includes(name) : true) &&
+                    (id ? p.nationalId.includes(id) : true)
+                );
+            }
+            renderList();
+        }
+
+        [elements.searchName, elements.searchId].forEach(el => {
+            el.addEventListener('keypress', (e) => { if(e.key === 'Enter') fireSearch(); });
+        });
+
+        function openEdit(id) {
+            const p = persons.find(x => x.nationalId === id);
+            if (!p) return;
+            document.getElementById('panelTitle').textContent = 'تعديل';
+            document.getElementById('editTargetId').value = p.nationalId;
+            document.getElementById('fullName').value = p.fullName;
+            document.getElementById('nationalId').value = p.nationalId;
+            document.getElementById('gender').value = p.gender || 'ذكر';
+            document.getElementById('birthDate').value = p.birthDate || '';
+            document.getElementById('maritalStatus').value = p.maritalStatus || 'أعزب';
+            document.getElementById('motherName').value = p.motherName || '';
+            document.getElementById('wifeName').value = p.wifeName || '';
+            document.getElementById('wifeNationalId').value = p.wifeNationalId || '';
+            document.getElementById('familyCount').value = p.familyCount || '';
+            document.getElementById('mobile').value = p.mobile || '';
+            document.getElementById('altPhone').value = p.altPhone || '';
+            document.getElementById('address').value = p.address || '';
+            document.getElementById('notes').value = p.notes || '';
+            elements.slideOverlay.style.display = 'flex';
+        }
+
+        elements.saveBtn.addEventListener('click', () => {
+            const formData = {
+                fullName: document.getElementById('fullName').value.trim(),
+                nationalId: document.getElementById('nationalId').value.trim(),
+                gender: document.getElementById('gender').value,
+                birthDate: document.getElementById('birthDate').value,
+                maritalStatus: document.getElementById('maritalStatus').value,
+                motherName: document.getElementById('motherName').value.trim(),
+                wifeName: document.getElementById('wifeName').value.trim(),
+                wifeNationalId: document.getElementById('wifeNationalId').value.trim(),
+                familyCount: document.getElementById('familyCount').value.trim(),
+                mobile: document.getElementById('mobile').value.trim(),
+                altPhone: document.getElementById('altPhone').value.trim(),
+                address: document.getElementById('address').value.trim(),
+                notes: document.getElementById('notes').value.trim()
+            };
+            if (!formData.fullName || !formData.nationalId) return alert('أكمل البيانات الأساسية');
+            const editId = document.getElementById('editTargetId').value;
+            if (editId) {
+                const idx = Math.max(0, persons.findIndex(x => x.nationalId === editId));
+                persons[idx] = formData;
+            } else {
+                if (persons.some(x => x.nationalId === formData.nationalId)) return alert('الهوية مكررة');
+                persons.push(formData);
+            }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(persons));
+            elements.slideOverlay.style.display = 'none';
+            fireSearch();
+        });
+
+        elements.addBtn.addEventListener('click', () => {
+            elements.personForm.reset();
+            document.getElementById('editTargetId').value = '';
+            document.getElementById('panelTitle').textContent = 'إضافة';
+            elements.slideOverlay.style.display = 'flex';
+        });
+
+        elements.closePanelBtn.addEventListener('click', () => elements.slideOverlay.style.display = 'none');
+        elements.cancelBtn.addEventListener('click', () => elements.slideOverlay.style.display = 'none');
+        elements.searchBtn.addEventListener('click', fireSearch);
+
+        function exportToExcel(dataArray) {
+            if (dataArray.length === 0) return;
+            let excelTemplate = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+            <head><meta charset="UTF-8"><style>table{border-collapse:collapse;direction:rtl;}th{background-color:#00f2ff;color:#000;font-weight:bold;}td,th{border:1px solid #ccc;text-align:right;padding:8px;font-family:'Cairo',sans-serif;}</style></head>
+            <body><table><tr><th>الاسم الكامل</th><th>رقم الهوية</th><th>الجنس</th><th>تاريخ الميلاد</th><th>الحالة الاجتماعية</th><th>اسم الأم</th><th>اسم الزوجة</th><th>رقم هوية الزوجة</th><th>عدد أفراد الأسرة</th><th>رقم الجوال</th><th>الهاتف البديل</th><th>العنوان التفصيلي</th><th>الملاحظات</th></tr>`;
+                
+            dataArray.forEach(p => {
+                excelTemplate += `<tr><td>${escapeHtml(p.fullName)}</td><td style="mso-number-format:'\\@';">${escapeHtml(p.nationalId)}</td><td>${escapeHtml(p.gender)}</td><td>${escapeHtml(p.birthDate)}</td><td>${escapeHtml(p.maritalStatus)}</td><td>${escapeHtml(p.motherName)}</td><td>${escapeHtml(p.wifeName)}</td><td style="mso-number-format:'\\@';">${escapeHtml(p.wifeNationalId)}</td><td>${escapeHtml(p.familyCount)}</td><td style="mso-number-format:'\\@';">${escapeHtml(p.mobile)}</td><td style="mso-number-format:'\\@';">${escapeHtml(p.altPhone)}</td><td>${escapeHtml(p.address)}</td><td>${escapeHtml(p.notes)}</td></tr>`;
+            });
+            excelTemplate += `</table></body></html>`;
+            const blob = new Blob([excelTemplate], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "السجل_" + new Date().toISOString().slice(0,10) + ".xls";
+            link.click();
+        }
+
+        document.getElementById('exportSelectedBtn').addEventListener('click', () => {
+            const checkedIds = Array.from(document.querySelectorAll('.row-checkbox:checked')).map(c => c.value);
+            exportToExcel(persons.filter(p => checkedIds.includes(p.nationalId)));
+        });
+
+        document.getElementById('deleteSelectedBtn').addEventListener('click', () => {
+            const checked = Array.from(document.querySelectorAll('.row-checkbox:checked')).map(c => c.value);
+            persons = persons.filter(p => !checked.includes(p.nationalId));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(persons));
+            fireSearch();
+            updateBulkActions();
+        });
+
+        elements.syncBtn.addEventListener('click', () => {
+            elements.syncText.style.display = 'none';
+            elements.syncSpinner.style.display = 'block';
+            elements.syncBtn.disabled = true;
+
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:handleGoogleSheetResponse&t=${new Date().getTime()}`;
+            const script = document.createElement('script');
+            script.src = url;
+            script.id = 'googleSheetScript';
+            
+            script.onerror = function() {
+                cleanupSync();
+                alert('❌ فشل الاتصال بخوادم قوقل. تأكد من اتصال الإنترنت.');
+            };
+            
+            document.body.appendChild(script);
+        });
+
+        window.handleGoogleSheetResponse = function(response) {
+            try {
+                if (!response || response.status === 'error') {
+                    throw new Error('رد غير صالح من قوقل شيت');
+                }
+
+                const data = response.table;
+                const rows = data.rows;
+                
+                if (!rows || rows.length === 0) {
+                    throw new Error('الجدول لا يحتوي على بيانات');
+                }
+
+                let syncCount = 0;
+
+                rows.forEach((row) => {
+                    const getVal = (idx) => {
+                        if (!row.c || !row.c[idx]) return "";
+                        if (row.c[idx].f !== undefined && row.c[idx].f !== null) {
+                            return String(row.c[idx].f).trim();
+                        }
+                        return row.c[idx].v !== null ? String(row.c[idx].v).trim() : "";
+                    };
+
+                    const fullName = getVal(0);
+                    const nationalId = getVal(1);
+
+                    if (fullName && nationalId && !nationalId.includes('الهوية') && !fullName.includes('الاسم')) {
+                        const newPerson = {
+                            fullName: fullName,
+                            nationalId: nationalId,
+                            gender: getVal(2) || 'ذكر',
+                            birthDate: getVal(3),
+                            maritalStatus: getVal(4) || 'أعزب',
+                            motherName: getVal(5),
+                            wifeName: getVal(6),
+                            wifeNationalId: getVal(7),
+                            familyCount: getVal(8) || '0',
+                            mobile: getVal(9),
+                            altPhone: getVal(10),
+                            address: getVal(11),
+                            notes: getVal(12)
+                        };
+
+                        const existingIndex = persons.findIndex(p => p.nationalId === newPerson.nationalId);
+                        if (existingIndex >= 0) {
+                            persons[existingIndex] = newPerson;
+                        } else {
+                            persons.push(newPerson);
+                        }
+                        syncCount++;
+                    }
+                });
+
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(persons));
+                updateStats();
+                fireSearch();
+                alert(`تمت المزامنة بنجاح: ${syncCount} سجل`);
+
+            } catch (error) {
+                alert('خطأ في معالجة البيانات: ' + error.message);
+            } finally {
+                cleanupSync();
+            }
+            
+            const script = document.getElementById('googleSheetScript');
+            if (script) script.remove();
+        };
+
+        function cleanupSync() {
+            elements.syncText.style.display = 'inline';
+            elements.syncSpinner.style.display = 'none';
+            elements.syncBtn.disabled = false;
+        }
+
+        function escapeHtml(text) { return String(text || '').replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+        updateStats();
+    })();
+</script>
+
+</body>
+</html>
