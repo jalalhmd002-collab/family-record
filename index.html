@@ -3,295 +3,1272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#0F172A">
+    <meta name="theme-color" content="#0B192C">
     <title>السجل المدني — تصميم ابو حازم</title>
-    
-    <!-- Inline PWA Manifest for Offline Support -->
-    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D8%A7%D9%84%D8%B3%D8%AC%D9%84%20%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A%22%2C%22short_name%22%3A%22%D8%A7%D9%84%D8%B3%D8%AC%D9%84%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f5f5f7%22%2C%22theme_color%22%3A%22%230F172A%22%7D">
 
-    <!-- Fonts: Cairo (Regular 400) & IBM Plex Mono (Regular 400) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Cairo', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-                        mono: ['IBM Plex Mono', 'monospace'],
-                    },
-                    colors: {
-                        editorial: {
-                            navy: '#0F172A',
-                            slate: '#1E293B',
-                            amber: '#D97706',
-                            gold: '#F59E0B',
-                            amberLight: '#FEF3C7',
-                        },
-                        apple: {
-                            bg: '#F5F5F7',
-                            card: '#FFFFFF',
-                            blue: '#0071E3',
-                            blueHover: '#0062C4',
-                            blueSoft: '#EFF6FF',
-                            text: '#1D1D1F',
-                            subtext: '#515154',
-                            border: '#E5E5EA',
-                            danger: '#DC2626',
-                            success: '#059669'
-                        }
-                    },
-                    boxShadow: {
-                        'apple': '0 2px 12px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03)',
-                        'apple-hover': '0 8px 24px rgba(0, 0, 0, 0.07), 0 2px 6px rgba(0, 0, 0, 0.04)',
-                        'floating': '0 12px 32px rgba(15, 23, 42, 0.22)',
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Inline PWA Manifest for Offline & Mobile Home Screen Support -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D8%A7%D9%84%D8%B3%D8%AC%D9%84%20%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A%22%2C%22short_name%22%3A%22%D8%A7%D9%84%D8%B3%D8%AC%D9%84%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F5F5F7%22%2C%22theme_color%22%3A%22%230B192C%22%7D">
 
     <style>
-        /* Strict Rule: Zero Bold Typography Anywhere (font-weight: 400 on every single element) */
-        *, *::before, *::after,
-        html, body, h1, h2, h3, h4, h5, h6,
-        p, span, div, a, button, input, select, textarea, label, th, td {
-            font-weight: 400 !important;
-            -webkit-tap-highlight-color: transparent;
-            box-sizing: border-box;
+        /* =====================================================================
+           1. GLOBAL RESET & STRICT NO-BOLD TYPOGRAPHY (font-weight: 400)
+           ===================================================================== */
+        :root {
+            --navy-dark: #0B192C;
+            --navy-soft: #162942;
+            --gold-accent: #D99B26;
+            --gold-bg: #FFFBEB;
+            --gold-border: #FDE68A;
+            --gold-text: #78350F;
+            --apple-bg: #F5F5F7;
+            --card-bg: #FFFFFF;
+            --apple-blue: #0071E3;
+            --apple-blue-hover: #005BB5;
+            --id-bg: #EFF6FF;
+            --id-border: #BFDBFE;
+            --id-text: #1E3A8A;
+            --mob-bg: #ECFDF5;
+            --mob-border: #A7F3D0;
+            --mob-text: #065F46;
+            --danger-red: #DC2626;
+            --danger-bg: #FEF2F2;
+            --border-light: #E2E8F0;
+            --text-primary: #111827;
+            --text-secondary: #4B5563;
+            --pitch-black: #000000;
         }
 
-        body {
-            background-color: #F5F5F7;
-            color: #1D1D1F;
-            font-family: 'Cairo', sans-serif;
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-weight: 400 !important;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            background-color: var(--apple-bg);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Editorial Al Jazeera x Apple Header */
-        .editorial-header {
-            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-            border-bottom: 3px solid #D97706;
+        button, input, select, textarea {
+            font-family: inherit;
+            font-weight: 400 !important;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #CBD5E1;
-            border-radius: 9999px;
-        }
-
-        /* Custom Apple Checkbox */
-        .apple-checkbox {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 24px;
-            height: 24px;
-            border: 1.5px solid #94A3B8;
-            border-radius: 8px;
-            background-color: #FFFFFF;
+        button {
             cursor: pointer;
+            border: none;
+            background: none;
+            transition: background-color 0.2s ease, transform 0.12s ease, border-color 0.2s ease;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* =====================================================================
+           2. EDITORIAL TOP HEADER (Al Jazeera Navy & Gold x Apple Clarity)
+           ===================================================================== */
+        .app-header {
+            background-color: var(--navy-dark);
+            border-bottom: 3px solid var(--gold-accent);
+            color: #FFFFFF;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            box-shadow: 0 4px 16px rgba(11, 25, 44, 0.16);
+        }
+
+        .header-inner {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             position: relative;
-            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Framed Gold ID-Card Sync Trigger Button */
+        .sync-icon-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .sync-icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background-color: rgba(217, 155, 38, 0.14);
+            border: 1.5px solid var(--gold-accent);
+            color: var(--gold-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
         }
 
-        .apple-checkbox:checked {
-            background-color: #0071E3;
-            border-color: #0071E3;
+        .sync-icon-btn:hover {
+            background-color: rgba(217, 155, 38, 0.24);
         }
 
-        .apple-checkbox:checked::after {
-            content: '';
+        /* "اضغط هنا" Callout Badge with Upward Arrow */
+        .sync-callout {
+            position: absolute;
+            top: 54px;
+            right: -4px;
+            background-color: var(--gold-accent);
+            color: var(--navy-dark);
+            font-size: 14px;
+            padding: 5px 12px;
+            border-radius: 10px;
+            white-space: nowrap;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            z-index: 50;
+            display: none;
+            align-items: center;
+            gap: 4px;
+            animation: floatPulse 1.8s infinite ease-in-out;
+        }
+
+        .sync-callout.visible {
+            display: inline-flex;
+        }
+
+        .sync-callout::before {
+            content: "";
+            position: absolute;
+            top: -7px;
+            right: 18px;
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 7px solid var(--gold-accent);
+        }
+
+        @keyframes floatPulse {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(3px); }
+        }
+
+        .brand-titles h1 {
+            font-size: 22px;
+            color: #FFFFFF;
+            line-height: 1.25;
+        }
+
+        .brand-titles .subtitle-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .brand-titles p {
+            font-size: 13px;
+            color: #CBD5E1;
+        }
+
+        .offline-tag {
+            display: none;
+            font-size: 12px;
+            padding: 1px 8px;
+            border-radius: 999px;
+            background-color: rgba(217, 155, 38, 0.2);
+            border: 1px solid var(--gold-accent);
+            color: #FDE68A;
+        }
+
+        .offline-tag.visible {
+            display: inline-block;
+        }
+
+        .total-capsule {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 999px;
+            padding: 6px 14px;
+            font-size: 15px;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .total-capsule span.num {
+            color: var(--gold-accent);
+            font-size: 17px;
+        }
+
+        /* =====================================================================
+           3. MAIN CONTAINER & SEARCH / FILTER CARD
+           ===================================================================== */
+        .main-wrapper {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 16px 14px 96px;
+        }
+
+        .search-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 540px) {
+            .search-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .field-box label {
+            display: block;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .field-box input {
+            width: 100%;
+            height: 44px;
+            background-color: var(--apple-bg);
+            border: 1px solid #CBD5E1;
+            border-radius: 12px;
+            padding: 0 14px;
+            font-size: 16px;
+            color: var(--text-primary);
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .field-box input:focus {
+            outline: none;
+            background-color: #FFFFFF;
+            border-color: var(--apple-blue);
+        }
+
+        .search-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .btn-search {
+            flex: 1;
+            height: 44px;
+            background-color: var(--apple-blue);
+            color: #FFFFFF;
+            border-radius: 12px;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-search:hover {
+            background-color: var(--apple-blue-hover);
+        }
+
+        .btn-clear {
+            height: 44px;
+            padding: 0 18px;
+            background-color: var(--apple-bg);
+            color: var(--text-primary);
+            border: 1px solid #CBD5E1;
+            border-radius: 12px;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-clear:hover {
+            background-color: #E5E7EB;
+        }
+
+        /* Bottom Filter & Action Row (Filters on Right, Print + Add on Left) */
+        .filter-action-row {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-pills-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .filter-pill {
+            height: 36px;
+            padding: 0 14px;
+            border-radius: 999px;
+            font-size: 14px;
+            background-color: var(--apple-bg);
+            color: var(--text-primary);
+            border: 1px solid #CBD5E1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-pill.active {
+            background-color: var(--navy-dark);
+            color: #FFFFFF;
+            border-color: var(--navy-dark);
+        }
+
+        .row-left-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-print-inline {
+            height: 36px;
+            padding: 0 14px;
+            border-radius: 999px;
+            background-color: #FFFFFF;
+            color: var(--navy-dark);
+            border: 1.5px solid var(--navy-dark);
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn-print-inline:hover {
+            background-color: #F1F5F9;
+        }
+
+        .btn-add-inline {
+            height: 36px;
+            padding: 0 14px;
+            border-radius: 999px;
+            background-color: var(--apple-blue);
+            color: #FFFFFF;
+            border: 1.5px solid var(--apple-blue);
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn-add-inline:hover {
+            background-color: var(--apple-blue-hover);
+        }
+
+        /* =====================================================================
+           4. RESULTS BAR, RECORD CARDS & PAGINATION (20 PER PAGE)
+           ===================================================================== */
+        .results-toolbar {
+            margin-top: 16px;
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .results-toolbar.visible {
+            display: flex;
+        }
+
+        .results-summary {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .select-all-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-primary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 1.5px solid #94A3B8;
+            border-radius: 7px;
+            background-color: #FFFFFF;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .custom-checkbox:checked {
+            background-color: var(--apple-blue);
+            border-color: var(--apple-blue);
+        }
+
+        .custom-checkbox:checked::after {
+            content: "";
             position: absolute;
             left: 7px;
             top: 3px;
-            width: 6px;
-            height: 12px;
-            border: solid white;
+            width: 5px;
+            height: 11px;
+            border: solid #FFFFFF;
             border-width: 0 2px 2px 0;
             transform: rotate(45deg);
         }
 
-        /* Animations */
-        @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0.5; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes fadeInScale {
-            from { transform: scale(0.96); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .animate-sheet {
-            animation: slideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .animate-modal {
-            animation: fadeInScale 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .empty-state {
+            margin-top: 16px;
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
         }
 
-        /* Hide horizontal scrollbar on filter bar */
-        .no-scrollbar::-webkit-scrollbar {
+        .empty-state h3 {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        .cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Citizen Record Card */
+        .citizen-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-radius: 18px;
+            padding: 14px 18px 14px 14px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .citizen-card:hover {
+            border-color: #CBD5E1;
+        }
+
+        .citizen-card.selected {
+            border-color: var(--apple-blue);
+            background-color: #F8FAFC;
+        }
+
+        /* Right Side Accent Stripe */
+        .citizen-card::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 12px;
+            bottom: 12px;
+            width: 4px;
+            border-radius: 4px 0 0 4px;
+            background-color: var(--apple-blue);
+        }
+
+        .citizen-card.is-local::before {
+            background-color: var(--gold-accent);
+        }
+
+        .card-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card-name-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .citizen-name {
+            font-size: 20px;
+            color: var(--pitch-black);
+            line-height: 1.35;
+        }
+
+        .local-tag {
+            font-size: 12px;
+            padding: 1px 8px;
+            border-radius: 6px;
+            background-color: var(--gold-bg);
+            border: 1px solid var(--gold-border);
+            color: var(--gold-text);
+        }
+
+        /* High-Contrast Numbers Row Beneath Name */
+        .badges-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .badge-id {
+            background-color: var(--id-bg);
+            border: 1px solid var(--id-border);
+            color: var(--id-text);
+            font-size: 18px;
+            padding: 3px 10px;
+            border-radius: 9px;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-mobile {
+            background-color: var(--mob-bg);
+            border: 1px solid var(--mob-border);
+            color: var(--mob-text);
+            font-size: 17px;
+            padding: 3px 10px;
+            border-radius: 9px;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-family {
+            background-color: var(--gold-bg);
+            border: 1px solid var(--gold-border);
+            color: var(--gold-text);
+            font-size: 16px;
+            padding: 3px 10px;
+            border-radius: 9px;
+        }
+
+        .checkbox-area {
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Pagination Bar */
+        .pagination-bar {
+            margin-top: 16px;
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 10px 14px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .pagination-bar.visible {
+            display: flex;
+        }
+
+        .page-btn {
+            height: 38px;
+            padding: 0 16px;
+            border-radius: 10px;
+            background-color: var(--apple-bg);
+            border: 1px solid #CBD5E1;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .page-indicator {
+            font-size: 15px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        /* =====================================================================
+           5. FLOATING BULK ACTION BAR
+           ===================================================================== */
+        .bulk-bar {
+            position: fixed;
+            bottom: 16px;
+            left: 14px;
+            right: 14px;
+            max-width: 692px;
+            margin: 0 auto;
+            background-color: var(--navy-dark);
+            color: #FFFFFF;
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: 0 10px 28px rgba(11, 25, 44, 0.3);
+            z-index: 45;
+        }
+
+        .bulk-bar.visible {
+            display: flex;
+        }
+
+        .bulk-info {
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bulk-count-pill {
+            background-color: var(--gold-accent);
+            color: var(--navy-dark);
+            padding: 2px 10px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .bulk-btns {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-bulk-print {
+            height: 38px;
+            padding: 0 14px;
+            border-radius: 10px;
+            background-color: var(--apple-blue);
+            color: #FFFFFF;
+            font-size: 15px;
+        }
+
+        .btn-bulk-delete {
+            height: 38px;
+            padding: 0 14px;
+            border-radius: 10px;
+            background-color: var(--danger-red);
+            color: #FFFFFF;
+            font-size: 15px;
+        }
+
+        /* =====================================================================
+           6. MODALS (ADD/EDIT SHEET, CENTRAL SYNC MODAL, CONFIRMATION MODAL)
+           ===================================================================== */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(11, 25, 44, 0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 60;
+        }
+
+        .modal-backdrop.visible {
+            display: flex;
+        }
+
+        .modal-card {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 560px;
+            max-height: 90vh;
+            border-radius: 22px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.28);
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #FFFFFF;
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+            color: var(--pitch-black);
+        }
+
+        .btn-close-x {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--apple-bg);
+            color: var(--pitch-black);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 18px 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .error-alert {
+            background-color: var(--danger-bg);
+            border: 1px solid #FECACA;
+            color: var(--danger-red);
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            margin-bottom: 14px;
             display: none;
         }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+
+        .error-alert.visible {
+            display: block;
         }
 
-        /* Landscape A4 Print Stylesheet */
+        /* Pitch Black Labels & Section Titles (#000000) in Add/Edit Form */
+        .form-sec-heading {
+            font-size: 18px;
+            color: var(--pitch-black);
+            padding-bottom: 6px;
+            margin-top: 18px;
+            margin-bottom: 12px;
+            border-bottom: 1.5px solid var(--border-light);
+        }
+
+        .form-sec-heading:first-child {
+            margin-top: 0;
+        }
+
+        .form-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .form-row-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-field {
+            margin-bottom: 12px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 16px;
+            color: var(--pitch-black);
+            margin-bottom: 5px;
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            width: 100%;
+            min-height: 44px;
+            background-color: var(--apple-bg);
+            border: 1px solid #CBD5E1;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 16px;
+            color: var(--pitch-black);
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            outline: none;
+            background-color: #FFFFFF;
+            border-color: var(--apple-blue);
+        }
+
+        .modal-footer {
+            padding: 14px 20px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #FFFFFF;
+        }
+
+        .btn-save {
+            flex: 2;
+            height: 46px;
+            border-radius: 12px;
+            background-color: var(--apple-blue);
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+
+        .btn-delete-single {
+            flex: 1;
+            height: 46px;
+            border-radius: 12px;
+            background-color: var(--danger-bg);
+            border: 1px solid #FECACA;
+            color: var(--danger-red);
+            font-size: 16px;
+            display: none;
+        }
+
+        .btn-delete-single.visible {
+            display: inline-block;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            height: 46px;
+            border-radius: 12px;
+            background-color: var(--apple-bg);
+            border: 1px solid #CBD5E1;
+            color: var(--pitch-black);
+            font-size: 16px;
+        }
+
+        /* =====================================================================
+           7. CENTRAL SYNC MODAL (3 STATS + DETAILED REPORT)
+           ===================================================================== */
+        .sync-dialog {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 440px;
+            border-radius: 24px;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .sync-dialog-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background-color: var(--gold-bg);
+            border: 1.5px solid var(--gold-accent);
+            color: var(--gold-accent);
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sync-dialog h3 {
+            font-size: 20px;
+            color: var(--pitch-black);
+            margin-bottom: 6px;
+        }
+
+        .sync-dialog p.desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .sync-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .sync-stat-box {
+            background-color: var(--apple-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            padding: 10px 6px;
+        }
+
+        .sync-stat-box .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .sync-stat-box .stat-val {
+            font-size: 20px;
+            color: var(--navy-dark);
+        }
+
+        .sync-stat-box.highlight .stat-val {
+            color: var(--apple-blue);
+        }
+
+        .sync-stat-box.gold .stat-val {
+            color: var(--gold-text);
+        }
+
+        .sync-report-box {
+            display: none;
+            background-color: #F0FDF4;
+            border: 1px solid #BBF7D0;
+            color: #14532D;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            text-align: right;
+            line-height: 1.6;
+        }
+
+        .sync-report-box.error {
+            background-color: var(--danger-bg);
+            border-color: #FECACA;
+            color: var(--danger-red);
+        }
+
+        .sync-report-box.visible {
+            display: block;
+        }
+
+        .sync-dialog-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn-sync-start {
+            height: 46px;
+            border-radius: 12px;
+            background-color: var(--navy-dark);
+            color: #FFFFFF;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-sync-start:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .btn-sync-cancel {
+            height: 46px;
+            border-radius: 12px;
+            background-color: var(--apple-bg);
+            border: 1px solid #CBD5E1;
+            color: var(--pitch-black);
+            font-size: 15px;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #FFFFFF;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .spinner.visible {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* =====================================================================
+           8. CUSTOM CONFIRMATION MODAL & TOAST
+           ===================================================================== */
+        .confirm-box {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 22px;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .confirm-box h3 {
+            font-size: 20px;
+            color: var(--pitch-black);
+            margin-bottom: 8px;
+        }
+
+        .confirm-box p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .confirm-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn-confirm-yes {
+            height: 44px;
+            border-radius: 12px;
+            background-color: var(--apple-blue);
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+
+        .btn-confirm-yes.danger {
+            background-color: var(--danger-red);
+        }
+
+        .btn-confirm-no {
+            height: 44px;
+            border-radius: 12px;
+            background-color: var(--apple-bg);
+            border: 1px solid #CBD5E1;
+            color: var(--pitch-black);
+            font-size: 16px;
+        }
+
+        .toast-msg {
+            position: fixed;
+            top: 84px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--navy-dark);
+            color: #FFFFFF;
+            border: 1px solid var(--gold-accent);
+            padding: 10px 18px;
+            border-radius: 14px;
+            font-size: 15px;
+            z-index: 80;
+            display: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            max-width: 92%;
+            text-align: center;
+        }
+
+        .toast-msg.visible {
+            display: block;
+        }
+
+        /* =====================================================================
+           9. A4 LANDSCAPE PRINT STYLESHEET (14 COLUMNS, NO BOLD, WESTERN DIGITS)
+           ===================================================================== */
+        #printArea {
+            display: none;
+        }
+
         @media print {
             @page {
                 size: A4 landscape;
                 margin: 10mm;
             }
-            html, body {
+
+            body {
                 background: #FFFFFF !important;
                 color: #000000 !important;
                 margin: 0 !important;
                 padding: 0 !important;
-                width: 100% !important;
             }
-            #appMainWrapper,
-            #bulkActionBar,
-            #formOverlay,
-            #syncModalOverlay,
-            #confirmDialogOverlay,
-            #toastBanner {
+
+            .app-header,
+            .main-wrapper,
+            .bulk-bar,
+            .modal-backdrop,
+            .toast-msg {
                 display: none !important;
             }
-            #printAreaContainer {
+
+            #printArea {
                 display: block !important;
                 width: 100% !important;
-            }
-            table.print-table {
-                width: 100% !important;
-                border-collapse: collapse !important;
-                font-size: 11px !important;
                 direction: rtl !important;
             }
-            table.print-table th,
-            table.print-table td {
-                border: 1px solid #334155 !important;
-                padding: 5px 6px !important;
-                text-align: right !important;
-                color: #000000 !important;
-                font-weight: 400 !important;
-                word-break: break-word !important;
+
+            .print-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 2px solid #000000;
+                padding-bottom: 8px;
+                margin-bottom: 10px;
             }
-            table.print-table th {
-                background-color: #F1F5F9 !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
+
+            .print-header h2 {
+                font-size: 18px;
+                color: #000000;
             }
-            tr {
-                page-break-inside: avoid !important;
+
+            .print-header .print-meta {
+                font-size: 13px;
+                color: #000000;
+            }
+
+            .print-table {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: auto;
+                font-size: 11px;
+            }
+
+            .print-table th,
+            .print-table td {
+                border: 1px solid #333333;
+                padding: 5px 4px;
+                text-align: right;
+                color: #000000;
+                word-break: break-word;
+            }
+
+            .print-table th {
+                background-color: #E5E7EB !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
         }
     </style>
 </head>
-<body class="pb-24">
+<body>
 
-    <!-- Main Interactive Application Wrapper -->
-    <div id="appMainWrapper" class="max-w-[680px] mx-auto min-h-screen flex flex-col">
-
-        <!-- 1. Editorial Al Jazeera x Apple Top Header (Exact Match to Screenshot) -->
-        <header class="editorial-header text-white px-5 py-4 sticky top-0 z-30 shadow-md">
-            <div class="flex items-center justify-between gap-3">
-                <!-- Right Side: Golden ID Card Sync Button + Title -->
-                <div class="flex items-center gap-3">
-                    <button type="button" id="openSyncModalBtn" title="مزامنة البيانات من المصدر"
-                        class="w-11 h-11 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 active:scale-95 border border-amber-400/40 flex items-center justify-center text-amber-400 shrink-0 transition-all relative cursor-pointer">
-                        <svg id="headerSyncIcon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"/>
+    <!-- =====================================================================
+         1. TOP EDITORIAL HEADER
+         ===================================================================== -->
+    <header class="app-header">
+        <div class="header-inner">
+            <div class="brand-cluster">
+                <!-- Gold Framed ID Card Sync Button + "اضغط هنا" Callout -->
+                <div class="sync-icon-wrapper">
+                    <button type="button" id="openSyncBtn" class="sync-icon-btn" title="مزامنة البيانات">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                            <rect x="2.5" y="4.5" width="19" height="15" rx="2.5"></rect>
+                            <circle cx="8.5" cy="10.5" r="2.2"></circle>
+                            <path d="M5 16.5c.7-2 2-3 3.5-3s2.8 1 3.5 3"></path>
+                            <line x1="14" y1="9.5" x2="18.5" y2="9.5"></line>
+                            <line x1="14" y1="13" x2="18.5" y2="13"></line>
+                            <line x1="14" y1="16.5" x2="17" y2="16.5"></line>
                         </svg>
-                        <span id="headerSyncDot" class="hidden absolute -top-1 -left-1 w-2.5 h-2.5 rounded-full bg-amber-400 border border-editorial-navy"></span>
                     </button>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h1 class="text-[21px] leading-tight text-white">السجل المدني</h1>
-                            <span id="offlineBadge" class="hidden text-[11px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">بدون إنترنت</span>
-                        </div>
-                        <p class="text-[12px] text-slate-300 mt-0.5">تصميم ابو حازم</p>
+                    <div id="syncCalloutBadge" class="sync-callout">
+                        <span>اضغط هنا</span>
                     </div>
                 </div>
 
-                <!-- Left Side: Total Badge -->
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/15 px-3.5 py-1.5 rounded-full">
-                        <span class="text-[13px] text-slate-200">الإجمالي:</span>
-                        <span id="totalRecordsCount" class="font-mono text-[15px] text-amber-400">0</span>
+                <div class="brand-titles">
+                    <h1>السجل المدني</h1>
+                    <div class="subtitle-row">
+                        <p>تصميم ابو حازم</p>
+                        <span id="offlineStatusTag" class="offline-tag">وضع بدون إنترنت</span>
                     </div>
                 </div>
             </div>
-        </header>
 
-        <!-- 2. Search & Filter Card (Exact Layout Match to Screenshot) -->
-        <section class="px-4 pt-4">
-            <div class="bg-apple-card rounded-2xl p-4 shadow-apple border border-apple-border">
-                <!-- Top Row: Name on Right, National ID on Left -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label for="searchNameInput" class="block text-[14px] text-apple-text mb-1.5">الاسم الكامل أو جزء منه</label>
-                        <input type="text" id="searchNameInput" placeholder="اكتب الاسم للبحث..." autocomplete="off"
-                            class="w-full h-11 bg-apple-bg/70 border border-apple-border rounded-xl px-3.5 text-[15px] text-apple-text placeholder:text-gray-400 focus:outline-none focus:bg-white focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/15 transition-all">
-                    </div>
+            <!-- Left Total Capsule -->
+            <div class="total-capsule">
+                <span>الإجمالي:</span>
+                <span id="headerTotalCount" class="num">0</span>
+            </div>
+        </div>
+    </header>
 
-                    <div>
-                        <label for="searchIdInput" class="block text-[14px] text-apple-text mb-1.5">رقم الهوية</label>
-                        <input type="text" id="searchIdInput" inputmode="numeric" placeholder="أدخل رقم الهوية..." autocomplete="off"
-                            class="w-full h-11 bg-apple-bg/70 border border-apple-border rounded-xl px-3.5 font-mono text-[15px] text-apple-text placeholder:font-sans placeholder:text-gray-400 focus:outline-none focus:bg-white focus:border-apple-blue focus:ring-2 focus:ring-apple-blue/15 transition-all">
-                    </div>
+    <!-- =====================================================================
+         2. MAIN SEARCH, FILTER & RESULTS AREA
+         ===================================================================== -->
+    <div class="main-wrapper">
+        <!-- Search & Filter Card -->
+        <section class="search-card">
+            <div class="search-grid">
+                <div class="field-box">
+                    <label for="searchNameInput">الاسم الكامل أو جزء منه</label>
+                    <input type="text" id="searchNameInput" placeholder="اكتب الاسم للبحث..." autocomplete="off">
+                </div>
+                <div class="field-box">
+                    <label for="searchIdInput">رقم الهوية</label>
+                    <input type="text" id="searchIdInput" inputmode="numeric" placeholder="أدخل رقم الهوية..." autocomplete="off">
+                </div>
+            </div>
+
+            <div class="search-actions">
+                <button type="button" id="searchBtn" class="btn-search">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                    </svg>
+                    <span>بحث في السجل</span>
+                </button>
+                <button type="button" id="clearSearchBtn" class="btn-clear">
+                    <span>مسح</span>
+                </button>
+            </div>
+
+            <!-- Filter Pills (Right) + Print & Add Buttons Side-by-Side (Left) -->
+            <div class="filter-action-row">
+                <div class="filter-pills-group">
+                    <button type="button" class="filter-pill active" data-filter="all">الكل</button>
+                    <button type="button" class="filter-pill" data-filter="local">المعدلة محلياً</button>
+                    <button type="button" class="filter-pill" data-filter="married">متزوج</button>
+                    <button type="button" class="filter-pill" data-filter="single">أعزب</button>
                 </div>
 
-                <!-- Middle Row: Wide Blue Search Button on Right, Clear Button on Left -->
-                <div class="flex items-center gap-2.5 mt-3.5">
-                    <button id="executeSearchBtn" type="button"
-                        class="flex-1 h-11 bg-apple-blue hover:bg-apple-blueHover active:scale-[0.99] text-white text-[15px] rounded-xl shadow-sm transition-all flex items-center justify-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                <div class="row-left-actions">
+                    <button type="button" id="printTopBtn" class="btn-print-inline">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                            <path d="M6 9V3h12v6"></path>
+                            <rect x="3" y="9" width="18" height="9" rx="2"></rect>
+                            <rect x="6" y="14" width="12" height="7"></rect>
                         </svg>
-                        <span>بحث في السجل</span>
+                        <span>طباعة</span>
                     </button>
-                    <button id="resetSearchBtn" type="button" title="مسح حقول البحث"
-                        class="h-11 px-4 bg-apple-bg hover:bg-gray-200/80 active:scale-[0.98] text-apple-text text-[14px] rounded-xl border border-apple-border transition-all flex items-center justify-center">
-                        <span>مسح</span>
-                    </button>
-                </div>
-
-                <!-- Bottom Row: Filter Pills on Right + "إضافة سجل جديد" Button on Left (Yellow Box Position) -->
-                <div class="flex flex-wrap items-center justify-between gap-2 mt-3.5 pt-3 border-t border-apple-border/70">
-                    <!-- Filter Pills (Right) -->
-                    <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-                        <button type="button" data-filter="all" class="filter-pill active-pill shrink-0 px-3.5 h-9 rounded-full text-[13px] transition-all bg-editorial-navy text-white">
-                            الكل
-                        </button>
-                        <button type="button" data-filter="local" class="filter-pill shrink-0 px-3.5 h-9 rounded-full text-[13px] transition-all bg-apple-bg text-apple-text hover:bg-gray-200/70">
-                            المعدلة محلياً
-                        </button>
-                        <button type="button" data-filter="married" class="filter-pill shrink-0 px-3.5 h-9 rounded-full text-[13px] transition-all bg-apple-bg text-apple-text hover:bg-gray-200/70">
-                            متزوج
-                        </button>
-                        <button type="button" data-filter="single" class="filter-pill shrink-0 px-3.5 h-9 rounded-full text-[13px] transition-all bg-apple-bg text-apple-text hover:bg-gray-200/70">
-                            أعزب
-                        </button>
-                    </div>
-
-                    <!-- Add New Record Button (Left - Yellow Rectangle Spot) -->
-                    <button type="button" id="openAddModalBtn"
-                        class="h-9 px-3.5 rounded-xl bg-editorial-navy hover:bg-editorial-slate active:scale-[0.98] text-white text-[13px] shadow-sm flex items-center justify-center gap-1.5 transition-all shrink-0">
-                        <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                    <button type="button" id="openAddBtn" class="btn-add-inline">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
                         </svg>
                         <span>إضافة سجل جديد</span>
                     </button>
@@ -299,406 +1276,303 @@
             </div>
         </section>
 
-        <!-- 3. Results Status Bar, Print All & Select Page -->
-        <section id="resultsStatusBar" class="hidden px-4 pt-4 pb-1 flex flex-wrap items-center justify-between gap-2">
-            <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-apple-blue"></span>
-                <p id="resultsCounterText" class="text-[14px] text-apple-subtext"></p>
-            </div>
-            <div class="flex items-center gap-2">
-                <button type="button" id="printAllResultsBtn"
-                    class="h-9 px-3 rounded-xl bg-white hover:bg-gray-50 text-editorial-navy border border-apple-border text-[13px] shadow-sm flex items-center gap-1.5 transition-all">
-                    <svg class="w-4 h-4 text-apple-blue" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"/>
-                    </svg>
-                    <span>طباعة الكل</span>
-                </button>
-                <label class="h-9 flex items-center gap-2 cursor-pointer select-none bg-white px-3 rounded-xl border border-apple-border shadow-sm">
-                    <span class="text-[13px] text-apple-text">تحديد الصفحة</span>
-                    <input type="checkbox" id="selectAllCheckbox" class="apple-checkbox !w-4 !h-4 !rounded">
-                </label>
-            </div>
-        </section>
+        <!-- Results Toolbar -->
+        <div id="resultsToolbar" class="results-toolbar">
+            <span id="resultsCountLabel" class="results-summary">0 نتيجة</span>
+            <label class="select-all-label">
+                <span>تحديد الصفحة</span>
+                <input type="checkbox" id="selectPageCheckbox" class="custom-checkbox">
+            </label>
+        </div>
 
-        <!-- 4. Results List & Pagination Container -->
-        <main class="flex-1 px-4 pt-2.5">
-            <!-- Empty / Initial State -->
-            <div id="emptyStateBox" class="bg-apple-card rounded-2xl border border-apple-border p-10 text-center shadow-apple mt-2">
-                <div class="w-16 h-16 rounded-2xl bg-apple-bg mx-auto flex items-center justify-center text-apple-subtext mb-3">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
-                    </svg>
-                </div>
-                <h3 id="emptyStateTitle" class="text-[18px] text-apple-text">ابحث في السجل المدني</h3>
-                <p id="emptyStateDesc" class="text-[14px] text-apple-subtext mt-1.5 max-w-xs mx-auto leading-relaxed">
-                    أدخل الاسم أو رقم الهوية في الأعلى، أو اختر أحد الفلاتر السريعة لعرض السجلات.
-                </p>
-            </div>
+        <!-- Empty State -->
+        <div id="emptyStateBox" class="empty-state">
+            <h3 id="emptyTitle">أدخل بيانات البحث أو اختر فلتراً</h3>
+            <p id="emptyDesc">يمكنك البحث بالاسم أو رقم الهوية، أو الضغط على أيقونة البطاقة الذهبية في الأعلى لمزامنة البيانات.</p>
+        </div>
 
-            <!-- Cards List (20 per page) -->
-            <div id="recordsListContainer" class="space-y-3"></div>
+        <!-- Cards Container (20 per page) -->
+        <div id="cardsList" class="cards-list"></div>
 
-            <!-- Pagination Controls -->
-            <div id="paginationBar" class="hidden mt-5 mb-4 bg-white rounded-2xl border border-apple-border p-3 shadow-apple flex items-center justify-between gap-2">
-                <button type="button" id="prevPageBtn"
-                    class="h-10 px-4 rounded-xl bg-apple-bg hover:bg-gray-200 disabled:opacity-40 disabled:pointer-events-none text-apple-text text-[14px] flex items-center gap-1.5 transition-all">
-                    <span>السابق</span>
-                </button>
-                <div id="pageIndicatorText" class="font-mono text-[14px] text-editorial-navy">
-                    صفحة 1 من 1
-                </div>
-                <button type="button" id="nextPageBtn"
-                    class="h-10 px-4 rounded-xl bg-apple-bg hover:bg-gray-200 disabled:opacity-40 disabled:pointer-events-none text-apple-text text-[14px] flex items-center gap-1.5 transition-all">
-                    <span>التالي</span>
-                </button>
-            </div>
-        </main>
-
+        <!-- Pagination Controls -->
+        <div id="paginationBar" class="pagination-bar">
+            <button type="button" id="prevPageBtn" class="page-btn">السابق</button>
+            <div id="pageIndicator" class="page-indicator">صفحة 1 من 1</div>
+            <button type="button" id="nextPageBtn" class="page-btn">التالي</button>
+        </div>
     </div>
 
-    <!-- 5. Floating Bulk Action Bar (Print Selected / Delete Selected) -->
-    <div id="bulkActionBar" class="hidden fixed bottom-4 left-0 right-0 z-30 px-4">
-        <div class="max-w-[648px] mx-auto bg-editorial-navy text-white rounded-2xl p-3 shadow-floating border border-slate-700 flex items-center justify-between gap-3 animate-modal">
-            <div class="flex items-center gap-2 pr-1">
-                <span id="selectedItemsCount" class="font-mono text-[15px] bg-amber-500 text-editorial-navy px-2.5 py-0.5 rounded-lg">0</span>
-                <span class="text-[14px] text-slate-200">سجل محدد</span>
+    <!-- =====================================================================
+         3. FLOATING BULK ACTION BAR
+         ===================================================================== -->
+    <div id="bulkBar" class="bulk-bar">
+        <div class="bulk-info">
+            <span id="bulkSelectedCount" class="bulk-count-pill">0</span>
+            <span>سجل محدد</span>
+        </div>
+        <div class="bulk-btns">
+            <button type="button" id="bulkPrintBtn" class="btn-bulk-print">طباعة المحدد</button>
+            <button type="button" id="bulkDeleteBtn" class="btn-bulk-delete">حذف المحدد</button>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         4. ADD / EDIT RECORD MODAL (PITCH BLACK LABELS #000000)
+         ===================================================================== -->
+    <div id="formModalBackdrop" class="modal-backdrop">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="formModalTitle">إضافة سجل جديد</h2>
+                <button type="button" id="closeFormModalBtn" class="btn-close-x">✕</button>
             </div>
-            <div class="flex items-center gap-2">
-                <button type="button" id="bulkPrintBtn"
-                    class="h-10 px-3.5 rounded-xl bg-apple-blue hover:bg-apple-blueHover text-white text-[14px] flex items-center gap-1.5 transition-all active:scale-95">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"/>
-                    </svg>
-                    <span>طباعة المحدد</span>
-                </button>
-                <button type="button" id="bulkDeleteBtn"
-                    class="h-10 px-3.5 rounded-xl bg-apple-danger hover:bg-red-700 text-white text-[14px] flex items-center gap-1.5 transition-all active:scale-95">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
-                    </svg>
-                    <span>حذف المحدد</span>
-                </button>
+
+            <div class="modal-body">
+                <div id="formErrorAlert" class="error-alert"></div>
+
+                <form id="citizenForm" onsubmit="return false;">
+                    <input type="hidden" id="editingOriginalId">
+
+                    <div class="form-sec-heading">البيانات الأساسية</div>
+
+                    <div class="form-field">
+                        <label for="inpFullName">الاسم الكامل</label>
+                        <input type="text" id="inpFullName" placeholder="أدخل الاسم الكامل..." required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="inpNationalId">رقم الهوية</label>
+                        <input type="text" id="inpNationalId" inputmode="numeric" placeholder="أدخل رقم الهوية..." required>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-field">
+                            <label for="inpGender">الجنس</label>
+                            <select id="inpGender">
+                                <option value="ذكر">ذكر</option>
+                                <option value="أنثى">أنثى</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="inpBirthDate">تاريخ الميلاد</label>
+                            <input type="date" id="inpBirthDate">
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-field">
+                            <label for="inpMaritalStatus">الحالة الاجتماعية</label>
+                            <select id="inpMaritalStatus">
+                                <option value="أعزب">أعزب</option>
+                                <option value="متزوج">متزوج</option>
+                                <option value="مطلق">مطلق</option>
+                                <option value="أرمل">أرمل</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="inpFamilyCount">عدد أفراد الأسرة</label>
+                            <input type="text" id="inpFamilyCount" inputmode="numeric" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div class="form-sec-heading">بيانات الأسرة</div>
+
+                    <div class="form-field">
+                        <label for="inpMotherName">اسم الأم</label>
+                        <input type="text" id="inpMotherName" placeholder="أدخل اسم الأم...">
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-field">
+                            <label for="inpWifeName">اسم الزوجة</label>
+                            <input type="text" id="inpWifeName" placeholder="أدخل اسم الزوجة...">
+                        </div>
+                        <div class="form-field">
+                            <label for="inpWifeNationalId">رقم هوية الزوجة</label>
+                            <input type="text" id="inpWifeNationalId" inputmode="numeric" placeholder="رقم هوية الزوجة...">
+                        </div>
+                    </div>
+
+                    <div class="form-sec-heading">التواصل والعنوان</div>
+
+                    <div class="form-row-2">
+                        <div class="form-field">
+                            <label for="inpMobile">رقم الجوال</label>
+                            <input type="text" id="inpMobile" inputmode="numeric" placeholder="أدخل رقم الجوال...">
+                        </div>
+                        <div class="form-field">
+                            <label for="inpAltPhone">الهاتف البديل</label>
+                            <input type="text" id="inpAltPhone" inputmode="numeric" placeholder="أدخل الهاتف البديل...">
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="inpAddress">العنوان التفصيلي</label>
+                        <input type="text" id="inpAddress" placeholder="أدخل العنوان...">
+                    </div>
+
+                    <div class="form-sec-heading">ملاحظات إضافية</div>
+
+                    <div class="form-field">
+                        <label for="inpNotes">ملاحظات</label>
+                        <textarea id="inpNotes" rows="2" placeholder="أدخل أي ملاحظات..."></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="saveFormBtn" class="btn-save">حفظ البيانات</button>
+                <button type="button" id="deleteSingleBtn" class="btn-delete-single">حذف</button>
+                <button type="button" id="cancelFormBtn" class="btn-cancel">إلغاء</button>
             </div>
         </div>
     </div>
 
-    <!-- 6. Centered Sync Modal (Triggered by clicking the Golden ID Card Icon in Header) -->
-    <div id="syncModalOverlay" class="hidden fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-[400px] rounded-3xl p-6 shadow-2xl border border-apple-border text-center animate-modal">
-            <div class="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center bg-amber-50 text-editorial-amber border border-amber-200">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
+    <!-- =====================================================================
+         5. CENTRAL SYNC MODAL (3 STATS + DETAILED REPORT)
+         ===================================================================== -->
+    <div id="syncModalBackdrop" class="modal-backdrop">
+        <div class="sync-dialog">
+            <div class="sync-dialog-icon">
+                <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path d="M4 12a8 8 0 0 1 14.9-3M20 4v5h-5"></path>
+                    <path d="M20 12a8 8 0 0 1-14.9 3M4 20v-5h5"></path>
                 </svg>
             </div>
-            <h3 class="text-[20px] text-editorial-navy">مزامنة بيانات السجل</h3>
-            <p class="text-[14px] text-apple-subtext mt-2 leading-relaxed">
-                سيتم جلب السجلات الجديدة من المصدر وتحديث السجلات غير المعدلة، مع حماية كاملة لكافة السجلات التي قمت بإضافتها أو تعديلها محلياً.
-            </p>
 
-            <!-- Stats Box inside Sync Modal -->
-            <div class="mt-4 bg-apple-bg rounded-2xl p-3 border border-apple-border grid grid-cols-2 divide-x divide-x-reverse divide-apple-border">
-                <div class="px-2">
-                    <span class="block text-[12px] text-apple-subtext">إجمالي السجلات</span>
-                    <span id="syncModalTotalCount" class="font-mono text-[18px] text-editorial-navy">0</span>
+            <h3>مزامنة بيانات السجل</h3>
+            <p class="desc">جلب وتحديث البيانات من المصدر مع الحفاظ التام على السجلات المضافة أو المعدلة محلياً.</p>
+
+            <!-- 3 Statistics Boxes -->
+            <div class="sync-stats-grid">
+                <div class="sync-stat-box">
+                    <div class="stat-label">إجمالي السجلات</div>
+                    <div id="syncStatTotal" class="stat-val">0</div>
                 </div>
-                <div class="px-2">
-                    <span class="block text-[12px] text-apple-subtext">المعدلة محلياً</span>
-                    <span id="syncModalLocalCount" class="font-mono text-[18px] text-editorial-amber">0</span>
+                <div class="sync-stat-box highlight">
+                    <div class="stat-label">الأسماء المحملة</div>
+                    <div id="syncStatLoaded" class="stat-val">0</div>
+                </div>
+                <div class="sync-stat-box gold">
+                    <div class="stat-label">المضافة أو المعدلة</div>
+                    <div id="syncStatChanged" class="stat-val">0</div>
                 </div>
             </div>
 
-            <!-- Strictly Two Buttons: "المزامنة من المصدر" and "إلغاء الأمر" -->
-            <div class="grid grid-cols-2 gap-2.5 mt-6">
-                <button type="button" id="confirmSyncExecuteBtn"
-                    class="h-12 rounded-xl text-[15px] text-white bg-editorial-navy hover:bg-editorial-slate shadow-sm transition-all active:scale-95">
-                    المزامنة من المصدر
+            <!-- Detailed Sync Report Inside Card -->
+            <div id="syncReportBox" class="sync-report-box"></div>
+
+            <div class="sync-dialog-actions">
+                <button type="button" id="startSyncBtn" class="btn-sync-start">
+                    <span id="syncSpinner" class="spinner"></span>
+                    <span id="startSyncBtnText">المزامنة من المصدر</span>
                 </button>
-                <button type="button" id="cancelSyncModalBtn"
-                    class="h-12 rounded-xl bg-apple-bg hover:bg-gray-200 text-apple-text text-[15px] transition-all active:scale-95">
-                    إلغاء الأمر
-                </button>
+                <button type="button" id="closeSyncBtn" class="btn-sync-cancel">إلغاء الأمر</button>
             </div>
         </div>
     </div>
 
-    <!-- 7. Slide-Up Add / Edit Modal Sheet (All Labels & Section Titles Pure Black #000000) -->
-    <div id="formOverlay" class="hidden fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center">
-        <div class="bg-apple-bg w-full max-w-[620px] max-h-[92vh] rounded-t-3xl sm:rounded-3xl flex flex-col overflow-hidden shadow-2xl animate-sheet">
-            
-            <!-- Modal Top Bar -->
-            <div class="bg-white px-5 py-4 border-b border-apple-border flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-2.5">
-                    <span id="formStatusDot" class="w-2.5 h-2.5 rounded-full bg-apple-blue"></span>
-                    <h2 id="formModalTitle" class="text-[20px] text-black">إضافة سجل جديد</h2>
-                </div>
-                <button type="button" id="closeFormBtn" class="w-9 h-9 rounded-full bg-apple-bg hover:bg-gray-200 flex items-center justify-center text-black text-[16px] transition-colors">
-                    ✕
-                </button>
-            </div>
-
-            <!-- Form Validation Error Banner -->
-            <div id="formErrorBanner" class="hidden mx-4 mt-3 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-[14px] flex items-center gap-2 shrink-0">
-                <svg class="w-5 h-5 text-apple-danger shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/>
-                </svg>
-                <span id="formErrorText"></span>
-            </div>
-
-            <!-- Scrollable Apple Grouped Form -->
-            <form id="recordForm" class="flex-1 overflow-y-auto p-4 space-y-5" novalidate>
-                <input type="hidden" id="originalNationalId">
-
-                <!-- Group 1: البيانات الأساسية -->
-                <div>
-                    <h3 class="text-[18px] text-black px-1 mb-2 flex items-center gap-2">
-                        <span class="w-1.5 h-4 rounded-full bg-apple-blue"></span>
-                        البيانات الأساسية
-                    </h3>
-                    <div class="bg-white rounded-2xl border border-apple-border divide-y divide-apple-border overflow-hidden shadow-apple">
-                        <div class="p-3.5">
-                            <label for="fieldFullName" class="block text-[15px] text-black mb-1">الاسم الكامل <span class="text-apple-danger">*</span></label>
-                            <input type="text" id="fieldFullName" required placeholder="أدخل الاسم الكامل..."
-                                class="w-full text-[16px] text-black placeholder:text-gray-400 focus:outline-none">
-                        </div>
-
-                        <div class="p-3.5">
-                            <label for="fieldNationalId" class="block text-[15px] text-black mb-1">رقم الهوية <span class="text-apple-danger">*</span></label>
-                            <input type="text" id="fieldNationalId" inputmode="numeric" maxlength="9" required placeholder="9 أرقام إنجليزية (مثال: 401234567)"
-                                class="w-full font-mono text-[17px] text-apple-blue placeholder:font-sans placeholder:text-[15px] placeholder:text-gray-400 focus:outline-none">
-                        </div>
-
-                        <div class="grid grid-cols-2 divide-x divide-x-reverse divide-apple-border">
-                            <div class="p-3.5">
-                                <label for="fieldGender" class="block text-[15px] text-black mb-1">الجنس</label>
-                                <select id="fieldGender" class="w-full text-[16px] text-black bg-transparent focus:outline-none">
-                                    <option value="ذكر">ذكر</option>
-                                    <option value="أنثى">أنثى</option>
-                                </select>
-                            </div>
-                            <div class="p-3.5">
-                                <label for="fieldBirthDate" class="block text-[15px] text-black mb-1">تاريخ الميلاد</label>
-                                <input type="date" id="fieldBirthDate" class="w-full font-mono text-[15px] text-black bg-transparent focus:outline-none">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 divide-x divide-x-reverse divide-apple-border">
-                            <div class="p-3.5">
-                                <label for="fieldMaritalStatus" class="block text-[15px] text-black mb-1">الحالة الاجتماعية</label>
-                                <select id="fieldMaritalStatus" class="w-full text-[16px] text-black bg-transparent focus:outline-none">
-                                    <option value="أعزب">أعزب</option>
-                                    <option value="متزوج">متزوج</option>
-                                    <option value="مطلق">مطلق</option>
-                                    <option value="أرمل">أرمل</option>
-                                </select>
-                            </div>
-                            <div class="p-3.5">
-                                <label for="fieldFamilyCount" class="block text-[15px] text-black mb-1">عدد أفراد الأسرة</label>
-                                <input type="text" id="fieldFamilyCount" inputmode="numeric" placeholder="0"
-                                    class="w-full font-mono text-[16px] text-black placeholder:text-gray-400 focus:outline-none">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Group 2: بيانات الأسرة -->
-                <div>
-                    <h3 class="text-[18px] text-black px-1 mb-2 flex items-center gap-2">
-                        <span class="w-1.5 h-4 rounded-full bg-editorial-amber"></span>
-                        بيانات الأسرة
-                    </h3>
-                    <div class="bg-white rounded-2xl border border-apple-border divide-y divide-apple-border overflow-hidden shadow-apple">
-                        <div class="p-3.5">
-                            <label for="fieldMotherName" class="block text-[15px] text-black mb-1">اسم الأم</label>
-                            <input type="text" id="fieldMotherName" placeholder="اسم الأم الكامل..."
-                                class="w-full text-[16px] text-black placeholder:text-gray-400 focus:outline-none">
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x sm:divide-x-reverse divide-apple-border">
-                            <div class="p-3.5">
-                                <label for="fieldWifeName" class="block text-[15px] text-black mb-1">اسم الزوجة</label>
-                                <input type="text" id="fieldWifeName" placeholder="اسم الزوجة..."
-                                    class="w-full text-[16px] text-black placeholder:text-gray-400 focus:outline-none">
-                            </div>
-                            <div class="p-3.5">
-                                <label for="fieldWifeNationalId" class="block text-[15px] text-black mb-1">رقم هوية الزوجة</label>
-                                <input type="text" id="fieldWifeNationalId" inputmode="numeric" maxlength="9" placeholder="9 أرقام..."
-                                    class="w-full font-mono text-[16px] text-black placeholder:font-sans placeholder:text-gray-400 focus:outline-none">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Group 3: التواصل والعنوان -->
-                <div>
-                    <h3 class="text-[18px] text-black px-1 mb-2 flex items-center gap-2">
-                        <span class="w-1.5 h-4 rounded-full bg-emerald-600"></span>
-                        التواصل والعنوان
-                    </h3>
-                    <div class="bg-white rounded-2xl border border-apple-border divide-y divide-apple-border overflow-hidden shadow-apple">
-                        <div class="grid grid-cols-2 divide-x divide-x-reverse divide-apple-border">
-                            <div class="p-3.5">
-                                <label for="fieldMobile" class="block text-[15px] text-black mb-1">رقم الجوال</label>
-                                <input type="text" id="fieldMobile" inputmode="tel" placeholder="059xxxxxxx"
-                                    class="w-full font-mono text-[16px] text-black placeholder:font-sans placeholder:text-gray-400 focus:outline-none">
-                            </div>
-                            <div class="p-3.5">
-                                <label for="fieldAltPhone" class="block text-[15px] text-black mb-1">الهاتف البديل</label>
-                                <input type="text" id="fieldAltPhone" inputmode="tel" placeholder="رقم بديل..."
-                                    class="w-full font-mono text-[16px] text-black placeholder:font-sans placeholder:text-gray-400 focus:outline-none">
-                            </div>
-                        </div>
-                        <div class="p-3.5">
-                            <label for="fieldAddress" class="block text-[15px] text-black mb-1">العنوان التفصيلي</label>
-                            <input type="text" id="fieldAddress" placeholder="المحافظة / المدينة / الحي..."
-                                class="w-full text-[16px] text-black placeholder:text-gray-400 focus:outline-none">
-                        </div>
-                        <div class="p-3.5">
-                            <label for="fieldNotes" class="block text-[15px] text-black mb-1">ملاحظات</label>
-                            <textarea id="fieldNotes" rows="2" placeholder="أي ملاحظات متعلقة بالسجل..."
-                                class="w-full text-[15px] text-black placeholder:text-gray-400 focus:outline-none resize-none"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            <!-- Modal Footer Actions -->
-            <div class="bg-white px-5 py-3.5 border-t border-apple-border flex items-center gap-2.5 shrink-0">
-                <button type="button" id="saveRecordBtn"
-                    class="flex-1 h-12 rounded-xl bg-apple-blue hover:bg-apple-blueHover active:scale-[0.99] text-white text-[15px] shadow-sm transition-all">
-                    حفظ البيانات محلياً
-                </button>
-                <button type="button" id="singleDeleteBtn"
-                    class="hidden h-12 px-4 rounded-xl bg-red-50 hover:bg-red-100 text-apple-danger border border-red-200 text-[15px] transition-all">
-                    حذف
-                </button>
-                <button type="button" id="cancelFormBtn"
-                    class="h-12 px-4 rounded-xl bg-apple-bg hover:bg-gray-200 text-black text-[15px] transition-all">
-                    إلغاء
-                </button>
+    <!-- =====================================================================
+         6. CUSTOM CONFIRMATION MODAL
+         ===================================================================== -->
+    <div id="confirmModalBackdrop" class="modal-backdrop">
+        <div class="confirm-box">
+            <h3 id="confirmModalTitle">تأكيد العملية</h3>
+            <p id="confirmModalMsg">هل أنت متأكد من تنفيذ هذا الإجراء؟</p>
+            <div class="confirm-actions">
+                <button type="button" id="confirmYesBtn" class="btn-confirm-yes">تأكيد</button>
+                <button type="button" id="confirmNoBtn" class="btn-confirm-no">إلغاء الأمر</button>
             </div>
         </div>
     </div>
 
-    <!-- 8. Custom Confirmation Dialog -->
-    <div id="confirmDialogOverlay" class="hidden fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-[390px] rounded-3xl p-6 shadow-2xl border border-apple-border text-center animate-modal">
-            <div id="confirmIconBox" class="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center"></div>
-            <h3 id="confirmTitle" class="text-[19px] text-editorial-navy">تأكيد العملية</h3>
-            <p id="confirmMessage" class="text-[14px] text-apple-subtext mt-2 leading-relaxed"></p>
-            
-            <div class="grid grid-cols-2 gap-2.5 mt-6">
-                <button type="button" id="confirmProceedBtn"
-                    class="h-11 rounded-xl text-[15px] text-white shadow-sm transition-all active:scale-95">
-                    تأكيد
-                </button>
-                <button type="button" id="confirmCancelBtn"
-                    class="h-11 rounded-xl bg-apple-bg hover:bg-gray-200 text-apple-text text-[15px] transition-all active:scale-95">
-                    تراجع
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- Floating Toast Notification -->
+    <div id="toastBanner" class="toast-msg"></div>
 
-    <!-- 9. Floating Toast Notification -->
-    <div id="toastBanner" class="hidden fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-[440px]">
-        <div class="bg-editorial-navy text-white px-4 py-3 rounded-2xl shadow-floating border border-slate-700 flex items-center gap-3 text-[14px] animate-modal">
-            <span id="toastIcon" class="w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0"></span>
-            <span id="toastMessage" class="flex-1 leading-snug"></span>
-        </div>
-    </div>
-
-    <!-- 10. Dedicated Landscape A4 Print Area (Visible Only During Print) -->
-    <div id="printAreaContainer" class="hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0F172A; padding-bottom: 8px; margin-bottom: 12px;">
-            <div>
-                <h1 style="font-size: 20px; margin: 0;">السجل المدني — كشف البيانات التفصيلي</h1>
-                <p id="printSubtitle" style="font-size: 13px; color: #475569; margin: 2px 0 0 0;"></p>
-            </div>
-            <div style="text-align: left; font-size: 13px;">
-                <p id="printDateStamp" style="margin: 0;"></p>
-                <p id="printCountStamp" style="margin: 2px 0 0 0;"></p>
-            </div>
+    <!-- =====================================================================
+         7. A4 LANDSCAPE PRINT CONTAINER (14 COLUMNS)
+         ===================================================================== -->
+    <div id="printArea">
+        <div class="print-header">
+            <h2>كشف بيانات السجل المدني</h2>
+            <div id="printMetaInfo" class="print-meta"></div>
         </div>
         <table class="print-table">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>م</th>
                     <th>الاسم الكامل</th>
                     <th>رقم الهوية</th>
                     <th>الجنس</th>
                     <th>تاريخ الميلاد</th>
                     <th>الحالة الاجتماعية</th>
-                    <th>الأفراد</th>
                     <th>اسم الأم</th>
                     <th>اسم الزوجة</th>
                     <th>هوية الزوجة</th>
-                    <th>رقم الجوال</th>
-                    <th>هاتف بديل</th>
-                    <th>العنوان التفصيلي</th>
-                    <th>ملاحظات</th>
+                    <th>عدد الأفراد</th>
+                    <th>الجوال</th>
+                    <th>الهاتف البديل</th>
+                    <th>العنوان</th>
+                    <th>الملاحظات</th>
                 </tr>
             </thead>
             <tbody id="printTableBody"></tbody>
         </table>
     </div>
 
-    <!-- Application Script -->
+    <!-- =====================================================================
+         8. APPLICATION JAVASCRIPT ENGINE
+         ===================================================================== -->
     <script>
-        (function() {
+        (function () {
             'use strict';
 
-            // ==========================================
-            // 1. Offline Service Worker & Network Badge
-            // ==========================================
-            if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-                const swCode = `
+            // -----------------------------------------------------------------
+            // A. Offline Service Worker & Network Detection
+            // -----------------------------------------------------------------
+            if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+                const swScript = `
                     const CACHE_NAME = 'civil-registry-offline-v3';
-                    self.addEventListener('install', (event) => {
+                    self.addEventListener('install', (e) => {
                         self.skipWaiting();
-                        event.waitUntil(
-                            caches.open(CACHE_NAME).then((cache) => cache.addAll([location.href]).catch(() => {}))
-                        );
+                        e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll([location.href]).catch(() => {})));
                     });
-                    self.addEventListener('activate', (event) => {
-                        event.waitUntil(self.clients.claim());
-                    });
-                    self.addEventListener('fetch', (event) => {
-                        if (event.request.url.includes('docs.google.com')) return;
-                        event.respondWith(
-                            caches.match(event.request).then((cached) => cached || fetch(event.request).catch(() => cached))
-                        );
+                    self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
+                    self.addEventListener('fetch', (e) => {
+                        if (e.request.url.includes('docs.google.com')) return;
+                        e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).catch(() => r)));
                     });
                 `;
                 try {
-                    const blob = new Blob([swCode], { type: 'application/javascript' });
-                    navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
-                } catch (e) {}
+                    const swBlob = new Blob([swScript], { type: 'application/javascript' });
+                    navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
+                } catch (err) {}
             }
 
-            const offlineBadge = document.getElementById('offlineBadge');
-            function updateOnlineStatus() {
+            const offlineStatusTag = document.getElementById('offlineStatusTag');
+            function checkOnlineState() {
                 if (!navigator.onLine) {
-                    offlineBadge.classList.remove('hidden');
+                    offlineStatusTag.classList.add('visible');
                 } else {
-                    offlineBadge.classList.add('hidden');
+                    offlineStatusTag.classList.remove('visible');
                 }
             }
-            window.addEventListener('online', updateOnlineStatus);
-            window.addEventListener('offline', updateOnlineStatus);
-            updateOnlineStatus();
+            window.addEventListener('online', checkOnlineState);
+            window.addEventListener('offline', checkOnlineState);
+            checkOnlineState();
 
-            // ==========================================
-            // 2. Utilities: Western Digits (1234) & Arabic Normalization
-            // ==========================================
-            function toWesternDigits(str) {
-                if (str === null || str === undefined) return '';
-                return String(str)
+            // -----------------------------------------------------------------
+            // B. Helper Utilities (English Numerals & Arabic Normalization)
+            // -----------------------------------------------------------------
+            function toEnglishDigits(val) {
+                if (val === null || val === undefined) return '';
+                return String(val)
                     .replace(/[٠-٩]/g, d => '0123456789'['٠١٢٣٤٥٦٧٨٩'.indexOf(d)])
                     .replace(/[۰-۹]/g, d => '0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)]);
             }
 
             function normalizeArabic(text) {
                 if (!text) return '';
-                return toWesternDigits(String(text))
+                return toEnglishDigits(String(text))
                     .toLowerCase()
                     .replace(/[\u064B-\u065F\u0670]/g, '')
                     .replace(/[أإآٱ]/g, 'ا')
@@ -709,48 +1583,96 @@
             }
 
             function escapeHtml(text) {
-                return String(text || '').replace(/[&<>"']/g, m => ({
+                return String(text || '').replace(/[&<>"']/g, ch => ({
                     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-                }[m]));
+                }[ch]));
             }
 
-            // ==========================================
-            // 3. IndexedDB Storage Engine
-            // ==========================================
-            const DB_NAME = 'CivilRegistryDB';
-            const DB_VERSION = 1;
-            const STORE_NAME = 'persons';
-            const LEGACY_STORAGE_KEY = 'civil_registry_data';
-            const SHEET_ID = '1t88M3eCknFxWpRwVXGjO-mrvtG6IVJqKDhWBzjenkOw';
-            const PAGE_SIZE = 20;
+            let toastTimeout = null;
+            function showToast(msg) {
+                const toast = document.getElementById('toastBanner');
+                toast.textContent = toEnglishDigits(msg);
+                toast.classList.add('visible');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => toast.classList.remove('visible'), 3400);
+            }
 
-            let dbInstance = null;
-            let allPersonsCache = [];
-            let currentFiltered = [];
-            let currentPage = 1;
-            let activeFilterPill = 'all';
-            let selectedIds = new Set();
+            // -----------------------------------------------------------------
+            // C. Custom Confirmation Modal Promise
+            // -----------------------------------------------------------------
+            const confirmBackdrop = document.getElementById('confirmModalBackdrop');
+            const confirmTitleEl = document.getElementById('confirmModalTitle');
+            const confirmMsgEl = document.getElementById('confirmModalMsg');
+            const confirmYesBtn = document.getElementById('confirmYesBtn');
+            const confirmNoBtn = document.getElementById('confirmNoBtn');
 
-            function openDatabase() {
-                return new Promise((resolve, reject) => {
-                    const request = indexedDB.open(DB_NAME, DB_VERSION);
-                    request.onupgradeneeded = (e) => {
-                        const db = e.target.result;
-                        if (!db.objectStoreNames.contains(STORE_NAME)) {
-                            db.createObjectStore(STORE_NAME, { keyPath: 'nationalId' });
-                        }
-                    };
-                    request.onsuccess = (e) => {
-                        dbInstance = e.target.result;
-                        resolve(dbInstance);
-                    };
-                    request.onerror = (e) => reject(e.target.error);
+            function askConfirmation({ title, message, confirmText = 'تأكيد', isDanger = false }) {
+                return new Promise((resolve) => {
+                    confirmTitleEl.textContent = toEnglishDigits(title);
+                    confirmMsgEl.textContent = toEnglishDigits(message);
+                    confirmYesBtn.textContent = confirmText;
+
+                    if (isDanger) {
+                        confirmYesBtn.classList.add('danger');
+                    } else {
+                        confirmYesBtn.classList.remove('danger');
+                    }
+
+                    confirmBackdrop.classList.add('visible');
+
+                    function finish(result) {
+                        confirmBackdrop.classList.remove('visible');
+                        confirmYesBtn.removeEventListener('click', onYes);
+                        confirmNoBtn.removeEventListener('click', onNo);
+                        resolve(result);
+                    }
+
+                    function onYes() { finish(true); }
+                    function onNo() { finish(false); }
+
+                    confirmYesBtn.addEventListener('click', onYes);
+                    confirmNoBtn.addEventListener('click', onNo);
                 });
             }
 
-            function dbGetAll() {
+            // -----------------------------------------------------------------
+            // D. IndexedDB Storage & Automatic localStorage Migration
+            // -----------------------------------------------------------------
+            const DB_NAME = 'CivilRegistryDB';
+            const DB_VERSION = 1;
+            const STORE_NAME = 'persons';
+            const LEGACY_LS_KEY = 'civil_registry_data';
+            const SHEET_ID = '1t88M3eCknFxWpRwVXGjO-mrvtG6IVJqKDhWBzjenkOw';
+            const PAGE_SIZE = 20;
+
+            let db = null;
+            let allRecords = [];
+            let currentFiltered = [];
+            let currentPage = 1;
+            let activeFilter = 'all';
+            let selectedIds = new Set();
+            let lastLoadedFromSync = 0;
+
+            function initIndexedDB() {
                 return new Promise((resolve, reject) => {
-                    const tx = dbInstance.transaction(STORE_NAME, 'readonly');
+                    const req = indexedDB.open(DB_NAME, DB_VERSION);
+                    req.onupgradeneeded = (e) => {
+                        const database = e.target.result;
+                        if (!database.objectStoreNames.contains(STORE_NAME)) {
+                            database.createObjectStore(STORE_NAME, { keyPath: 'nationalId' });
+                        }
+                    };
+                    req.onsuccess = (e) => {
+                        db = e.target.result;
+                        resolve(db);
+                    };
+                    req.onerror = (e) => reject(e.target.error);
+                });
+            }
+
+            function dbFetchAll() {
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(STORE_NAME, 'readonly');
                     const store = tx.objectStore(STORE_NAME);
                     const req = store.getAll();
                     req.onsuccess = () => resolve(req.result || []);
@@ -758,324 +1680,224 @@
                 });
             }
 
-            function dbPutMany(records) {
+            function dbSaveMany(items) {
                 return new Promise((resolve, reject) => {
-                    const tx = dbInstance.transaction(STORE_NAME, 'readwrite');
+                    const tx = db.transaction(STORE_NAME, 'readwrite');
                     const store = tx.objectStore(STORE_NAME);
-                    records.forEach(rec => store.put(rec));
+                    items.forEach(item => store.put(item));
                     tx.oncomplete = () => resolve();
                     tx.onerror = () => reject(tx.error);
                 });
             }
 
-            function dbPutOne(record, oldIdToDelete = null) {
+            function dbSaveOne(item, oldNationalId = null) {
                 return new Promise((resolve, reject) => {
-                    const tx = dbInstance.transaction(STORE_NAME, 'readwrite');
+                    const tx = db.transaction(STORE_NAME, 'readwrite');
                     const store = tx.objectStore(STORE_NAME);
-                    if (oldIdToDelete && oldIdToDelete !== record.nationalId) {
-                        store.delete(oldIdToDelete);
+                    if (oldNationalId && oldNationalId !== item.nationalId) {
+                        store.delete(oldNationalId);
                     }
-                    store.put(record);
+                    store.put(item);
                     tx.oncomplete = () => resolve();
                     tx.onerror = () => reject(tx.error);
                 });
             }
 
-            function dbDeleteMany(idsArray) {
+            function dbDeleteIds(ids) {
                 return new Promise((resolve, reject) => {
-                    const tx = dbInstance.transaction(STORE_NAME, 'readwrite');
+                    const tx = db.transaction(STORE_NAME, 'readwrite');
                     const store = tx.objectStore(STORE_NAME);
-                    idsArray.forEach(id => store.delete(id));
+                    ids.forEach(id => store.delete(id));
                     tx.oncomplete = () => resolve();
                     tx.onerror = () => reject(tx.error);
                 });
             }
 
-            async function migrateLegacyLocalStorage() {
+            async function migrateFromLocalStorage() {
                 try {
-                    const rawLegacy = localStorage.getItem(LEGACY_STORAGE_KEY);
-                    if (!rawLegacy) return;
-                    const parsed = JSON.parse(rawLegacy);
+                    const raw = localStorage.getItem(LEGACY_LS_KEY);
+                    if (!raw) return;
+                    const parsed = JSON.parse(raw);
                     if (Array.isArray(parsed) && parsed.length > 0) {
-                        const sanitized = parsed
-                            .filter(p => p && p.nationalId && p.fullName)
-                            .map(p => ({
-                                ...p,
-                                nationalId: toWesternDigits(p.nationalId).trim(),
-                                familyCount: toWesternDigits(p.familyCount || '0'),
-                                mobile: toWesternDigits(p.mobile || ''),
-                                altPhone: toWesternDigits(p.altPhone || ''),
-                                wifeNationalId: toWesternDigits(p.wifeNationalId || ''),
-                                isLocal: Boolean(p.isLocal),
-                                updatedAt: p.updatedAt || Date.now()
-                            }));
-                        if (sanitized.length > 0) {
-                            await dbPutMany(sanitized);
-                            localStorage.removeItem(LEGACY_STORAGE_KEY);
-                            showToast(`تم ترحيل ${toWesternDigits(sanitized.length)} سجل إلى قاعدة البيانات المحلية`, 'success');
+                        const cleanItems = parsed
+                            .filter(x => x && x.fullName && x.nationalId)
+                            .map(x => ({
+                                fullName: String(x.fullName).trim(),
+                                nationalId: toEnglishDigits(x.nationalId).replace(/[^\d]/g, ''),
+                                gender: x.gender || 'ذكر',
+                                birthDate: toEnglishDigits(x.birthDate || ''),
+                                maritalStatus: x.maritalStatus || 'أعزب',
+                                motherName: x.motherName || '',
+                                wifeName: x.wifeName || '',
+                                wifeNationalId: toEnglishDigits(x.wifeNationalId || '').replace(/[^\d]/g, ''),
+                                familyCount: toEnglishDigits(x.familyCount || '0') || '0',
+                                mobile: toEnglishDigits(x.mobile || ''),
+                                altPhone: toEnglishDigits(x.altPhone || ''),
+                                address: x.address || '',
+                                notes: x.notes || '',
+                                isLocal: Boolean(x.isLocal),
+                                _normName: normalizeArabic(x.fullName)
+                            }))
+                            .filter(x => x.nationalId.length > 0);
+
+                        if (cleanItems.length > 0) {
+                            await dbSaveMany(cleanItems);
+                            localStorage.removeItem(LEGACY_LS_KEY);
                         }
                     }
-                } catch (err) {
-                    console.error('Migration error:', err);
+                } catch (e) {}
+            }
+
+            // -----------------------------------------------------------------
+            // E. Header Counters & "اضغط هنا" Callout Management
+            // -----------------------------------------------------------------
+            const headerTotalCount = document.getElementById('headerTotalCount');
+            const syncCalloutBadge = document.getElementById('syncCalloutBadge');
+            let calloutDismissed = false;
+
+            function updateGlobalCounters() {
+                const total = allRecords.length;
+                const localChangedCount = allRecords.filter(r => r.isLocal).length;
+
+                headerTotalCount.textContent = toEnglishDigits(total);
+                document.getElementById('syncStatTotal').textContent = toEnglishDigits(total);
+                document.getElementById('syncStatLoaded').textContent = toEnglishDigits(lastLoadedFromSync);
+                document.getElementById('syncStatChanged').textContent = toEnglishDigits(localChangedCount);
+
+                if (total === 0 && !calloutDismissed) {
+                    syncCalloutBadge.classList.add('visible');
+                } else {
+                    syncCalloutBadge.classList.remove('visible');
                 }
             }
 
-            // ==========================================
-            // 4. Custom Confirmation Modal & Toast
-            // ==========================================
-            const confirmOverlay = document.getElementById('confirmDialogOverlay');
-            const confirmIconBox = document.getElementById('confirmIconBox');
-            const confirmTitle = document.getElementById('confirmTitle');
-            const confirmMessage = document.getElementById('confirmMessage');
-            const confirmProceedBtn = document.getElementById('confirmProceedBtn');
-            const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+            syncCalloutBadge.addEventListener('click', () => {
+                calloutDismissed = true;
+                syncCalloutBadge.classList.remove('visible');
+                openSyncModal();
+            });
 
-            function showConfirmDialog({ title, message, confirmText = 'تأكيد', type = 'primary' }) {
-                return new Promise((resolve) => {
-                    confirmTitle.textContent = toWesternDigits(title);
-                    confirmMessage.textContent = toWesternDigits(message);
-                    confirmProceedBtn.textContent = confirmText;
-
-                    if (type === 'danger') {
-                        confirmIconBox.className = 'w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center bg-red-50 text-apple-danger border border-red-100';
-                        confirmIconBox.innerHTML = `<svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>`;
-                        confirmProceedBtn.className = 'h-11 rounded-xl text-[15px] text-white bg-apple-danger hover:bg-red-700 shadow-sm transition-all active:scale-95';
-                    } else {
-                        confirmIconBox.className = 'w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center bg-apple-blueSoft text-apple-blue border border-blue-100';
-                        confirmIconBox.innerHTML = `<svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
-                        confirmProceedBtn.className = 'h-11 rounded-xl text-[15px] text-white bg-apple-blue hover:bg-apple-blueHover shadow-sm transition-all active:scale-95';
-                    }
-
-                    confirmOverlay.classList.remove('hidden');
-
-                    const cleanup = (result) => {
-                        confirmOverlay.classList.add('hidden');
-                        confirmProceedBtn.removeEventListener('click', onProceed);
-                        confirmCancelBtn.removeEventListener('click', onCancel);
-                        resolve(result);
-                    };
-
-                    const onProceed = () => cleanup(true);
-                    const onCancel = () => cleanup(false);
-
-                    confirmProceedBtn.addEventListener('click', onProceed);
-                    confirmCancelBtn.addEventListener('click', onCancel);
-                });
-            }
-
-            let toastTimer = null;
-            function showToast(msg, type = 'info') {
-                const banner = document.getElementById('toastBanner');
-                const icon = document.getElementById('toastIcon');
-                const text = document.getElementById('toastMessage');
-
-                text.textContent = toWesternDigits(msg);
-                icon.className = 'w-2.5 h-2.5 rounded-full shrink-0 ' + (
-                    type === 'danger' ? 'bg-apple-danger' :
-                    type === 'success' ? 'bg-apple-success' : 'bg-amber-400'
-                );
-
-                banner.classList.remove('hidden');
-                clearTimeout(toastTimer);
-                toastTimer = setTimeout(() => {
-                    banner.classList.add('hidden');
-                }, 3600);
-            }
-
-            // ==========================================
-            // 5. DOM References & Rendering (20 per page)
-            // ==========================================
+            // -----------------------------------------------------------------
+            // F. Search, Filter & 20-Per-Page Pagination Engine
+            // -----------------------------------------------------------------
             const searchNameInput = document.getElementById('searchNameInput');
             const searchIdInput = document.getElementById('searchIdInput');
-            const executeSearchBtn = document.getElementById('executeSearchBtn');
-            const resetSearchBtn = document.getElementById('resetSearchBtn');
-            const filterPills = document.querySelectorAll('.filter-pill');
-            const recordsListContainer = document.getElementById('recordsListContainer');
+            const resultsToolbar = document.getElementById('resultsToolbar');
+            const resultsCountLabel = document.getElementById('resultsCountLabel');
+            const selectPageCheckbox = document.getElementById('selectPageCheckbox');
             const emptyStateBox = document.getElementById('emptyStateBox');
-            const emptyStateTitle = document.getElementById('emptyStateTitle');
-            const emptyStateDesc = document.getElementById('emptyStateDesc');
-            const resultsStatusBar = document.getElementById('resultsStatusBar');
-            const resultsCounterText = document.getElementById('resultsCounterText');
-            const selectAllCheckbox = document.getElementById('selectAllCheckbox');
-            const bulkActionBar = document.getElementById('bulkActionBar');
-            const selectedItemsCount = document.getElementById('selectedItemsCount');
+            const emptyTitle = document.getElementById('emptyTitle');
+            const emptyDesc = document.getElementById('emptyDesc');
+            const cardsList = document.getElementById('cardsList');
             const paginationBar = document.getElementById('paginationBar');
             const prevPageBtn = document.getElementById('prevPageBtn');
             const nextPageBtn = document.getElementById('nextPageBtn');
-            const pageIndicatorText = document.getElementById('pageIndicatorText');
+            const pageIndicator = document.getElementById('pageIndicator');
+            const bulkBar = document.getElementById('bulkBar');
+            const bulkSelectedCount = document.getElementById('bulkSelectedCount');
 
-            function updateHeaderStats() {
-                const total = allPersonsCache.length;
-                const localCount = allPersonsCache.filter(p => p.isLocal).length;
+            searchIdInput.addEventListener('input', () => {
+                searchIdInput.value = toEnglishDigits(searchIdInput.value).replace(/[^\d]/g, '');
+            });
 
-                document.getElementById('totalRecordsCount').textContent = toWesternDigits(total);
-                document.getElementById('syncModalTotalCount').textContent = toWesternDigits(total);
-                document.getElementById('syncModalLocalCount').textContent = toWesternDigits(localCount);
-
-                const headerDot = document.getElementById('headerSyncDot');
-                if (localCount > 0) {
-                    headerDot.classList.remove('hidden');
-                } else {
-                    headerDot.classList.add('hidden');
-                }
-            }
-
-            function getCurrentPageSlice() {
-                const startIndex = (currentPage - 1) * PAGE_SIZE;
-                return currentFiltered.slice(startIndex, startIndex + PAGE_SIZE);
-            }
-
-            function updateBulkBarUI() {
-                const count = selectedIds.size;
-                selectedItemsCount.textContent = toWesternDigits(count);
-                if (count > 0) {
-                    bulkActionBar.classList.remove('hidden');
-                } else {
-                    bulkActionBar.classList.add('hidden');
-                }
-
-                const pageSlice = getCurrentPageSlice();
-                selectAllCheckbox.checked = pageSlice.length > 0 && pageSlice.every(p => selectedIds.has(p.nationalId));
-            }
-
-            function runSearchAndFilter(forceShowAllWhenEmpty = false, resetPage = true) {
+            function applySearchAndFilter(resetPage = true, explicitSearch = false) {
                 if (resetPage) currentPage = 1;
 
-                const rawName = normalizeArabic(searchNameInput.value);
-                const rawId = toWesternDigits(searchIdInput.value).trim();
+                const normQueryName = normalizeArabic(searchNameInput.value);
+                const queryId = toEnglishDigits(searchIdInput.value).trim();
+                const hasTextQuery = normQueryName.length > 0 || queryId.length > 0;
+                const hasFilter = activeFilter !== 'all';
 
-                const hasQuery = rawName.length > 0 || rawId.length > 0;
-                const hasSpecificFilter = activeFilterPill !== 'all';
-
-                if (!hasQuery && !hasSpecificFilter && !forceShowAllWhenEmpty) {
+                if (!hasTextQuery && !hasFilter && !explicitSearch) {
                     currentFiltered = [];
-                    renderRecordsList(false);
+                    renderCurrentPage(false);
                     return;
                 }
 
-                const nameTokens = rawName ? rawName.split(' ').filter(Boolean) : [];
+                const tokens = normQueryName ? normQueryName.split(' ').filter(Boolean) : [];
 
-                currentFiltered = allPersonsCache.filter(person => {
-                    if (activeFilterPill === 'local' && !person.isLocal) return false;
-                    if (activeFilterPill === 'married' && person.maritalStatus !== 'متزوج') return false;
-                    if (activeFilterPill === 'single' && person.maritalStatus !== 'أعزب') return false;
+                currentFiltered = allRecords.filter(person => {
+                    if (activeFilter === 'local' && !person.isLocal) return false;
+                    if (activeFilter === 'married' && person.maritalStatus !== 'متزوج') return false;
+                    if (activeFilter === 'single' && person.maritalStatus !== 'أعزب') return false;
 
-                    if (rawId && !person.nationalId.includes(rawId)) return false;
+                    if (queryId && !person.nationalId.includes(queryId)) return false;
 
-                    if (nameTokens.length > 0) {
-                        const normFullName = person._normName || normalizeArabic(person.fullName);
-                        for (let i = 0; i < nameTokens.length; i++) {
-                            if (!normFullName.includes(nameTokens[i])) return false;
+                    if (tokens.length > 0) {
+                        const targetName = person._normName || normalizeArabic(person.fullName);
+                        for (let i = 0; i < tokens.length; i++) {
+                            if (!targetName.includes(tokens[i])) return false;
                         }
                     }
-
                     return true;
                 });
 
-                renderRecordsList(true);
+                renderCurrentPage(true);
             }
 
-            function renderRecordsList(didSearch) {
-                recordsListContainer.innerHTML = '';
+            function renderCurrentPage(didSearch) {
+                cardsList.innerHTML = '';
 
                 if (!didSearch) {
-                    resultsStatusBar.classList.add('hidden');
-                    paginationBar.classList.add('hidden');
-                    emptyStateBox.classList.remove('hidden');
-                    emptyStateTitle.textContent = 'ابحث في السجل المدني';
-                    emptyStateDesc.textContent = 'أدخل الاسم أو رقم الهوية في الأعلى، أو اختر أحد الفلاتر السريعة لعرض السجلات.';
-                    updateBulkBarUI();
+                    resultsToolbar.classList.remove('visible');
+                    paginationBar.classList.remove('visible');
+                    emptyStateBox.style.display = 'block';
+                    emptyTitle.textContent = 'أدخل بيانات البحث أو اختر فلتراً';
+                    emptyDesc.textContent = 'يمكنك البحث بالاسم أو رقم الهوية، أو الضغط على أيقونة البطاقة الذهبية في الأعلى لمزامنة البيانات.';
+                    updateBulkBar();
                     return;
                 }
 
                 if (currentFiltered.length === 0) {
-                    resultsStatusBar.classList.add('hidden');
-                    paginationBar.classList.add('hidden');
-                    emptyStateBox.classList.remove('hidden');
-                    emptyStateTitle.textContent = 'لا توجد نتائج مطابقة';
-                    emptyStateDesc.textContent = 'تأكد من كتابة الاسم أو رقم الهوية بشكل صحيح أو جرّب تغيير الفلتر.';
-                    updateBulkBarUI();
+                    resultsToolbar.classList.remove('visible');
+                    paginationBar.classList.remove('visible');
+                    emptyStateBox.style.display = 'block';
+                    emptyTitle.textContent = 'لا توجد نتائج مطابقة';
+                    emptyDesc.textContent = 'تحقق من الاسم أو رقم الهوية المدخل أو جرّب تغيير خيار التصفية.';
+                    updateBulkBar();
                     return;
                 }
 
-                emptyStateBox.classList.add('hidden');
-                resultsStatusBar.classList.remove('hidden');
+                emptyStateBox.style.display = 'none';
+                resultsToolbar.classList.add('visible');
 
                 const totalMatches = currentFiltered.length;
                 const totalPages = Math.max(1, Math.ceil(totalMatches / PAGE_SIZE));
                 if (currentPage > totalPages) currentPage = totalPages;
 
-                const pageSlice = getCurrentPageSlice();
-                const startNum = (currentPage - 1) * PAGE_SIZE + 1;
-                const endNum = Math.min(currentPage * PAGE_SIZE, totalMatches);
+                const startIdx = (currentPage - 1) * PAGE_SIZE;
+                const pageSlice = currentFiltered.slice(startIdx, startIdx + PAGE_SIZE);
 
-                resultsCounterText.textContent = `عرض ${toWesternDigits(startNum)}-${toWesternDigits(endNum)} من أصل ${toWesternDigits(totalMatches)} نتيجة`;
+                resultsCountLabel.textContent = `إجمالي النتائج: ${toEnglishDigits(totalMatches)} سجل`;
 
-                // Pagination Bar State
-                if (totalPages > 1) {
-                    paginationBar.classList.remove('hidden');
-                    pageIndicatorText.textContent = `صفحة ${toWesternDigits(currentPage)} من ${toWesternDigits(totalPages)}`;
-                    prevPageBtn.disabled = currentPage <= 1;
-                    nextPageBtn.disabled = currentPage >= totalPages;
-                } else {
-                    paginationBar.classList.add('hidden');
-                }
-
-                const fragment = document.createDocumentFragment();
-
+                const frag = document.createDocumentFragment();
                 pageSlice.forEach(person => {
-                    const isChecked = selectedIds.has(person.nationalId);
-                    const isLocal = Boolean(person.isLocal);
-                    const famCount = toWesternDigits(person.familyCount || '0');
-                    const mob = toWesternDigits(person.mobile || '');
+                    const isSelected = selectedIds.has(person.nationalId);
+                    const idText = toEnglishDigits(person.nationalId);
+                    const mobText = toEnglishDigits(person.mobile || '');
+                    const famText = toEnglishDigits(person.familyCount || '0');
 
-                    const card = document.createElement('article');
-                    card.className = `relative bg-white rounded-2xl p-4 transition-all cursor-pointer select-none border ${
-                        isChecked
-                            ? 'border-apple-blue bg-apple-blueSoft/45 shadow-md'
-                            : 'border-apple-border hover:border-gray-300 shadow-apple hover:shadow-apple-hover'
-                    }`;
-
-                    const accentColor = isLocal ? 'bg-editorial-amber' : 'bg-apple-blue';
+                    const card = document.createElement('div');
+                    card.className = 'citizen-card' + (person.isLocal ? ' is-local' : '') + (isSelected ? ' selected' : '');
 
                     card.innerHTML = `
-                        <div class="absolute right-0 top-3 bottom-3 w-1.5 rounded-l-full ${accentColor}"></div>
-                        <div class="flex items-center justify-between gap-3 pr-2.5">
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center gap-2 flex-wrap">
-                                    <h4 class="text-[19px] leading-snug text-editorial-navy truncate">${escapeHtml(person.fullName)}</h4>
-                                    ${isLocal ? `<span class="text-[12px] px-2 py-0.5 rounded-md bg-editorial-amberLight text-amber-900 border border-amber-300">محلي</span>` : ''}
-                                </div>
-
-                                <!-- Clear High-Contrast Numbers Beneath Name -->
-                                <div class="flex items-center gap-2 mt-2.5 flex-wrap">
-                                    <!-- National ID Badge -->
-                                    <span class="font-mono text-[16px] px-3 py-1 rounded-lg bg-[#EFF6FF] text-[#1E3A8A] border border-blue-200 tracking-wide">
-                                        ${escapeHtml(toWesternDigits(person.nationalId))}
-                                    </span>
-
-                                    <!-- Mobile Number Badge -->
-                                    ${mob ? `
-                                        <span class="font-mono text-[15px] px-3 py-1 rounded-lg bg-[#ECFDF5] text-[#065F46] border border-emerald-200">
-                                            ${escapeHtml(mob)}
-                                        </span>
-                                    ` : ''}
-
-                                    <!-- Family Count Badge -->
-                                    <span class="text-[14px] px-2.5 py-1 rounded-lg bg-[#FFFBEB] text-[#78350F] border border-amber-200">
-                                        أفراد: <span class="font-mono text-[15px]">${escapeHtml(famCount)}</span>
-                                    </span>
-                                </div>
+                        <div class="card-main">
+                            <div class="card-name-row">
+                                <span class="citizen-name">${escapeHtml(person.fullName)}</span>
+                                ${person.isLocal ? '<span class="local-tag">معدل محلياً</span>' : ''}
                             </div>
-
-                            <!-- Checkbox -->
-                            <div class="p-1" data-checkbox-wrapper="true">
-                                <input type="checkbox" class="apple-checkbox row-select-cb" ${isChecked ? 'checked' : ''} aria-label="تحديد السجل">
+                            <div class="badges-row">
+                                <span class="badge-id">${escapeHtml(idText)}</span>
+                                ${mobText ? `<span class="badge-mobile">${escapeHtml(mobText)}</span>` : ''}
+                                <span class="badge-family">الأفراد: ${escapeHtml(famText)}</span>
                             </div>
+                        </div>
+                        <div class="checkbox-area">
+                            <input type="checkbox" class="custom-checkbox row-cb" ${isSelected ? 'checked' : ''} aria-label="تحديد">
                         </div>
                     `;
 
-                    const cb = card.querySelector('.row-select-cb');
+                    const cb = card.querySelector('.row-cb');
                     cb.addEventListener('change', (e) => {
                         e.stopPropagation();
                         if (cb.checked) {
@@ -1083,26 +1905,48 @@
                         } else {
                             selectedIds.delete(person.nationalId);
                         }
-                        renderRecordsList(true);
+                        renderCurrentPage(true);
                     });
 
                     card.addEventListener('click', (e) => {
-                        if (e.target.closest('[data-checkbox-wrapper="true"]')) return;
-                        openEditModal(person.nationalId);
+                        if (e.target.closest('.checkbox-area')) return;
+                        openEditRecordModal(person.nationalId);
                     });
 
-                    fragment.appendChild(card);
+                    frag.appendChild(card);
                 });
 
-                recordsListContainer.appendChild(fragment);
-                updateBulkBarUI();
+                cardsList.appendChild(frag);
+
+                // Pagination Bar Update
+                if (totalPages > 1) {
+                    paginationBar.classList.add('visible');
+                    prevPageBtn.disabled = currentPage <= 1;
+                    nextPageBtn.disabled = currentPage >= totalPages;
+                    pageIndicator.textContent = `صفحة ${toEnglishDigits(currentPage)} من ${toEnglishDigits(totalPages)}`;
+                } else {
+                    paginationBar.classList.remove('visible');
+                }
+
+                // Sync Select Page Checkbox
+                selectPageCheckbox.checked = pageSlice.length > 0 && pageSlice.every(p => selectedIds.has(p.nationalId));
+                updateBulkBar();
             }
 
-            // Pagination Listeners
+            function updateBulkBar() {
+                const count = selectedIds.size;
+                bulkSelectedCount.textContent = toEnglishDigits(count);
+                if (count > 0) {
+                    bulkBar.classList.add('visible');
+                } else {
+                    bulkBar.classList.remove('visible');
+                }
+            }
+
             prevPageBtn.addEventListener('click', () => {
                 if (currentPage > 1) {
                     currentPage--;
-                    renderRecordsList(true);
+                    renderCurrentPage(true);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             });
@@ -1111,526 +1955,506 @@
                 const totalPages = Math.ceil(currentFiltered.length / PAGE_SIZE);
                 if (currentPage < totalPages) {
                     currentPage++;
-                    renderRecordsList(true);
+                    renderCurrentPage(true);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             });
 
-            // ==========================================
-            // 6. Search & Filter Event Handlers
-            // ==========================================
-            executeSearchBtn.addEventListener('click', () => runSearchAndFilter(true, true));
-
-            resetSearchBtn.addEventListener('click', () => {
-                searchNameInput.value = '';
-                searchIdInput.value = '';
-                activeFilterPill = 'all';
-                updateFilterPillsUI();
-                selectedIds.clear();
-                runSearchAndFilter(false, true);
-            });
-
-            [searchNameInput, searchIdInput].forEach(input => {
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        runSearchAndFilter(true, true);
-                    }
-                });
-            });
-
-            searchIdInput.addEventListener('input', () => {
-                const pos = searchIdInput.selectionStart;
-                searchIdInput.value = toWesternDigits(searchIdInput.value).replace(/[^\d]/g, '');
-                searchIdInput.setSelectionRange(pos, pos);
-            });
-
-            function updateFilterPillsUI() {
-                filterPills.forEach(btn => {
-                    if (btn.dataset.filter === activeFilterPill) {
-                        btn.className = 'filter-pill active-pill shrink-0 px-3.5 h-9 rounded-full text-[13px] transition-all bg-editorial-navy text-white';
-                    } else {
-                        btn.className = 'filter-pill shrink-0 px-3.5 h-9 rounded-full text-[13px] transition-all bg-apple-bg text-apple-text hover:bg-gray-200/70';
-                    }
-                });
-            }
-
-            filterPills.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    activeFilterPill = btn.dataset.filter;
-                    updateFilterPillsUI();
-                    runSearchAndFilter(activeFilterPill !== 'all', true);
-                });
-            });
-
-            selectAllCheckbox.addEventListener('change', () => {
-                const pageSlice = getCurrentPageSlice();
-                if (selectAllCheckbox.checked) {
+            selectPageCheckbox.addEventListener('change', () => {
+                const startIdx = (currentPage - 1) * PAGE_SIZE;
+                const pageSlice = currentFiltered.slice(startIdx, startIdx + PAGE_SIZE);
+                if (selectPageCheckbox.checked) {
                     pageSlice.forEach(p => selectedIds.add(p.nationalId));
                 } else {
                     pageSlice.forEach(p => selectedIds.delete(p.nationalId));
                 }
-                renderRecordsList(true);
+                renderCurrentPage(true);
             });
 
-            // ==========================================
-            // 7. Add / Edit Slide-Up Sheet & Validation
-            // ==========================================
-            const formOverlay = document.getElementById('formOverlay');
-            const recordForm = document.getElementById('recordForm');
-            const formErrorBanner = document.getElementById('formErrorBanner');
-            const formErrorText = document.getElementById('formErrorText');
-            const singleDeleteBtn = document.getElementById('singleDeleteBtn');
+            document.getElementById('searchBtn').addEventListener('click', () => applySearchAndFilter(true, true));
 
-            function showFormError(msg) {
-                formErrorText.textContent = toWesternDigits(msg);
-                formErrorBanner.classList.remove('hidden');
+            document.getElementById('clearSearchBtn').addEventListener('click', () => {
+                searchNameInput.value = '';
+                searchIdInput.value = '';
+                activeFilter = 'all';
+                document.querySelectorAll('.filter-pill').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.filter === 'all');
+                });
+                selectedIds.clear();
+                applySearchAndFilter(true, false);
+            });
+
+            [searchNameInput, searchIdInput].forEach(inp => {
+                inp.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        applySearchAndFilter(true, true);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.filter-pill').forEach(pill => {
+                pill.addEventListener('click', () => {
+                    activeFilter = pill.dataset.filter;
+                    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+                    pill.classList.add('active');
+                    applySearchAndFilter(true, activeFilter !== 'all');
+                });
+            });
+
+            // -----------------------------------------------------------------
+            // G. Add / Edit Record Modal & Strict Validation
+            // -----------------------------------------------------------------
+            const formModalBackdrop = document.getElementById('formModalBackdrop');
+            const formModalTitle = document.getElementById('formModalTitle');
+            const formErrorAlert = document.getElementById('formErrorAlert');
+            const citizenForm = document.getElementById('citizenForm');
+            const deleteSingleBtn = document.getElementById('deleteSingleBtn');
+
+            function showFormAlert(msg) {
+                formErrorAlert.textContent = toEnglishDigits(msg);
+                formErrorAlert.classList.add('visible');
             }
 
-            function hideFormError() {
-                formErrorBanner.classList.add('hidden');
+            function hideFormAlert() {
+                formErrorAlert.classList.remove('visible');
             }
 
-            function openAddModal() {
-                recordForm.reset();
-                hideFormError();
-                document.getElementById('originalNationalId').value = '';
-                document.getElementById('formModalTitle').textContent = 'إضافة سجل جديد';
-                document.getElementById('formStatusDot').className = 'w-2.5 h-2.5 rounded-full bg-apple-blue';
-                singleDeleteBtn.classList.add('hidden');
-                formOverlay.classList.remove('hidden');
+            ['inpNationalId', 'inpWifeNationalId', 'inpFamilyCount', 'inpMobile', 'inpAltPhone'].forEach(id => {
+                const el = document.getElementById(id);
+                el.addEventListener('input', () => {
+                    el.value = toEnglishDigits(el.value).replace(/[^\d]/g, '');
+                });
+            });
+
+            function openAddRecordModal() {
+                citizenForm.reset();
+                hideFormAlert();
+                document.getElementById('editingOriginalId').value = '';
+                formModalTitle.textContent = 'إضافة سجل جديد';
+                deleteSingleBtn.classList.remove('visible');
+                formModalBackdrop.classList.add('visible');
             }
 
-            function openEditModal(nationalId) {
-                const person = allPersonsCache.find(p => p.nationalId === nationalId);
+            function openEditRecordModal(nationalId) {
+                const person = allRecords.find(p => p.nationalId === nationalId);
                 if (!person) return;
 
-                hideFormError();
-                document.getElementById('originalNationalId').value = person.nationalId;
-                document.getElementById('formModalTitle').textContent = 'تعديل بيانات المواطن';
-                document.getElementById('formStatusDot').className = 'w-2.5 h-2.5 rounded-full bg-editorial-amber';
+                hideFormAlert();
+                document.getElementById('editingOriginalId').value = person.nationalId;
+                formModalTitle.textContent = 'تعديل بيانات السجل';
 
-                document.getElementById('fieldFullName').value = person.fullName || '';
-                document.getElementById('fieldNationalId').value = toWesternDigits(person.nationalId || '');
-                document.getElementById('fieldGender').value = person.gender || 'ذكر';
-                document.getElementById('fieldBirthDate').value = toWesternDigits(person.birthDate || '');
-                document.getElementById('fieldMaritalStatus').value = person.maritalStatus || 'أعزب';
-                document.getElementById('fieldFamilyCount').value = toWesternDigits(person.familyCount || '');
-                document.getElementById('fieldMotherName').value = person.motherName || '';
-                document.getElementById('fieldWifeName').value = person.wifeName || '';
-                document.getElementById('fieldWifeNationalId').value = toWesternDigits(person.wifeNationalId || '');
-                document.getElementById('fieldMobile').value = toWesternDigits(person.mobile || '');
-                document.getElementById('fieldAltPhone').value = toWesternDigits(person.altPhone || '');
-                document.getElementById('fieldAddress').value = person.address || '';
-                document.getElementById('fieldNotes').value = person.notes || '';
+                document.getElementById('inpFullName').value = person.fullName || '';
+                document.getElementById('inpNationalId').value = toEnglishDigits(person.nationalId || '');
+                document.getElementById('inpGender').value = person.gender || 'ذكر';
+                document.getElementById('inpBirthDate').value = toEnglishDigits(person.birthDate || '');
+                document.getElementById('inpMaritalStatus').value = person.maritalStatus || 'أعزب';
+                document.getElementById('inpFamilyCount').value = toEnglishDigits(person.familyCount || '');
+                document.getElementById('inpMotherName').value = person.motherName || '';
+                document.getElementById('inpWifeName').value = person.wifeName || '';
+                document.getElementById('inpWifeNationalId').value = toEnglishDigits(person.wifeNationalId || '');
+                document.getElementById('inpMobile').value = toEnglishDigits(person.mobile || '');
+                document.getElementById('inpAltPhone').value = toEnglishDigits(person.altPhone || '');
+                document.getElementById('inpAddress').value = person.address || '';
+                document.getElementById('inpNotes').value = person.notes || '';
 
-                singleDeleteBtn.classList.remove('hidden');
-                formOverlay.classList.remove('hidden');
+                deleteSingleBtn.classList.add('visible');
+                formModalBackdrop.classList.add('visible');
             }
 
             function closeFormModal() {
-                formOverlay.classList.add('hidden');
+                formModalBackdrop.classList.remove('visible');
             }
 
-            document.getElementById('openAddModalBtn').addEventListener('click', openAddModal);
-            document.getElementById('closeFormBtn').addEventListener('click', closeFormModal);
+            document.getElementById('openAddBtn').addEventListener('click', openAddRecordModal);
+            document.getElementById('closeFormModalBtn').addEventListener('click', closeFormModal);
             document.getElementById('cancelFormBtn').addEventListener('click', closeFormModal);
 
-            ['fieldNationalId', 'fieldWifeNationalId', 'fieldFamilyCount'].forEach(id => {
-                const el = document.getElementById(id);
-                el.addEventListener('input', () => {
-                    el.value = toWesternDigits(el.value).replace(/[^\d]/g, '');
-                });
-            });
+            document.getElementById('saveFormBtn').addEventListener('click', async () => {
+                hideFormAlert();
 
-            document.getElementById('saveRecordBtn').addEventListener('click', async () => {
-                hideFormError();
+                const originalId = document.getElementById('editingOriginalId').value.trim();
+                const isEdit = originalId.length > 0;
 
-                const originalId = document.getElementById('originalNationalId').value.trim();
-                const isEditMode = originalId.length > 0;
+                const fullName = document.getElementById('inpFullName').value.replace(/\s+/g, ' ').trim();
+                const nationalId = toEnglishDigits(document.getElementById('inpNationalId').value).replace(/[^\d]/g, '');
+                const wifeNationalId = toEnglishDigits(document.getElementById('inpWifeNationalId').value).replace(/[^\d]/g, '');
+                const familyCount = toEnglishDigits(document.getElementById('inpFamilyCount').value).replace(/[^\d]/g, '') || '0';
+                const mobile = toEnglishDigits(document.getElementById('inpMobile').value).replace(/[^\d]/g, '');
+                const altPhone = toEnglishDigits(document.getElementById('inpAltPhone').value).replace(/[^\d]/g, '');
 
-                const fullName = document.getElementById('fieldFullName').value.replace(/\s+/g, ' ').trim();
-                const nationalId = toWesternDigits(document.getElementById('fieldNationalId').value).trim();
-                const wifeNationalId = toWesternDigits(document.getElementById('fieldWifeNationalId').value).trim();
-                const familyCount = toWesternDigits(document.getElementById('fieldFamilyCount').value).trim() || '0';
-                const mobile = toWesternDigits(document.getElementById('fieldMobile').value).trim();
-                const altPhone = toWesternDigits(document.getElementById('fieldAltPhone').value).trim();
-
-                const nameWords = fullName.split(' ').filter(Boolean);
-                if (!fullName || nameWords.length < 2) {
-                    showFormError('يرجى إدخال الاسم الكامل (اسمين على الأقل).');
+                if (!fullName) {
+                    showFormAlert('يرجى إدخال الاسم الكامل للمواطن.');
                     return;
                 }
 
-                if (!/^\d{9}$/.test(nationalId)) {
-                    showFormError('رقم الهوية يجب أن يتكون من 9 أرقام إنجليزية صحيحة.');
+                if (!nationalId || nationalId.length < 5) {
+                    showFormAlert('يرجى إدخال رقم هوية صحيح بالأرقام الإنجليزية.');
                     return;
                 }
 
-                if (wifeNationalId && !/^\d{9}$/.test(wifeNationalId)) {
-                    showFormError('رقم هوية الزوجة يجب أن يتكون من 9 أرقام صحيحة أو يترك فارغاً.');
+                // Strict Duplicate National ID Check in Both Add and Edit
+                const existingMatch = allRecords.find(p => p.nationalId === nationalId);
+                if (!isEdit && existingMatch) {
+                    showFormAlert(`رقم الهوية (${nationalId}) مسجل مسبقاً باسم: ${existingMatch.fullName}`);
+                    return;
+                }
+                if (isEdit && nationalId !== originalId && existingMatch) {
+                    showFormAlert(`رقم الهوية (${nationalId}) مستخدم في سجل آخر باسم: ${existingMatch.fullName}`);
                     return;
                 }
 
-                const duplicatePerson = allPersonsCache.find(p => p.nationalId === nationalId);
-                if (!isEditMode && duplicatePerson) {
-                    showFormError(`رقم الهوية (${nationalId}) مسجل مسبقاً باسم: ${duplicatePerson.fullName}`);
-                    return;
-                }
-                if (isEditMode && nationalId !== originalId && duplicatePerson) {
-                    showFormError(`لا يمكن التعديل؛ رقم الهوية (${nationalId}) مملوك لسجل آخر باسم: ${duplicatePerson.fullName}`);
-                    return;
-                }
-
-                const confirmed = await showConfirmDialog({
-                    title: isEditMode ? 'تأكيد حفظ التعديلات' : 'تأكيد إضافة سجل جديد',
-                    message: `الاسم: ${fullName} — رقم الهوية: ${nationalId}. سيتم حفظ البيانات محلياً على جهازك دون إرسالها للمصدر.`,
-                    confirmText: isEditMode ? 'حفظ التعديلات' : 'إضافة السجل',
-                    type: 'primary'
+                const ok = await askConfirmation({
+                    title: isEdit ? 'تأكيد تعديل السجل' : 'تأكيد إضافة سجل جديد',
+                    message: `الاسم: ${fullName} — رقم الهوية: ${nationalId}. سيتم حفظ البيانات محلياً على جهازك فقط.`,
+                    confirmText: isEdit ? 'حفظ التعديل' : 'إضافة السجل',
+                    isDanger: false
                 });
 
-                if (!confirmed) return;
+                if (!ok) return;
 
-                const recordObj = {
+                const recordData = {
                     fullName,
                     nationalId,
-                    gender: document.getElementById('fieldGender').value,
-                    birthDate: toWesternDigits(document.getElementById('fieldBirthDate').value),
-                    maritalStatus: document.getElementById('fieldMaritalStatus').value,
+                    gender: document.getElementById('inpGender').value,
+                    birthDate: toEnglishDigits(document.getElementById('inpBirthDate').value),
+                    maritalStatus: document.getElementById('inpMaritalStatus').value,
                     familyCount,
-                    motherName: document.getElementById('fieldMotherName').value.trim(),
-                    wifeName: document.getElementById('fieldWifeName').value.trim(),
+                    motherName: document.getElementById('inpMotherName').value.trim(),
+                    wifeName: document.getElementById('inpWifeName').value.trim(),
                     wifeNationalId,
                     mobile,
                     altPhone,
-                    address: document.getElementById('fieldAddress').value.trim(),
-                    notes: document.getElementById('fieldNotes').value.trim(),
+                    address: document.getElementById('inpAddress').value.trim(),
+                    notes: document.getElementById('inpNotes').value.trim(),
                     isLocal: true,
-                    updatedAt: Date.now(),
                     _normName: normalizeArabic(fullName)
                 };
 
-                try {
-                    await dbPutOne(recordObj, isEditMode ? originalId : null);
+                await dbSaveOne(recordData, isEdit ? originalId : null);
 
-                    if (isEditMode) {
-                        const idx = allPersonsCache.findIndex(p => p.nationalId === originalId);
-                        if (idx !== -1) {
-                            allPersonsCache[idx] = recordObj;
-                        } else {
-                            allPersonsCache.unshift(recordObj);
-                        }
-                        if (selectedIds.has(originalId)) {
-                            selectedIds.delete(originalId);
-                            selectedIds.add(nationalId);
-                        }
+                if (isEdit) {
+                    const idx = allRecords.findIndex(p => p.nationalId === originalId);
+                    if (idx !== -1) {
+                        allRecords[idx] = recordData;
                     } else {
-                        allPersonsCache.unshift(recordObj);
+                        allRecords.unshift(recordData);
                     }
-
-                    closeFormModal();
-                    updateHeaderStats();
-                    runSearchAndFilter(true, false);
-                    showToast(isEditMode ? 'تم تحديث السجل وحفظه محلياً' : 'تمت إضافة السجل الجديد بنجاح', 'success');
-                } catch (err) {
-                    showFormError('حدث خطأ أثناء الحفظ في قاعدة البيانات المحلية.');
+                    if (selectedIds.has(originalId)) {
+                        selectedIds.delete(originalId);
+                        selectedIds.add(nationalId);
+                    }
+                } else {
+                    allRecords.unshift(recordData);
                 }
+
+                closeFormModal();
+                updateGlobalCounters();
+                applySearchAndFilter(false, true);
+                showToast(isEdit ? 'تم حفظ التعديلات محلياً بنجاح' : 'تمت إضافة السجل الجديد بنجاح');
             });
 
-            singleDeleteBtn.addEventListener('click', async () => {
-                const targetId = document.getElementById('originalNationalId').value.trim();
-                const person = allPersonsCache.find(p => p.nationalId === targetId);
-                if (!person) return;
+            // Single Record Delete
+            deleteSingleBtn.addEventListener('click', async () => {
+                const targetId = document.getElementById('editingOriginalId').value.trim();
+                const targetPerson = allRecords.find(p => p.nationalId === targetId);
+                if (!targetPerson) return;
 
-                const confirmed = await showConfirmDialog({
-                    title: 'حذف السجل نهائياً',
-                    message: `هل أنت متأكد من حذف سجل "${person.fullName}" (هوية: ${person.nationalId}) من جهازك؟`,
-                    confirmText: 'نعم، احذف السجل',
-                    type: 'danger'
+                const ok = await askConfirmation({
+                    title: 'تأكيد حذف السجل',
+                    message: `هل تريد حذف سجل "${targetPerson.fullName}" (هوية: ${targetPerson.nationalId}) نهائياً من الجهاز؟`,
+                    confirmText: 'حذف السجل',
+                    isDanger: true
                 });
 
-                if (!confirmed) return;
+                if (!ok) return;
 
-                await dbDeleteMany([targetId]);
-                allPersonsCache = allPersonsCache.filter(p => p.nationalId !== targetId);
+                await dbDeleteIds([targetId]);
+                allRecords = allRecords.filter(p => p.nationalId !== targetId);
                 selectedIds.delete(targetId);
 
                 closeFormModal();
-                updateHeaderStats();
-                runSearchAndFilter(true, false);
-                showToast('تم حذف السجل من الجهاز', 'danger');
+                updateGlobalCounters();
+                applySearchAndFilter(false, true);
+                showToast('تم حذف السجل بنجاح');
             });
 
-            // ==========================================
-            // 8. Bulk Delete & Landscape A4 Printing
-            // ==========================================
+            // Bulk Delete
             document.getElementById('bulkDeleteBtn').addEventListener('click', async () => {
                 const count = selectedIds.size;
                 if (count === 0) return;
 
-                const confirmed = await showConfirmDialog({
-                    title: `حذف ${toWesternDigits(count)} سجل محدد`,
-                    message: 'سيتم حذف السجلات المحددة من ذاكرة الجهاز المحلية بشكل نهائي. هل تريد المتابعة؟',
+                const ok = await askConfirmation({
+                    title: `حذف ${toEnglishDigits(count)} سجل محدد`,
+                    message: 'سيتم حذف السجلات المحددة من ذاكرة الجهاز نهائياً. هل أنت متأكد؟',
                     confirmText: 'حذف المحدد',
-                    type: 'danger'
+                    isDanger: true
                 });
 
-                if (!confirmed) return;
+                if (!ok) return;
 
-                const idsToDelete = Array.from(selectedIds);
-                await dbDeleteMany(idsToDelete);
-
-                const deleteSet = new Set(idsToDelete);
-                allPersonsCache = allPersonsCache.filter(p => !deleteSet.has(p.nationalId));
+                const idsToRemove = Array.from(selectedIds);
+                await dbDeleteIds(idsToRemove);
+                const removeSet = new Set(idsToRemove);
+                allRecords = allRecords.filter(p => !removeSet.has(p.nationalId));
                 selectedIds.clear();
 
-                updateHeaderStats();
-                runSearchAndFilter(true, false);
-                showToast(`تم حذف ${toWesternDigits(count)} سجل بنجاح`, 'danger');
+                updateGlobalCounters();
+                applySearchAndFilter(false, true);
+                showToast(`تم حذف ${toEnglishDigits(count)} سجل بنجاح`);
             });
 
-            function triggerLandscapePrint(records, titleContext) {
-                if (!records || records.length === 0) return;
-
-                const tbody = document.getElementById('printTableBody');
-                tbody.innerHTML = '';
-
-                records.forEach((p, idx) => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="font-mono">${toWesternDigits(idx + 1)}</td>
-                        <td>${escapeHtml(p.fullName)}</td>
-                        <td class="font-mono">${escapeHtml(toWesternDigits(p.nationalId))}</td>
-                        <td>${escapeHtml(p.gender || '')}</td>
-                        <td class="font-mono">${escapeHtml(toWesternDigits(p.birthDate || ''))}</td>
-                        <td>${escapeHtml(p.maritalStatus || '')}</td>
-                        <td class="font-mono">${escapeHtml(toWesternDigits(p.familyCount || '0'))}</td>
-                        <td>${escapeHtml(p.motherName || '')}</td>
-                        <td>${escapeHtml(p.wifeName || '')}</td>
-                        <td class="font-mono">${escapeHtml(toWesternDigits(p.wifeNationalId || ''))}</td>
-                        <td class="font-mono">${escapeHtml(toWesternDigits(p.mobile || ''))}</td>
-                        <td class="font-mono">${escapeHtml(toWesternDigits(p.altPhone || ''))}</td>
-                        <td>${escapeHtml(p.address || '')}</td>
-                        <td>${escapeHtml(p.notes || '')}</td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-
-                const nowStr = toWesternDigits(new Date().toLocaleDateString('en-GB'));
-                document.getElementById('printSubtitle').textContent = titleContext;
-                document.getElementById('printDateStamp').textContent = `تاريخ الطباعة: ${nowStr}`;
-                document.getElementById('printCountStamp').textContent = `عدد السجلات: ${toWesternDigits(records.length)}`;
-
-                setTimeout(() => {
-                    window.print();
-                }, 120);
-            }
-
-            document.getElementById('bulkPrintBtn').addEventListener('click', async () => {
-                const count = selectedIds.size;
-                if (count === 0) return;
-
-                const confirmed = await showConfirmDialog({
-                    title: 'طباعة السجلات المحددة',
-                    message: `سيتم تهيئة ${toWesternDigits(count)} سجل للطباعة الأفقية بعرض الصفحة (A4 Landscape).`,
-                    confirmText: 'طباعة الآن',
-                    type: 'primary'
-                });
-
-                if (!confirmed) return;
-
-                const selectedRecords = allPersonsCache.filter(p => selectedIds.has(p.nationalId));
-                triggerLandscapePrint(selectedRecords, 'كشف السجلات المحددة');
-            });
-
-            document.getElementById('printAllResultsBtn').addEventListener('click', async () => {
-                const count = currentFiltered.length;
-                if (count === 0) return;
-
-                const confirmed = await showConfirmDialog({
-                    title: 'طباعة كافة نتائج البحث',
-                    message: `سيتم طباعة جميع نتائج التصفية الحالية وعددها ${toWesternDigits(count)} سجل بعرض الصفحة (A4 Landscape).`,
-                    confirmText: 'طباعة الكل',
-                    type: 'primary'
-                });
-
-                if (!confirmed) return;
-
-                triggerLandscapePrint(currentFiltered, 'كشف نتائج البحث الكاملة');
-            });
-
-            // ==========================================
-            // 9. Centered Sync Modal & Google Sheets Sync
-            // ==========================================
-            const syncModalOverlay = document.getElementById('syncModalOverlay');
-            const openSyncModalBtn = document.getElementById('openSyncModalBtn');
-            const confirmSyncExecuteBtn = document.getElementById('confirmSyncExecuteBtn');
-            const cancelSyncModalBtn = document.getElementById('cancelSyncModalBtn');
-            const headerSyncIcon = document.getElementById('headerSyncIcon');
-
-            openSyncModalBtn.addEventListener('click', () => {
-                updateHeaderStats();
-                syncModalOverlay.classList.remove('hidden');
-            });
-
-            cancelSyncModalBtn.addEventListener('click', () => {
-                syncModalOverlay.classList.add('hidden');
-            });
-
-            syncModalOverlay.addEventListener('click', (e) => {
-                if (e.target === syncModalOverlay) {
-                    syncModalOverlay.classList.add('hidden');
-                }
-            });
-
-            confirmSyncExecuteBtn.addEventListener('click', () => {
-                if (!navigator.onLine) {
-                    syncModalOverlay.classList.add('hidden');
-                    showToast('لا يوجد اتصال بالإنترنت لإجراء المزامنة', 'danger');
+            // -----------------------------------------------------------------
+            // H. A4 Landscape Printing Engine (Top Print Button + Bulk Print)
+            // -----------------------------------------------------------------
+            async function triggerLandscapePrint(recordsToPrint) {
+                if (!recordsToPrint || recordsToPrint.length === 0) {
+                    showToast('لا توجد سجلات معروضة أو محددة للطباعة');
                     return;
                 }
 
-                syncModalOverlay.classList.add('hidden');
-                setSyncLoading(true);
+                const ok = await askConfirmation({
+                    title: 'تأكيد طباعة الكشف',
+                    message: `سيتم تجهيز طباعة ${toEnglishDigits(recordsToPrint.length)} سجل بعرض الصفحة الكاملة (A4 Landscape).`,
+                    confirmText: 'طباعة الآن',
+                    isDanger: false
+                });
 
-                const oldScript = document.getElementById('googleSheetJsonpScript');
+                if (!ok) return;
+
+                const tbody = document.getElementById('printTableBody');
+                const metaInfo = document.getElementById('printMetaInfo');
+                const todayStr = toEnglishDigits(new Date().toISOString().slice(0, 10));
+
+                metaInfo.textContent = `التاريخ: ${todayStr} | عدد السجلات: ${toEnglishDigits(recordsToPrint.length)}`;
+                tbody.innerHTML = '';
+
+                const frag = document.createDocumentFragment();
+                recordsToPrint.forEach((p, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${toEnglishDigits(index + 1)}</td>
+                        <td>${escapeHtml(p.fullName)}</td>
+                        <td>${escapeHtml(toEnglishDigits(p.nationalId))}</td>
+                        <td>${escapeHtml(p.gender || '')}</td>
+                        <td>${escapeHtml(toEnglishDigits(p.birthDate || ''))}</td>
+                        <td>${escapeHtml(p.maritalStatus || '')}</td>
+                        <td>${escapeHtml(p.motherName || '')}</td>
+                        <td>${escapeHtml(p.wifeName || '')}</td>
+                        <td>${escapeHtml(toEnglishDigits(p.wifeNationalId || ''))}</td>
+                        <td>${escapeHtml(toEnglishDigits(p.familyCount || '0'))}</td>
+                        <td>${escapeHtml(toEnglishDigits(p.mobile || ''))}</td>
+                        <td>${escapeHtml(toEnglishDigits(p.altPhone || ''))}</td>
+                        <td>${escapeHtml(p.address || '')}</td>
+                        <td>${escapeHtml(p.notes || '')}</td>
+                    `;
+                    frag.appendChild(tr);
+                });
+
+                tbody.appendChild(frag);
+                window.print();
+            }
+
+            // Print Button next to "إضافة سجل جديد"
+            document.getElementById('printTopBtn').addEventListener('click', () => {
+                if (selectedIds.size > 0) {
+                    const chosen = allRecords.filter(p => selectedIds.has(p.nationalId));
+                    triggerLandscapePrint(chosen);
+                } else if (currentFiltered.length > 0) {
+                    triggerLandscapePrint(currentFiltered);
+                } else if (allRecords.length > 0) {
+                    showToast('يرجى إجراء بحث أو اختيار فلتر لعرض السجلات المراد طباعتها');
+                } else {
+                    showToast('لا توجد سجلات محملة في النظام للطباعة');
+                }
+            });
+
+            // Bulk Bar Print Button
+            document.getElementById('bulkPrintBtn').addEventListener('click', () => {
+                const chosen = allRecords.filter(p => selectedIds.has(p.nationalId));
+                triggerLandscapePrint(chosen);
+            });
+
+            // -----------------------------------------------------------------
+            // I. Central Sync Modal & Protected Google Sheets Sync
+            // -----------------------------------------------------------------
+            const syncModalBackdrop = document.getElementById('syncModalBackdrop');
+            const syncReportBox = document.getElementById('syncReportBox');
+            const startSyncBtn = document.getElementById('startSyncBtn');
+            const startSyncBtnText = document.getElementById('startSyncBtnText');
+            const syncSpinner = document.getElementById('syncSpinner');
+            const closeSyncBtn = document.getElementById('closeSyncBtn');
+
+            function openSyncModal() {
+                calloutDismissed = true;
+                syncCalloutBadge.classList.remove('visible');
+                syncReportBox.classList.remove('visible', 'error');
+                closeSyncBtn.textContent = 'إلغاء الأمر';
+                updateGlobalCounters();
+                syncModalBackdrop.classList.add('visible');
+            }
+
+            function closeSyncModal() {
+                syncModalBackdrop.classList.remove('visible');
+            }
+
+            document.getElementById('openSyncBtn').addEventListener('click', openSyncModal);
+            closeSyncBtn.addEventListener('click', closeSyncModal);
+
+            startSyncBtn.addEventListener('click', () => {
+                if (!navigator.onLine) {
+                    syncReportBox.textContent = 'لا يوجد اتصال بالإنترنت حالياً لإجراء المزامنة.';
+                    syncReportBox.classList.add('visible', 'error');
+                    return;
+                }
+
+                startSyncBtn.disabled = true;
+                syncSpinner.classList.add('visible');
+                startSyncBtnText.textContent = 'جاري المزامنة...';
+                syncReportBox.classList.remove('visible', 'error');
+
+                const oldScript = document.getElementById('gsheetSyncScript');
                 if (oldScript) oldScript.remove();
 
-                const callbackName = 'handleCivilSheetSync_' + Date.now();
-                window[callbackName] = async function(response) {
+                const callbackName = 'onCivilSheetLoaded_' + Date.now();
+                window[callbackName] = async function (response) {
                     try {
                         if (!response || response.status === 'error' || !response.table || !response.table.rows) {
-                            throw new Error('تعذر قراءة البيانات من جدول المصدر');
+                            throw new Error('تعذر جلب البيانات من جدول المصدر.');
                         }
 
                         const rows = response.table.rows;
-                        const existingMap = new Map(allPersonsCache.map(p => [p.nationalId, p]));
+                        const recordMap = new Map(allRecords.map(p => [p.nationalId, p]));
 
-                        let addedCount = 0;
-                        let updatedCount = 0;
-                        let protectedLocalCount = 0;
-                        const recordsToSave = [];
+                        let loadedFromSheet = 0;
+                        let newlyAdded = 0;
+                        let updatedFromSheet = 0;
+                        let protectedLocal = 0;
+                        const toPersist = [];
 
-                        rows.forEach((row, rowIndex) => {
-                            if (rowIndex === 0) return;
+                        rows.forEach((row, index) => {
+                            // Strictly skip first row (Header Row)
+                            if (index === 0) return;
 
-                            const getCell = (idx) => {
-                                if (!row.c || !row.c[idx]) return '';
-                                const rawVal = (row.c[idx].f !== undefined && row.c[idx].f !== null)
-                                    ? row.c[idx].f
-                                    : row.c[idx].v;
-                                return rawVal !== null && rawVal !== undefined ? toWesternDigits(String(rawVal)).trim() : '';
+                            const cell = (colIdx) => {
+                                if (!row.c || !row.c[colIdx]) return '';
+                                const v = (row.c[colIdx].f !== undefined && row.c[colIdx].f !== null)
+                                    ? row.c[colIdx].f
+                                    : row.c[colIdx].v;
+                                return v !== null && v !== undefined ? toEnglishDigits(String(v)).trim() : '';
                             };
 
-                            const fullName = getCell(0).replace(/\s+/g, ' ').trim();
-                            const nationalId = getCell(1).replace(/[^\d]/g, '');
+                            const fullName = cell(0).replace(/\s+/g, ' ').trim();
+                            const nationalId = cell(1).replace(/[^\d]/g, '');
 
                             if (!fullName || !nationalId) return;
 
-                            const existingRecord = existingMap.get(nationalId);
+                            loadedFromSheet++;
 
-                            if (existingRecord && existingRecord.isLocal) {
-                                protectedLocalCount++;
+                            const existing = recordMap.get(nationalId);
+                            if (existing && existing.isLocal) {
+                                protectedLocal++;
                                 return;
                             }
 
-                            const syncedPerson = {
+                            const personObj = {
                                 fullName,
                                 nationalId,
-                                gender: getCell(2) || 'ذكر',
-                                birthDate: getCell(3),
-                                maritalStatus: getCell(4) || 'أعزب',
-                                motherName: getCell(5),
-                                wifeName: getCell(6),
-                                wifeNationalId: getCell(7).replace(/[^\d]/g, ''),
-                                familyCount: getCell(8) || '0',
-                                mobile: getCell(9),
-                                altPhone: getCell(10),
-                                address: getCell(11),
-                                notes: getCell(12),
+                                gender: cell(2) || 'ذكر',
+                                birthDate: cell(3),
+                                maritalStatus: cell(4) || 'أعزب',
+                                motherName: cell(5),
+                                wifeName: cell(6),
+                                wifeNationalId: cell(7).replace(/[^\d]/g, ''),
+                                familyCount: cell(8) || '0',
+                                mobile: cell(9),
+                                altPhone: cell(10),
+                                address: cell(11),
+                                notes: cell(12),
                                 isLocal: false,
-                                updatedAt: Date.now(),
                                 _normName: normalizeArabic(fullName)
                             };
 
-                            recordsToSave.push(syncedPerson);
-                            existingMap.set(nationalId, syncedPerson);
+                            toPersist.push(personObj);
+                            recordMap.set(nationalId, personObj);
 
-                            if (existingRecord) {
-                                updatedCount++;
+                            if (existing) {
+                                updatedFromSheet++;
                             } else {
-                                addedCount++;
+                                newlyAdded++;
                             }
                         });
 
-                        if (recordsToSave.length > 0) {
-                            await dbPutMany(recordsToSave);
-                            allPersonsCache = Array.from(existingMap.values());
+                        if (toPersist.length > 0) {
+                            await dbSaveMany(toPersist);
+                            allRecords = Array.from(recordMap.values());
                         }
 
-                        updateHeaderStats();
-                        const hasActiveSearch = activeFilterPill !== 'all' || searchNameInput.value.trim() !== '' || searchIdInput.value.trim() !== '';
-                        runSearchAndFilter(hasActiveSearch, false);
+                        lastLoadedFromSync = loadedFromSheet;
+                        const localTotalCount = allRecords.filter(r => r.isLocal).length;
 
-                        let summaryMsg = `اكتملت المزامنة: ${addedCount} جديد، ${updatedCount} محدث`;
-                        if (protectedLocalCount > 0) {
-                            summaryMsg += ` (تمت حماية ${protectedLocalCount} سجل محلي)`;
-                        }
-                        showToast(summaryMsg, 'success');
+                        updateGlobalCounters();
+                        applySearchAndFilter(false, activeFilter !== 'all' || searchNameInput.value.trim() !== '' || searchIdInput.value.trim() !== '');
+
+                        let reportLines = [
+                            `اكتملت المزامنة بنجاح:`,
+                            `• الأسماء المحملة من المصدر: ${toEnglishDigits(loadedFromSheet)}`,
+                            `• الأسماء الجديدة المضافة: ${toEnglishDigits(newlyAdded)} | المحدثة: ${toEnglishDigits(updatedFromSheet)}`,
+                            `• السجلات المحلية المحمية: ${toEnglishDigits(localTotalCount)} (تم تجاوز استبدال ${toEnglishDigits(protectedLocal)} سجل)`
+                        ];
+
+                        syncReportBox.innerHTML = reportLines.map(l => escapeHtml(l)).join('<br>');
+                        syncReportBox.classList.remove('error');
+                        syncReportBox.classList.add('visible');
+                        closeSyncBtn.textContent = 'إغلاق';
 
                     } catch (err) {
-                        showToast(err.message || 'حدث خطأ أثناء معالجة المزامنة', 'danger');
+                        syncReportBox.textContent = toEnglishDigits(err.message || 'حدث خطأ أثناء معالجة البيانات.');
+                        syncReportBox.classList.add('visible', 'error');
                     } finally {
-                        setSyncLoading(false);
+                        startSyncBtn.disabled = false;
+                        syncSpinner.classList.remove('visible');
+                        startSyncBtnText.textContent = 'المزامنة من المصدر';
                         delete window[callbackName];
-                        const scr = document.getElementById('googleSheetJsonpScript');
+                        const scr = document.getElementById('gsheetSyncScript');
                         if (scr) scr.remove();
                     }
                 };
 
-                const script = document.createElement('script');
-                script.id = 'googleSheetJsonpScript';
-                script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:${callbackName}&t=${Date.now()}`;
-                script.onerror = () => {
-                    setSyncLoading(false);
+                const scriptEl = document.createElement('script');
+                scriptEl.id = 'gsheetSyncScript';
+                scriptEl.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:${callbackName}&t=${Date.now()}`;
+                scriptEl.onerror = () => {
+                    startSyncBtn.disabled = false;
+                    syncSpinner.classList.remove('visible');
+                    startSyncBtnText.textContent = 'المزامنة من المصدر';
+                    syncReportBox.textContent = 'فشل الاتصال بخوادم Google Sheets. تأكد من اتصال الإنترنت.';
+                    syncReportBox.classList.add('visible', 'error');
                     delete window[callbackName];
-                    showToast('فشل الاتصال بخادم Google Sheets. تحقق من الشبكة.', 'danger');
                 };
-                document.body.appendChild(script);
+                document.body.appendChild(scriptEl);
             });
 
-            function setSyncLoading(isLoading) {
-                openSyncModalBtn.disabled = isLoading;
-                if (isLoading) {
-                    headerSyncIcon.classList.add('animate-pulse');
-                } else {
-                    headerSyncIcon.classList.remove('animate-pulse');
-                }
-            }
-
-            // ==========================================
-            // 10. Boot Application
-            // ==========================================
-            async function initApp() {
+            // -----------------------------------------------------------------
+            // J. Bootstrap Application
+            // -----------------------------------------------------------------
+            async function boot() {
                 try {
-                    await openDatabase();
-                    await migrateLegacyLocalStorage();
-                    const storedRecords = await dbGetAll();
-
-                    allPersonsCache = storedRecords.map(p => ({
-                        ...p,
-                        nationalId: toWesternDigits(p.nationalId),
-                        _normName: p._normName || normalizeArabic(p.fullName)
+                    await initIndexedDB();
+                    await migrateFromLocalStorage();
+                    const stored = await dbFetchAll();
+                    allRecords = stored.map(item => ({
+                        ...item,
+                        nationalId: toEnglishDigits(item.nationalId),
+                        _normName: item._normName || normalizeArabic(item.fullName)
                     }));
-
-                    updateHeaderStats();
+                    updateGlobalCounters();
                 } catch (err) {
-                    console.error('Initialization failed:', err);
-                    showToast('تعذر تهيئة قاعدة البيانات المحلية', 'danger');
+                    showToast('تعذر فتح قاعدة البيانات المحلية');
                 }
             }
 
-            initApp();
+            boot();
         })();
     </script>
 </body>
