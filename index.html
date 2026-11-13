@@ -1,98 +1,172 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#0B192C">
+    <meta name="theme-color" content="#0F172A">
     <title>السجل المدني — تصميم ابو حازم</title>
 
-    <!-- Inline PWA Manifest for Offline & Mobile Home Screen Support -->
-    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D8%A7%D9%84%D8%B3%D8%AC%D9%84%20%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A%22%2C%22short_name%22%3A%22%D8%A7%D9%84%D8%B3%D8%AC%D9%84%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F5F5F7%22%2C%22theme_color%22%3A%22%230B192C%22%7D">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+    <!-- Inline PWA Manifest -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D8%A7%D9%84%D8%B3%D8%AC%D9%84%20%D8%A7%D9%84%D9%85%D8%AF%D9%86%D9%8A%22%2C%22short_name%22%3A%22%D8%A7%D9%84%D8%B3%D8%AC%D9%84%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F3F5F8%22%2C%22theme_color%22%3A%22%230F172A%22%7D">
 
     <style>
         /* =====================================================================
-           1. GLOBAL RESET & STRICT NO-BOLD TYPOGRAPHY (font-weight: 400)
+           1. ARCHITECTURAL DESIGN TOKENS (LIGHT & DARK MODES)
            ===================================================================== */
         :root {
-            --navy-dark: #0B192C;
-            --navy-soft: #162942;
-            --gold-accent: #D99B26;
-            --gold-bg: #FFFBEB;
-            --gold-border: #FDE68A;
-            --gold-text: #78350F;
-            --apple-bg: #F5F5F7;
-            --card-bg: #FFFFFF;
-            --apple-blue: #0071E3;
-            --apple-blue-hover: #005BB5;
-            --id-bg: #EFF6FF;
-            --id-border: #BFDBFE;
-            --id-text: #1E3A8A;
-            --mob-bg: #ECFDF5;
-            --mob-border: #A7F3D0;
-            --mob-text: #065F46;
-            --danger-red: #DC2626;
-            --danger-bg: #FEF2F2;
-            --border-light: #E2E8F0;
-            --text-primary: #111827;
-            --text-secondary: #4B5563;
-            --pitch-black: #000000;
+            --bg-canvas: #F2F4F8;
+            --bg-pattern: rgba(15, 23, 42, 0.04);
+            --surface-card: #FFFFFF;
+            --surface-elevated: #FFFFFF;
+            --surface-subtle: #F8FAFC;
+            --surface-input: #F1F5F9;
+
+            --ink-primary: #0F172A;
+            --ink-secondary: #475569;
+            --ink-muted: #64748B;
+
+            --border-subtle: #E2E8F0;
+            --border-strong: #CBD5E1;
+
+            /* Signature Palette: Deep Teal + Electric Indigo + Warm Amber */
+            --brand-primary: #0D9488;
+            --brand-primary-hover: #0F766E;
+            --brand-primary-soft: rgba(13, 148, 136, 0.10);
+
+            --accent-indigo: #4F46E5;
+            --accent-indigo-soft: #EEF2FF;
+            --accent-indigo-border: #C7D2FE;
+
+            --accent-emerald: #059669;
+            --accent-emerald-soft: #ECFDF5;
+            --accent-emerald-border: #A7F3D0;
+
+            --accent-amber: #D97706;
+            --accent-amber-soft: #FFFBEB;
+            --accent-amber-border: #FDE68A;
+
+            --danger: #DC2626;
+            --danger-soft: #FEF2F2;
+            --danger-border: #FECACA;
+
+            --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.07);
+            --shadow-lg: 0 20px 50px rgba(15, 23, 42, 0.16);
+
+            --radius-xl: 22px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        [data-theme="dark"] {
+            --bg-canvas: #1E2736;
+            --bg-pattern: rgba(226, 232, 240, 0.04);
+            --surface-card: #263144;
+            --surface-elevated: #2E3B52;
+            --surface-subtle: #212B3C;
+            --surface-input: #2D394E;
+
+            --ink-primary: #F1F5F9;
+            --ink-secondary: #CBD5E1;
+            --ink-muted: #94A3B8;
+
+            --border-subtle: rgba(148, 163, 184, 0.20);
+            --border-strong: rgba(148, 163, 184, 0.36);
+
+            --brand-primary: #2DD4BF;
+            --brand-primary-hover: #5EEAD4;
+            --brand-primary-soft: rgba(45, 212, 191, 0.13);
+
+            --accent-indigo: #A5B4FC;
+            --accent-indigo-soft: rgba(129, 140, 248, 0.14);
+            --accent-indigo-border: rgba(165, 180, 252, 0.35);
+
+            --accent-emerald: #6EE7B7;
+            --accent-emerald-soft: rgba(52, 211, 153, 0.14);
+            --accent-emerald-border: rgba(110, 231, 183, 0.35);
+
+            --accent-amber: #FCD34D;
+            --accent-amber-soft: rgba(251, 191, 36, 0.14);
+            --accent-amber-border: rgba(252, 211, 77, 0.35);
+
+            --danger: #FCA5A5;
+            --danger-soft: rgba(248, 113, 113, 0.14);
+            --danger-border: rgba(252, 165, 165, 0.40);
+
+            --shadow-sm: 0 2px 10px rgba(15, 23, 42, 0.18);
+            --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.24);
+            --shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.35);
         }
 
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-weight: 400 !important;
             -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
-            background-color: var(--apple-bg);
-            color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
-            font-size: 16px;
-            line-height: 1.5;
+            background-color: var(--bg-canvas);
+            background-image: radial-gradient(var(--bg-pattern) 1.2px, transparent 1.2px);
+            background-size: 22px 22px;
+            color: var(--ink-primary);
+            font-family: "Cairo", -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.55;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.25s ease, color 0.25s ease;
         }
 
         button, input, select, textarea {
             font-family: inherit;
-            font-weight: 400 !important;
         }
 
         button {
             cursor: pointer;
             border: none;
             background: none;
-            transition: background-color 0.2s ease, transform 0.12s ease, border-color 0.2s ease;
+            transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         button:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
         /* =====================================================================
-           2. EDITORIAL TOP HEADER (Al Jazeera Navy & Gold x Apple Clarity)
+           2. FLOATING GLASS HEADER & BRAND BAR
            ===================================================================== */
-        .app-header {
-            background-color: var(--navy-dark);
-            border-bottom: 3px solid var(--gold-accent);
-            color: #FFFFFF;
+        .top-bar-wrap {
             position: sticky;
             top: 0;
             z-index: 40;
-            box-shadow: 0 4px 16px rgba(11, 25, 44, 0.16);
+            padding: 10px 14px 0;
+            max-width: 860px;
+            margin: 0 auto;
         }
 
-        .header-inner {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 14px 16px;
+        .glass-header {
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.90)) padding-box,
+                linear-gradient(135deg, rgba(13, 148, 136, 0.40), rgba(79, 70, 229, 0.22), rgba(148, 163, 184, 0.16)) border-box;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid transparent;
+            border-radius: 20px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
+            box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.10);
+        }
+
+        [data-theme="dark"] .glass-header {
+            background:
+                linear-gradient(rgba(38, 49, 68, 0.90), rgba(38, 49, 68, 0.90)) padding-box,
+                linear-gradient(135deg, rgba(45, 212, 191, 0.38), rgba(129, 140, 248, 0.24), rgba(148, 163, 184, 0.15)) border-box;
+            box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.35);
         }
 
         .brand-cluster {
@@ -102,42 +176,40 @@
             position: relative;
         }
 
-        /* Framed Gold ID-Card Sync Trigger Button */
-        .sync-icon-wrapper {
+        .sync-trigger-wrap {
             position: relative;
-            display: inline-flex;
-            align-items: center;
         }
 
-        .sync-icon-btn {
+        .sync-orb-btn {
             width: 44px;
             height: 44px;
-            border-radius: 12px;
-            background-color: rgba(217, 155, 38, 0.14);
-            border: 1.5px solid var(--gold-accent);
-            color: var(--gold-accent);
+            border-radius: 14px;
+            background: var(--brand-primary-soft);
+            border: 1.5px solid var(--brand-primary);
+            color: var(--brand-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            box-shadow: 0 2px 10px rgba(13, 148, 136, 0.14);
         }
 
-        .sync-icon-btn:hover {
-            background-color: rgba(217, 155, 38, 0.24);
+        .sync-orb-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(13, 148, 136, 0.36);
         }
 
-        /* "اضغط هنا" Callout Badge with Upward Arrow */
         .sync-callout {
             position: absolute;
-            top: 54px;
-            right: -4px;
-            background-color: var(--gold-accent);
-            color: var(--navy-dark);
-            font-size: 14px;
-            padding: 5px 12px;
+            top: 52px;
+            right: 0;
+            background: var(--accent-amber);
+            color: #FFFFFF;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 12px;
             border-radius: 10px;
             white-space: nowrap;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 6px 18px rgba(217, 119, 6, 0.35);
             z-index: 50;
             display: none;
             align-items: center;
@@ -152,13 +224,11 @@
         .sync-callout::before {
             content: "";
             position: absolute;
-            top: -7px;
-            right: 18px;
-            width: 0;
-            height: 0;
-            border-left: 7px solid transparent;
-            border-right: 7px solid transparent;
-            border-bottom: 7px solid var(--gold-accent);
+            top: -6px;
+            right: 16px;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 6px solid var(--accent-amber);
         }
 
         @keyframes floatPulse {
@@ -166,243 +236,322 @@
             50% { transform: translateY(3px); }
         }
 
-        .brand-titles h1 {
-            font-size: 22px;
-            color: #FFFFFF;
+        .brand-info h1 {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--ink-primary);
             line-height: 1.25;
         }
 
-        .brand-titles .subtitle-row {
+        .brand-sub {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-top: 2px;
-        }
-
-        .brand-titles p {
-            font-size: 13px;
-            color: #CBD5E1;
-        }
-
-        .offline-tag {
-            display: none;
             font-size: 12px;
+            color: var(--ink-muted);
+        }
+
+        .offline-pill {
+            display: none;
             padding: 1px 8px;
             border-radius: 999px;
-            background-color: rgba(217, 155, 38, 0.2);
-            border: 1px solid var(--gold-accent);
-            color: #FDE68A;
+            background: var(--accent-amber-soft);
+            border: 1px solid var(--accent-amber-border);
+            color: var(--accent-amber);
+            font-size: 11px;
+            font-weight: 600;
         }
 
-        .offline-tag.visible {
+        .offline-pill.visible {
             display: inline-block;
         }
 
-        .total-capsule {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 999px;
-            padding: 6px 14px;
-            font-size: 15px;
-            color: #FFFFFF;
+        .header-controls {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+        }
+
+        .icon-square-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: var(--surface-input);
+            border: 1px solid var(--border-subtle);
+            color: var(--ink-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-square-btn:hover {
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+        }
+
+        .total-pill {
+            background: var(--brand-primary-soft);
+            border: 1px solid rgba(13, 148, 136, 0.25);
+            color: var(--brand-primary);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
             white-space: nowrap;
         }
 
-        .total-capsule span.num {
-            color: var(--gold-accent);
-            font-size: 17px;
+        /* =====================================================================
+           3. MAIN CONTAINER & INTERACTIVE BENTO KPI STRIP
+           ===================================================================== */
+        .app-container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 14px 14px 110px;
+        }
+
+        .filter-pills-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--border-subtle);
+        }
+
+        .filter-pill {
+            height: 36px;
+            padding: 0 15px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            background: var(--surface-input);
+            color: var(--ink-secondary);
+            border: 1.5px solid var(--border-subtle);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-pill:hover {
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+        }
+
+        .filter-pill.active {
+            background: var(--brand-primary-soft);
+            color: var(--brand-primary);
+            border: 1.5px solid var(--brand-primary);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.08);
         }
 
         /* =====================================================================
-           3. MAIN CONTAINER & SEARCH / FILTER CARD
+           4. COMMAND SEARCH DOCK & ACTION TOOLBAR
            ===================================================================== */
-        .main-wrapper {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 16px 14px 96px;
-        }
-
-        .search-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
+        .search-dock {
+            background:
+                linear-gradient(180deg, rgba(2, 132, 199, 0.03), transparent 45%),
+                linear-gradient(var(--surface-card), var(--surface-card)) padding-box,
+                linear-gradient(135deg, rgba(2, 132, 199, 0.42), rgba(13, 148, 136, 0.28), rgba(148, 163, 184, 0.18)) border-box;
+            border: 1px solid transparent;
+            border-radius: var(--radius-xl);
             padding: 16px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 12px 32px -12px rgba(2, 132, 199, 0.12);
         }
 
-        .search-grid {
+        .search-inputs-row {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 10px;
         }
 
-        @media (max-width: 540px) {
-            .search-grid {
+        @media (max-width: 580px) {
+            .search-inputs-row {
                 grid-template-columns: 1fr;
             }
         }
 
-        .field-box label {
-            display: block;
-            font-size: 14px;
-            color: var(--text-secondary);
+        .input-shell {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-shell label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-secondary);
             margin-bottom: 5px;
         }
 
-        .field-box input {
-            width: 100%;
-            height: 44px;
-            background-color: var(--apple-bg);
-            border: 1px solid #CBD5E1;
-            border-radius: 12px;
-            padding: 0 14px;
-            font-size: 16px;
-            color: var(--text-primary);
-            transition: border-color 0.2s, background-color 0.2s;
-        }
-
-        .field-box input:focus {
-            outline: none;
-            background-color: #FFFFFF;
-            border-color: var(--apple-blue);
-        }
-
-        .search-actions {
+        .input-with-icon {
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-top: 14px;
         }
 
-        .btn-search {
-            flex: 1;
+        .input-with-icon svg.lead-icon {
+            position: absolute;
+            right: 12px;
+            color: var(--ink-muted);
+            pointer-events: none;
+        }
+
+        .input-with-icon input {
+            width: 100%;
             height: 44px;
-            background-color: var(--apple-blue);
-            color: #FFFFFF;
-            border-radius: 12px;
-            font-size: 16px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-search:hover {
-            background-color: var(--apple-blue-hover);
-        }
-
-        .btn-clear {
-            height: 44px;
-            padding: 0 18px;
-            background-color: var(--apple-bg);
-            color: var(--text-primary);
-            border: 1px solid #CBD5E1;
-            border-radius: 12px;
+            background: var(--surface-input);
+            border: 1.5px solid transparent;
+            border-radius: var(--radius-md);
+            padding: 0 38px 0 34px;
             font-size: 15px;
-            display: inline-flex;
+            color: var(--ink-primary);
+            transition: all 0.2s ease;
+        }
+
+        .input-with-icon input:focus {
+            outline: none;
+            background: var(--surface-card);
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 3px var(--brand-primary-soft);
+        }
+
+        .mini-clear-x {
+            position: absolute;
+            left: 10px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--border-strong);
+            color: var(--ink-primary);
+            font-size: 12px;
+            display: none;
             align-items: center;
             justify-content: center;
-            gap: 6px;
         }
 
-        .btn-clear:hover {
-            background-color: #E5E7EB;
+        .mini-clear-x.visible {
+            display: flex;
         }
 
-        /* Bottom Filter & Action Row (Filters on Right, Print + Add on Left) */
-        .filter-action-row {
-            margin-top: 14px;
-            padding-top: 14px;
-            border-top: 1px solid var(--border-light);
+        .search-controls-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 10px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--border-subtle);
         }
 
-        .filter-pills-group {
+        .primary-search-group {
             display: flex;
             align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
+            gap: 8px;
+            flex: 1;
+            min-width: 220px;
         }
 
-        .filter-pill {
-            height: 36px;
-            padding: 0 14px;
-            border-radius: 999px;
-            font-size: 14px;
-            background-color: var(--apple-bg);
-            color: var(--text-primary);
-            border: 1px solid #CBD5E1;
+        .btn-primary-action {
+            flex: 1;
+            height: 42px;
+            padding: 0 18px;
+            border-radius: var(--radius-md);
+            background: var(--brand-primary-soft);
+            border: 1.5px solid var(--brand-primary);
+            color: var(--brand-primary);
+            font-size: 15px;
+            font-weight: 600;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.06);
         }
 
-        .filter-pill.active {
-            background-color: var(--navy-dark);
-            color: #FFFFFF;
-            border-color: var(--navy-dark);
+        .btn-primary-action:hover {
+            background: rgba(13, 148, 136, 0.18);
         }
 
-        .row-left-actions {
+        .btn-ghost {
+            height: 42px;
+            padding: 0 16px;
+            border-radius: var(--radius-md);
+            background: transparent;
+            border: 1.5px solid var(--border-strong);
+            color: var(--ink-primary);
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--border-strong);
+        }
+
+        .secondary-actions-group {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .btn-print-inline {
-            height: 36px;
+        .btn-outline-ink {
+            height: 42px;
             padding: 0 14px;
-            border-radius: 999px;
-            background-color: #FFFFFF;
-            color: var(--navy-dark);
-            border: 1.5px solid var(--navy-dark);
+            border-radius: var(--radius-md);
+            background: var(--surface-card);
+            border: 1.5px solid var(--border-strong);
+            color: var(--ink-primary);
             font-size: 14px;
+            font-weight: 600;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 6px;
-            white-space: nowrap;
         }
 
-        .btn-print-inline:hover {
-            background-color: #F1F5F9;
+        .btn-outline-ink:hover {
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
         }
 
-        .btn-add-inline {
-            height: 36px;
-            padding: 0 14px;
-            border-radius: 999px;
-            background-color: var(--apple-blue);
-            color: #FFFFFF;
-            border: 1.5px solid var(--apple-blue);
+        .btn-add-accent {
+            height: 42px;
+            padding: 0 16px;
+            border-radius: var(--radius-md);
+            background: var(--accent-indigo-soft);
+            border: 1.5px solid var(--accent-indigo);
+            color: var(--accent-indigo);
             font-size: 14px;
+            font-weight: 600;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 6px;
-            white-space: nowrap;
         }
 
-        .btn-add-inline:hover {
-            background-color: var(--apple-blue-hover);
+        .btn-add-accent:hover {
+            opacity: 0.9;
         }
 
         /* =====================================================================
-           4. RESULTS BAR, RECORD CARDS & PAGINATION (20 PER PAGE)
+           5. RESULTS BAR & DIGITAL IDENTITY PASS CARDS
            ===================================================================== */
-        .results-toolbar {
+        .results-bar {
             margin-top: 16px;
             margin-bottom: 10px;
-            padding: 8px 12px;
-            background-color: #FFFFFF;
-            border: 1px solid var(--border-light);
+            padding: 10px 14px;
+            background:
+                linear-gradient(90deg, rgba(79, 70, 229, 0.04), transparent),
+                linear-gradient(var(--surface-card), var(--surface-card)) padding-box,
+                linear-gradient(135deg, rgba(79, 70, 229, 0.38), rgba(139, 92, 246, 0.26)) border-box;
+            border: 1px solid transparent;
+            box-shadow: 0 6px 20px -8px rgba(79, 70, 229, 0.12);
             border-radius: 14px;
             display: none;
             align-items: center;
@@ -410,44 +559,47 @@
             gap: 10px;
         }
 
-        .results-toolbar.visible {
+        .results-bar.visible {
             display: flex;
         }
 
-        .results-summary {
+        .results-meta {
             font-size: 14px;
-            color: var(--text-secondary);
+            font-weight: 600;
+            color: var(--ink-secondary);
         }
 
-        .select-all-label {
+        .select-all-toggle {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             font-size: 14px;
-            color: var(--text-primary);
+            font-weight: 600;
+            color: var(--ink-primary);
             cursor: pointer;
             user-select: none;
         }
 
-        .custom-checkbox {
+        .modern-check {
             appearance: none;
             -webkit-appearance: none;
             width: 22px;
             height: 22px;
-            border: 1.5px solid #94A3B8;
+            border: 1.5px solid var(--border-strong);
             border-radius: 7px;
-            background-color: #FFFFFF;
+            background: var(--surface-card);
             cursor: pointer;
             position: relative;
             flex-shrink: 0;
+            transition: all 0.15s ease;
         }
 
-        .custom-checkbox:checked {
-            background-color: var(--apple-blue);
-            border-color: var(--apple-blue);
+        .modern-check:checked {
+            background: var(--brand-primary);
+            border-color: var(--brand-primary);
         }
 
-        .custom-checkbox:checked::after {
+        .modern-check:checked::after {
             content: "";
             position: absolute;
             left: 7px;
@@ -459,150 +611,242 @@
             transform: rotate(45deg);
         }
 
-        .empty-state {
+        .empty-canvas {
             margin-top: 16px;
-            background-color: #FFFFFF;
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 40px 20px;
+            background:
+                linear-gradient(var(--surface-card), var(--surface-card)) padding-box,
+                linear-gradient(135deg, rgba(13, 148, 136, 0.28), rgba(148, 163, 184, 0.16), rgba(79, 70, 229, 0.20)) border-box;
+            border: 1px solid transparent;
+            box-shadow: 0 12px 32px -12px rgba(15, 23, 42, 0.07);
+            border-radius: var(--radius-xl);
+            padding: 44px 20px;
             text-align: center;
-            color: var(--text-secondary);
         }
 
-        .empty-state h3 {
-            font-size: 18px;
-            color: var(--text-primary);
-            margin-bottom: 6px;
-        }
-
-        .empty-state p {
-            font-size: 14px;
-        }
-
-        .cards-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        /* Citizen Record Card */
-        .citizen-card {
-            background-color: #FFFFFF;
-            border: 1px solid var(--border-light);
+        .empty-icon-circle {
+            width: 60px;
+            height: 60px;
             border-radius: 18px;
-            padding: 14px 18px 14px 14px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-            transition: border-color 0.2s, background-color 0.2s;
-        }
-
-        .citizen-card:hover {
-            border-color: #CBD5E1;
-        }
-
-        .citizen-card.selected {
-            border-color: var(--apple-blue);
-            background-color: #F8FAFC;
-        }
-
-        /* Right Side Accent Stripe */
-        .citizen-card::before {
-            content: "";
-            position: absolute;
-            right: 0;
-            top: 12px;
-            bottom: 12px;
-            width: 4px;
-            border-radius: 4px 0 0 4px;
-            background-color: var(--apple-blue);
-        }
-
-        .citizen-card.is-local::before {
-            background-color: var(--gold-accent);
-        }
-
-        .card-main {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .card-name-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .citizen-name {
-            font-size: 20px;
-            color: var(--pitch-black);
-            line-height: 1.35;
-        }
-
-        .local-tag {
-            font-size: 12px;
-            padding: 1px 8px;
-            border-radius: 6px;
-            background-color: var(--gold-bg);
-            border: 1px solid var(--gold-border);
-            color: var(--gold-text);
-        }
-
-        /* High-Contrast Numbers Row Beneath Name */
-        .badges-row {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .badge-id {
-            background-color: var(--id-bg);
-            border: 1px solid var(--id-border);
-            color: var(--id-text);
-            font-size: 18px;
-            padding: 3px 10px;
-            border-radius: 9px;
-            letter-spacing: 0.5px;
-        }
-
-        .badge-mobile {
-            background-color: var(--mob-bg);
-            border: 1px solid var(--mob-border);
-            color: var(--mob-text);
-            font-size: 17px;
-            padding: 3px 10px;
-            border-radius: 9px;
-            letter-spacing: 0.5px;
-        }
-
-        .badge-family {
-            background-color: var(--gold-bg);
-            border: 1px solid var(--gold-border);
-            color: var(--gold-text);
-            font-size: 16px;
-            padding: 3px 10px;
-            border-radius: 9px;
-        }
-
-        .checkbox-area {
-            padding: 6px;
+            background: var(--brand-primary-soft);
+            color: var(--brand-primary);
+            margin: 0 auto 14px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Pagination Bar */
-        .pagination-bar {
+        .empty-canvas h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            margin-bottom: 6px;
+        }
+
+        .empty-canvas p {
+            font-size: 14px;
+            color: var(--ink-muted);
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .cards-stack {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        /* Digital ID Pass Card */
+        .id-pass-card {
+            background:
+                linear-gradient(var(--surface-card), var(--surface-card)) padding-box,
+                linear-gradient(135deg, rgba(13, 148, 136, 0.30), rgba(148, 163, 184, 0.18), rgba(79, 70, 229, 0.20)) border-box;
+            border: 1px solid transparent;
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 20px -8px rgba(15, 23, 42, 0.07);
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
+        }
+
+        .id-pass-card:hover {
+            border-color: var(--brand-primary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .id-pass-card.is-selected {
+            border-color: var(--brand-primary);
+            background: linear-gradient(to left, var(--brand-primary-soft), var(--surface-card) 45%);
+        }
+
+        .pass-stripe {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: linear-gradient(180deg, var(--brand-primary), #0284C7);
+        }
+
+        .id-pass-card.is-female {
+            background:
+                linear-gradient(var(--surface-card), var(--surface-card)) padding-box,
+                linear-gradient(135deg, rgba(225, 29, 72, 0.32), rgba(168, 85, 247, 0.22), rgba(148, 163, 184, 0.16)) border-box;
+        }
+
+        .id-pass-card.is-female .pass-stripe {
+            background: linear-gradient(180deg, #E11D48, #9333EA);
+        }
+
+        .id-pass-card.is-female .avatar-squircle {
+            background: rgba(225, 29, 72, 0.10);
+            border-color: rgba(225, 29, 72, 0.25);
+            color: #E11D48;
+        }
+
+        [data-theme="dark"] .id-pass-card.is-female .avatar-squircle {
+            color: #FDA4AF;
+        }
+
+        .id-pass-card.is-local {
+            background:
+                linear-gradient(var(--surface-card), var(--surface-card)) padding-box,
+                linear-gradient(135deg, rgba(217, 119, 6, 0.42), rgba(245, 158, 11, 0.22), rgba(148, 163, 184, 0.16)) border-box;
+        }
+
+        .id-pass-card.is-local .pass-stripe {
+            background: linear-gradient(180deg, var(--accent-amber), #EA580C);
+        }
+
+        .pass-left-cluster {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+            padding-right: 6px;
+        }
+
+        .avatar-squircle {
+            width: 44px;
+            height: 44px;
+            border-radius: 13px;
+            background: var(--surface-input);
+            border: 1px solid var(--border-subtle);
+            color: var(--brand-primary);
+            font-size: 19px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .id-pass-card.is-local .avatar-squircle {
+            background: var(--accent-amber-soft);
+            border-color: var(--accent-amber-border);
+            color: var(--accent-amber);
+        }
+
+        .pass-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .pass-title-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .pass-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            line-height: 1.35;
+        }
+
+        .local-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: var(--accent-amber-soft);
+            border: 1px solid var(--accent-amber-border);
+            color: var(--accent-amber);
+        }
+
+        .pass-chips-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 8px;
+        }
+
+        .chip-id {
+            background: var(--accent-indigo-soft);
+            border: 1px solid var(--accent-indigo-border);
+            color: var(--accent-indigo);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 9px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            letter-spacing: 0.4px;
+        }
+
+        .chip-id:hover {
+            filter: brightness(0.95);
+        }
+
+        .chip-mobile {
+            background: var(--accent-emerald-soft);
+            border: 1px solid var(--accent-emerald-border);
+            color: var(--accent-emerald);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 9px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chip-neutral {
+            background: var(--surface-input);
+            border: 1px solid var(--border-subtle);
+            color: var(--ink-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 9px;
+        }
+
+        .pass-actions-end {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Pagination */
+        .pagination-dock {
             margin-top: 16px;
-            background-color: #FFFFFF;
-            border: 1px solid var(--border-light);
+            background:
+                linear-gradient(var(--surface-card), var(--surface-card)) padding-box,
+                linear-gradient(135deg, rgba(5, 150, 105, 0.36), rgba(13, 148, 136, 0.26)) border-box;
+            border: 1px solid transparent;
+            box-shadow: 0 6px 20px -8px rgba(5, 150, 105, 0.12);
             border-radius: 16px;
             padding: 10px 14px;
             display: none;
@@ -611,73 +855,89 @@
             gap: 10px;
         }
 
-        .pagination-bar.visible {
+        .pagination-dock.visible {
             display: flex;
         }
 
-        .page-btn {
+        .page-nav-btn {
             height: 38px;
             padding: 0 16px;
             border-radius: 10px;
-            background-color: var(--apple-bg);
-            border: 1px solid #CBD5E1;
-            color: var(--text-primary);
-            font-size: 15px;
+            background: var(--surface-input);
+            border: 1px solid var(--border-subtle);
+            color: var(--ink-primary);
+            font-size: 14px;
+            font-weight: 600;
         }
 
-        .page-btn:disabled {
-            opacity: 0.45;
+        .page-nav-btn:disabled {
+            opacity: 0.4;
             cursor: not-allowed;
         }
 
-        .page-indicator {
-            font-size: 15px;
-            color: var(--text-primary);
-            text-align: center;
+        .page-status {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink-secondary);
         }
 
         /* =====================================================================
-           5. FLOATING BULK ACTION BAR
+           6. FLOATING BULK ACTION DOCK
            ===================================================================== */
-        .bulk-bar {
+        .floating-bulk-dock {
             position: fixed;
-            bottom: 16px;
+            bottom: 18px;
             left: 14px;
             right: 14px;
-            max-width: 692px;
+            max-width: 680px;
             margin: 0 auto;
-            background-color: var(--navy-dark);
-            color: #FFFFFF;
-            border-radius: 16px;
+            background: var(--surface-card);
+            color: var(--ink-primary);
+            border: 1.5px solid var(--brand-primary);
+            border-radius: 18px;
             padding: 12px 16px;
             display: none;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            box-shadow: 0 10px 28px rgba(11, 25, 44, 0.3);
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.08), var(--shadow-lg);
             z-index: 45;
+            animation: slideUp 0.2s ease-out;
         }
 
-        .bulk-bar.visible {
+        [data-theme="dark"] .floating-bulk-dock {
+            background: var(--surface-card);
+            color: var(--ink-primary);
+            border: 1.5px solid var(--brand-primary);
+        }
+
+        .floating-bulk-dock.visible {
             display: flex;
         }
 
-        .bulk-info {
-            font-size: 15px;
+        @keyframes slideUp {
+            from { transform: translateY(16px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .bulk-counter {
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
         }
 
-        .bulk-count-pill {
-            background-color: var(--gold-accent);
-            color: var(--navy-dark);
+        .bulk-badge-num {
+            background: var(--brand-primary);
+            color: #FFFFFF;
             padding: 2px 10px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
+            font-weight: 700;
         }
 
-        .bulk-btns {
+        .bulk-actions-row {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -687,328 +947,415 @@
             height: 38px;
             padding: 0 14px;
             border-radius: 10px;
-            background-color: var(--apple-blue);
-            color: #FFFFFF;
-            font-size: 15px;
+            background: var(--brand-primary-soft);
+            border: 1.5px solid var(--brand-primary);
+            color: var(--brand-primary);
+            font-size: 14px;
+            font-weight: 600;
         }
 
         .btn-bulk-delete {
             height: 38px;
             padding: 0 14px;
             border-radius: 10px;
-            background-color: var(--danger-red);
-            color: #FFFFFF;
-            font-size: 15px;
+            background: var(--danger-soft);
+            border: 1.5px solid var(--danger);
+            color: var(--danger);
+            font-size: 14px;
+            font-weight: 600;
         }
 
         /* =====================================================================
-           6. MODALS (ADD/EDIT SHEET, CENTRAL SYNC MODAL, CONFIRMATION MODAL)
+           7. SLIDE-OVER DRAWER (ADD / EDIT RECORD) & MODALS
            ===================================================================== */
-        .modal-backdrop {
+        .backdrop-overlay {
             position: fixed;
             inset: 0;
-            background-color: rgba(11, 25, 44, 0.65);
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(4px);
             display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
             z-index: 60;
         }
 
-        .modal-backdrop.visible {
+        .backdrop-overlay.visible {
             display: flex;
         }
 
-        .modal-card {
-            background-color: #FFFFFF;
+        /* Centered Modern Modal Card */
+        .drawer-overlay {
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .drawer-panel {
+            background:
+                linear-gradient(var(--surface-card), var(--surface-card)) padding-box,
+                linear-gradient(135deg, rgba(13, 148, 136, 0.42), rgba(79, 70, 229, 0.26), rgba(148, 163, 184, 0.18)) border-box;
+            border: 1px solid transparent;
+            border-radius: 24px;
             width: 100%;
-            max-width: 560px;
+            max-width: 540px;
             max-height: 90vh;
-            border-radius: 22px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.28);
+            box-shadow: var(--shadow-lg);
+            animation: popCenterIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .modal-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-light);
+        @keyframes popCenterIn {
+            from { transform: scale(0.95) translateY(8px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .drawer-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: #FFFFFF;
         }
 
-        .modal-header h2 {
-            font-size: 20px;
-            color: var(--pitch-black);
+        .drawer-header h2 {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--ink-primary);
         }
 
-        .btn-close-x {
+        .close-circle-btn {
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background-color: var(--apple-bg);
-            color: var(--pitch-black);
-            font-size: 18px;
+            background: var(--surface-input);
+            color: var(--ink-primary);
+            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .modal-body {
+        .drawer-body {
             padding: 18px 20px;
             overflow-y: auto;
             flex: 1;
         }
 
-        .error-alert {
-            background-color: var(--danger-bg);
-            border: 1px solid #FECACA;
-            color: var(--danger-red);
+        .form-alert {
+            background: var(--danger-soft);
+            border: 1px solid var(--danger-border);
+            color: var(--danger);
             padding: 10px 14px;
             border-radius: 12px;
-            font-size: 15px;
+            font-size: 14px;
+            font-weight: 600;
             margin-bottom: 14px;
             display: none;
         }
 
-        .error-alert.visible {
+        .form-alert.visible {
             display: block;
         }
 
-        /* Pitch Black Labels & Section Titles (#000000) in Add/Edit Form */
-        .form-sec-heading {
-            font-size: 18px;
-            color: var(--pitch-black);
-            padding-bottom: 6px;
-            margin-top: 18px;
-            margin-bottom: 12px;
-            border-bottom: 1.5px solid var(--border-light);
+        .form-group-card {
+            background:
+                linear-gradient(var(--surface-subtle), var(--surface-subtle)) padding-box,
+                linear-gradient(135deg, rgba(13, 148, 136, 0.34), rgba(148, 163, 184, 0.18)) border-box;
+            border: 1px solid transparent;
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 14px;
         }
 
-        .form-sec-heading:first-child {
-            margin-top: 0;
+        .form-group-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--brand-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
         }
 
-        .form-row-2 {
+        .form-group-title::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            display: inline-block;
+        }
+
+        .form-group-card.tone-teal {
+            background:
+                linear-gradient(180deg, rgba(13, 148, 136, 0.045), transparent 55%),
+                linear-gradient(var(--surface-subtle), var(--surface-subtle)) padding-box,
+                linear-gradient(135deg, rgba(13, 148, 136, 0.42), rgba(2, 132, 199, 0.22)) border-box;
+        }
+        .form-group-card.tone-teal .form-group-title { color: var(--brand-primary); }
+
+        .form-group-card.tone-indigo {
+            background:
+                linear-gradient(180deg, rgba(79, 70, 229, 0.045), transparent 55%),
+                linear-gradient(var(--surface-subtle), var(--surface-subtle)) padding-box,
+                linear-gradient(135deg, rgba(79, 70, 229, 0.42), rgba(139, 92, 246, 0.24)) border-box;
+        }
+        .form-group-card.tone-indigo .form-group-title { color: var(--accent-indigo); }
+
+        .form-group-card.tone-emerald {
+            background:
+                linear-gradient(180deg, rgba(5, 150, 105, 0.045), transparent 55%),
+                linear-gradient(var(--surface-subtle), var(--surface-subtle)) padding-box,
+                linear-gradient(135deg, rgba(5, 150, 105, 0.42), rgba(16, 185, 129, 0.22)) border-box;
+        }
+        .form-group-card.tone-emerald .form-group-title { color: var(--accent-emerald); }
+
+        .form-group-card.tone-amber {
+            background:
+                linear-gradient(180deg, rgba(217, 119, 6, 0.045), transparent 55%),
+                linear-gradient(var(--surface-subtle), var(--surface-subtle)) padding-box,
+                linear-gradient(135deg, rgba(217, 119, 6, 0.42), rgba(234, 88, 12, 0.22)) border-box;
+        }
+        .form-group-card.tone-amber .form-group-title { color: var(--accent-amber); }
+
+        .form-grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
         @media (max-width: 480px) {
-            .form-row-2 {
+            .form-grid-2 {
                 grid-template-columns: 1fr;
             }
         }
 
-        .form-field {
-            margin-bottom: 12px;
+        .field-wrap {
+            margin-bottom: 10px;
         }
 
-        .form-field label {
+        .field-wrap:last-child {
+            margin-bottom: 0;
+        }
+
+        .field-wrap label {
             display: block;
-            font-size: 16px;
-            color: var(--pitch-black);
-            margin-bottom: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-primary);
+            margin-bottom: 4px;
         }
 
-        .form-field input,
-        .form-field select,
-        .form-field textarea {
+        .field-wrap input,
+        .field-wrap select,
+        .field-wrap textarea {
             width: 100%;
-            min-height: 44px;
-            background-color: var(--apple-bg);
-            border: 1px solid #CBD5E1;
-            border-radius: 12px;
-            padding: 10px 12px;
-            font-size: 16px;
-            color: var(--pitch-black);
+            min-height: 42px;
+            background: var(--surface-card);
+            border: 1.5px solid var(--border-subtle);
+            border-radius: 11px;
+            padding: 8px 12px;
+            font-size: 15px;
+            color: var(--ink-primary);
+            transition: border-color 0.2s ease;
         }
 
-        .form-field input:focus,
-        .form-field select:focus,
-        .form-field textarea:focus {
+        .field-wrap input:focus,
+        .field-wrap select:focus,
+        .field-wrap textarea:focus {
             outline: none;
-            background-color: #FFFFFF;
-            border-color: var(--apple-blue);
+            border-color: var(--brand-primary);
         }
 
-        .modal-footer {
+        .drawer-footer {
             padding: 14px 20px;
-            border-top: 1px solid var(--border-light);
+            border-top: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
             gap: 10px;
-            background-color: #FFFFFF;
+            background: var(--surface-card);
         }
 
-        .btn-save {
+        .btn-save-record {
             flex: 2;
-            height: 46px;
+            height: 44px;
             border-radius: 12px;
-            background-color: var(--apple-blue);
-            color: #FFFFFF;
-            font-size: 16px;
+            background: var(--brand-primary-soft);
+            border: 1.5px solid var(--brand-primary);
+            color: var(--brand-primary);
+            font-size: 15px;
+            font-weight: 600;
         }
 
-        .btn-delete-single {
+        .btn-delete-record {
             flex: 1;
-            height: 46px;
+            height: 44px;
             border-radius: 12px;
-            background-color: var(--danger-bg);
-            border: 1px solid #FECACA;
-            color: var(--danger-red);
-            font-size: 16px;
+            background: var(--danger-soft);
+            border: 1px solid var(--danger-border);
+            color: var(--danger);
+            font-size: 14px;
+            font-weight: 600;
             display: none;
         }
 
-        .btn-delete-single.visible {
+        .btn-delete-record.visible {
             display: inline-block;
         }
 
-        .btn-cancel {
+        .btn-cancel-drawer {
             flex: 1;
-            height: 46px;
+            height: 44px;
             border-radius: 12px;
-            background-color: var(--apple-bg);
-            border: 1px solid #CBD5E1;
-            color: var(--pitch-black);
-            font-size: 16px;
+            background: var(--surface-input);
+            border: 1px solid var(--border-subtle);
+            color: var(--ink-primary);
+            font-size: 14px;
+            font-weight: 600;
         }
 
-        /* =====================================================================
-           7. CENTRAL SYNC MODAL (3 STATS + DETAILED REPORT)
-           ===================================================================== */
-        .sync-dialog {
-            background-color: #FFFFFF;
+        /* Center Dialogs (Sync & Confirm) */
+        .center-overlay {
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .dialog-card {
+            background:
+                linear-gradient(var(--surface-card), var(--surface-card)) padding-box,
+                linear-gradient(135deg, rgba(13, 148, 136, 0.42), rgba(79, 70, 229, 0.26), rgba(148, 163, 184, 0.18)) border-box;
             width: 100%;
             max-width: 440px;
             border-radius: 24px;
             padding: 24px 20px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid transparent;
         }
 
-        .sync-dialog-icon {
+        .dialog-icon-ring {
             width: 56px;
             height: 56px;
             border-radius: 16px;
-            background-color: var(--gold-bg);
-            border: 1.5px solid var(--gold-accent);
-            color: var(--gold-accent);
+            background: var(--brand-primary-soft);
+            color: var(--brand-primary);
             margin: 0 auto 12px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .sync-dialog h3 {
-            font-size: 20px;
-            color: var(--pitch-black);
+        .dialog-card h3 {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--ink-primary);
             margin-bottom: 6px;
         }
 
-        .sync-dialog p.desc {
+        .dialog-card p.sub {
             font-size: 14px;
-            color: var(--text-secondary);
+            color: var(--ink-muted);
             margin-bottom: 16px;
         }
 
-        .sync-stats-grid {
+        .sync-stats-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
             margin-bottom: 16px;
         }
 
-        .sync-stat-box {
-            background-color: var(--apple-bg);
-            border: 1px solid var(--border-light);
+        .sync-stat-tile {
+            background: var(--surface-subtle);
+            border: 1px solid var(--border-subtle);
             border-radius: 14px;
             padding: 10px 6px;
         }
 
-        .sync-stat-box .stat-label {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
+        .sync-stat-tile .lbl {
+            font-size: 12px;
+            color: var(--ink-muted);
+            margin-bottom: 2px;
         }
 
-        .sync-stat-box .stat-val {
+        .sync-stat-tile .val {
             font-size: 20px;
-            color: var(--navy-dark);
+            font-weight: 700;
+            color: var(--ink-primary);
         }
 
-        .sync-stat-box.highlight .stat-val {
-            color: var(--apple-blue);
-        }
+        .sync-stat-tile.teal .val { color: var(--brand-primary); }
+        .sync-stat-tile.amber .val { color: var(--accent-amber); }
 
-        .sync-stat-box.gold .stat-val {
-            color: var(--gold-text);
-        }
-
-        .sync-report-box {
+        .sync-report-panel {
             display: none;
-            background-color: #F0FDF4;
-            border: 1px solid #BBF7D0;
-            color: #14532D;
+            background: var(--accent-emerald-soft);
+            border: 1px solid var(--accent-emerald-border);
+            color: var(--accent-emerald);
             border-radius: 12px;
             padding: 10px 12px;
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 16px;
             text-align: right;
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
-        .sync-report-box.error {
-            background-color: var(--danger-bg);
-            border-color: #FECACA;
-            color: var(--danger-red);
+        .sync-report-panel.error {
+            background: var(--danger-soft);
+            border-color: var(--danger-border);
+            color: var(--danger);
         }
 
-        .sync-report-box.visible {
+        .sync-report-panel.visible {
             display: block;
         }
 
-        .sync-dialog-actions {
+        .dialog-actions-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
 
-        .btn-sync-start {
-            height: 46px;
+        .btn-dialog-primary {
+            height: 44px;
             border-radius: 12px;
-            background-color: var(--navy-dark);
-            color: #FFFFFF;
+            background: var(--brand-primary-soft);
+            border: 1.5px solid var(--brand-primary);
+            color: var(--brand-primary);
             font-size: 15px;
+            font-weight: 600;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
 
-        .btn-sync-start:disabled {
+        .btn-dialog-primary.danger {
+            background: var(--danger-soft);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .btn-dialog-primary:disabled {
             opacity: 0.6;
             cursor: wait;
         }
 
-        .btn-sync-cancel {
-            height: 46px;
+        .btn-dialog-cancel {
+            height: 44px;
             border-radius: 12px;
-            background-color: var(--apple-bg);
-            border: 1px solid #CBD5E1;
-            color: var(--pitch-black);
+            background: var(--surface-input);
+            border: 1px solid var(--border-subtle);
+            color: var(--ink-primary);
             font-size: 15px;
+            font-weight: 600;
         }
 
         .spinner {
-            width: 18px;
-            height: 18px;
-            border: 2px solid #FFFFFF;
+            width: 17px;
+            height: 17px;
+            border: 2px solid currentColor;
             border-top-color: transparent;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
@@ -1023,83 +1370,38 @@
             to { transform: rotate(360deg); }
         }
 
-        /* =====================================================================
-           8. CUSTOM CONFIRMATION MODAL & TOAST
-           ===================================================================== */
-        .confirm-box {
-            background-color: #FFFFFF;
-            width: 100%;
-            max-width: 400px;
-            border-radius: 22px;
-            padding: 24px 20px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-        }
-
-        .confirm-box h3 {
-            font-size: 20px;
-            color: var(--pitch-black);
-            margin-bottom: 8px;
-        }
-
-        .confirm-box p {
-            font-size: 15px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .confirm-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .btn-confirm-yes {
-            height: 44px;
-            border-radius: 12px;
-            background-color: var(--apple-blue);
-            color: #FFFFFF;
-            font-size: 16px;
-        }
-
-        .btn-confirm-yes.danger {
-            background-color: var(--danger-red);
-        }
-
-        .btn-confirm-no {
-            height: 44px;
-            border-radius: 12px;
-            background-color: var(--apple-bg);
-            border: 1px solid #CBD5E1;
-            color: var(--pitch-black);
-            font-size: 16px;
-        }
-
-        .toast-msg {
+        /* Toast */
+        .toast-pill {
             position: fixed;
-            top: 84px;
+            top: 78px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: var(--navy-dark);
-            color: #FFFFFF;
-            border: 1px solid var(--gold-accent);
-            padding: 10px 18px;
-            border-radius: 14px;
-            font-size: 15px;
+            background: var(--surface-card);
+            color: var(--ink-primary);
+            border: 1.5px solid var(--brand-primary);
+            padding: 9px 18px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
             z-index: 80;
             display: none;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            box-shadow: var(--shadow-lg);
             max-width: 92%;
             text-align: center;
         }
 
-        .toast-msg.visible {
+        .toast-pill.visible {
             display: block;
+            animation: fadeInToast 0.2s ease;
+        }
+
+        @keyframes fadeInToast {
+            from { opacity: 0; transform: translate(-50%, -8px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
         }
 
         /* =====================================================================
-           9. A4 LANDSCAPE PRINT STYLESHEET (14 COLUMNS, NO BOLD, WESTERN DIGITS)
+           8. A4 LANDSCAPE PRINT STYLESHEET (14 COLUMNS)
            ===================================================================== */
         #printArea {
             display: none;
@@ -1113,16 +1415,17 @@
 
             body {
                 background: #FFFFFF !important;
+                background-image: none !important;
                 color: #000000 !important;
                 margin: 0 !important;
                 padding: 0 !important;
             }
 
-            .app-header,
-            .main-wrapper,
-            .bulk-bar,
-            .modal-backdrop,
-            .toast-msg {
+            .top-bar-wrap,
+            .app-container,
+            .floating-bulk-dock,
+            .backdrop-overlay,
+            .toast-pill {
                 display: none !important;
             }
 
@@ -1143,6 +1446,7 @@
 
             .print-header h2 {
                 font-size: 18px;
+                font-weight: 700;
                 color: #000000;
             }
 
@@ -1178,318 +1482,346 @@
 <body>
 
     <!-- =====================================================================
-         1. TOP EDITORIAL HEADER
+         1. FLOATING GLASS HEADER
          ===================================================================== -->
-    <header class="app-header">
-        <div class="header-inner">
+    <div class="top-bar-wrap">
+        <header class="glass-header">
             <div class="brand-cluster">
-                <!-- Gold Framed ID Card Sync Button + "اضغط هنا" Callout -->
-                <div class="sync-icon-wrapper">
-                    <button type="button" id="openSyncBtn" class="sync-icon-btn" title="مزامنة البيانات">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <div class="sync-trigger-wrap">
+                    <button type="button" id="openSyncBtn" class="sync-orb-btn" title="مزامنة البيانات">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <rect x="2.5" y="4.5" width="19" height="15" rx="2.5"></rect>
                             <circle cx="8.5" cy="10.5" r="2.2"></circle>
                             <path d="M5 16.5c.7-2 2-3 3.5-3s2.8 1 3.5 3"></path>
                             <line x1="14" y1="9.5" x2="18.5" y2="9.5"></line>
                             <line x1="14" y1="13" x2="18.5" y2="13"></line>
-                            <line x1="14" y1="16.5" x2="17" y2="16.5"></line>
                         </svg>
                     </button>
                     <div id="syncCalloutBadge" class="sync-callout">
-                        <span>اضغط هنا</span>
+                        <span>اضغط هنا للمزامنة</span>
                     </div>
                 </div>
 
-                <div class="brand-titles">
+                <div class="brand-info">
                     <h1>السجل المدني</h1>
-                    <div class="subtitle-row">
-                        <p>تصميم ابو حازم</p>
-                        <span id="offlineStatusTag" class="offline-tag">وضع بدون إنترنت</span>
+                    <div class="brand-sub">
+                        <span>تصميم ابو حازم</span>
+                        <span id="offlineStatusTag" class="offline-pill">بدون إنترنت</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Left Total Capsule -->
-            <div class="total-capsule">
-                <span>الإجمالي:</span>
-                <span id="headerTotalCount" class="num">0</span>
+            <div class="header-controls">
+                <button type="button" id="themeToggleBtn" class="icon-square-btn" title="تبديل المظهر">
+                    <svg id="themeIconSun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none;">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                    </svg>
+                    <svg id="themeIconMoon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <div class="total-pill">
+                    <span>السجلات:</span>
+                    <span id="headerTotalCount">0</span>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
+    </div>
 
     <!-- =====================================================================
-         2. MAIN SEARCH, FILTER & RESULTS AREA
+         2. MAIN WORKSPACE
          ===================================================================== -->
-    <div class="main-wrapper">
-        <!-- Search & Filter Card -->
-        <section class="search-card">
-            <div class="search-grid">
-                <div class="field-box">
-                    <label for="searchNameInput">الاسم الكامل أو جزء منه</label>
-                    <input type="text" id="searchNameInput" placeholder="اكتب الاسم للبحث..." autocomplete="off">
+    <main class="app-container">
+
+        <!-- Search & Action Dock -->
+        <section class="search-dock">
+            <div class="search-inputs-row">
+                <div class="input-shell">
+                    <label for="searchNameInput">البحث بالاسم الكامل أو جزء منه</label>
+                    <div class="input-with-icon">
+                        <svg class="lead-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                        </svg>
+                        <input type="text" id="searchNameInput" placeholder="اكتب الاسم للبحث..." autocomplete="off">
+                        <button type="button" id="clearNameFieldBtn" class="mini-clear-x" title="مسح">✕</button>
+                    </div>
                 </div>
-                <div class="field-box">
-                    <label for="searchIdInput">رقم الهوية</label>
-                    <input type="text" id="searchIdInput" inputmode="numeric" placeholder="أدخل رقم الهوية..." autocomplete="off">
+
+                <div class="input-shell">
+                    <label for="searchIdInput">البحث برقم الهوية</label>
+                    <div class="input-with-icon">
+                        <svg class="lead-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                            <line x1="7" y1="10" x2="17" y2="10"></line>
+                            <line x1="7" y1="14" x2="13" y2="14"></line>
+                        </svg>
+                        <input type="text" id="searchIdInput" inputmode="numeric" placeholder="أدخل رقم الهوية..." autocomplete="off">
+                        <button type="button" id="clearIdFieldBtn" class="mini-clear-x" title="مسح">✕</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="search-actions">
-                <button type="button" id="searchBtn" class="btn-search">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="7"></circle>
-                        <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
-                    </svg>
-                    <span>بحث في السجل</span>
-                </button>
-                <button type="button" id="clearSearchBtn" class="btn-clear">
-                    <span>مسح</span>
-                </button>
-            </div>
-
-            <!-- Filter Pills (Right) + Print & Add Buttons Side-by-Side (Left) -->
-            <div class="filter-action-row">
-                <div class="filter-pills-group">
-                    <button type="button" class="filter-pill active" data-filter="all">الكل</button>
-                    <button type="button" class="filter-pill" data-filter="local">المعدلة محلياً</button>
-                    <button type="button" class="filter-pill" data-filter="married">متزوج</button>
-                    <button type="button" class="filter-pill" data-filter="single">أعزب</button>
+            <div class="search-controls-row">
+                <div class="primary-search-group">
+                    <button type="button" id="searchBtn" class="btn-primary-action">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                        </svg>
+                        <span>بحث في السجل</span>
+                    </button>
+                    <button type="button" id="clearSearchBtn" class="btn-ghost">
+                        <span>إعادة ضبط</span>
+                    </button>
                 </div>
 
-                <div class="row-left-actions">
-                    <button type="button" id="printTopBtn" class="btn-print-inline">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <div class="secondary-actions-group">
+                    <button type="button" id="printTopBtn" class="btn-outline-ink">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M6 9V3h12v6"></path>
                             <rect x="3" y="9" width="18" height="9" rx="2"></rect>
                             <rect x="6" y="14" width="12" height="7"></rect>
                         </svg>
                         <span>طباعة</span>
                     </button>
-                    <button type="button" id="openAddBtn" class="btn-add-inline">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <button type="button" id="openAddBtn" class="btn-add-accent">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                             <line x1="12" y1="5" x2="12" y2="19"></line>
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                         </svg>
-                        <span>إضافة سجل جديد</span>
+                        <span>إضافة سجل</span>
                     </button>
                 </div>
+            </div>
+
+            <div class="filter-pills-bar" aria-label="تصفية السجلات">
+                <button type="button" class="filter-pill active" data-filter="all">الكل</button>
+                <button type="button" class="filter-pill" data-filter="local">المعدلة محلياً</button>
+                <button type="button" class="filter-pill" data-filter="married">متزوج</button>
+                <button type="button" class="filter-pill" data-filter="single">أعزب</button>
             </div>
         </section>
 
         <!-- Results Toolbar -->
-        <div id="resultsToolbar" class="results-toolbar">
-            <span id="resultsCountLabel" class="results-summary">0 نتيجة</span>
-            <label class="select-all-label">
+        <div id="resultsToolbar" class="results-bar">
+            <span id="resultsCountLabel" class="results-meta">0 نتيجة</span>
+            <label class="select-all-toggle">
                 <span>تحديد الصفحة</span>
-                <input type="checkbox" id="selectPageCheckbox" class="custom-checkbox">
+                <input type="checkbox" id="selectPageCheckbox" class="modern-check">
             </label>
         </div>
 
         <!-- Empty State -->
-        <div id="emptyStateBox" class="empty-state">
-            <h3 id="emptyTitle">أدخل بيانات البحث أو اختر فلتراً</h3>
-            <p id="emptyDesc">يمكنك البحث بالاسم أو رقم الهوية، أو الضغط على أيقونة البطاقة الذهبية في الأعلى لمزامنة البيانات.</p>
+        <div id="emptyStateBox" class="empty-canvas">
+            <div class="empty-icon-circle">
+                <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                </svg>
+            </div>
+            <h3 id="emptyTitle">ابدأ بالبحث أو اختر فلتراً</h3>
+            <p id="emptyDesc">أدخل الاسم أو رقم الهوية، أو اختر إحدى خيارات التصفية، أو اضغط على أيقونة المزامنة لجلب البيانات.</p>
         </div>
 
-        <!-- Cards Container (20 per page) -->
-        <div id="cardsList" class="cards-list"></div>
+        <!-- Digital Identity Pass Cards -->
+        <div id="cardsList" class="cards-stack"></div>
 
-        <!-- Pagination Controls -->
-        <div id="paginationBar" class="pagination-bar">
-            <button type="button" id="prevPageBtn" class="page-btn">السابق</button>
-            <div id="pageIndicator" class="page-indicator">صفحة 1 من 1</div>
-            <button type="button" id="nextPageBtn" class="page-btn">التالي</button>
+        <!-- Pagination -->
+        <div id="paginationBar" class="pagination-dock">
+            <button type="button" id="prevPageBtn" class="page-nav-btn">السابق</button>
+            <div id="pageIndicator" class="page-status">صفحة 1 من 1</div>
+            <button type="button" id="nextPageBtn" class="page-nav-btn">التالي</button>
         </div>
-    </div>
+
+    </main>
 
     <!-- =====================================================================
-         3. FLOATING BULK ACTION BAR
+         3. FLOATING BULK ACTION DOCK
          ===================================================================== -->
-    <div id="bulkBar" class="bulk-bar">
-        <div class="bulk-info">
-            <span id="bulkSelectedCount" class="bulk-count-pill">0</span>
+    <div id="bulkBar" class="floating-bulk-dock">
+        <div class="bulk-counter">
+            <span id="bulkSelectedCount" class="bulk-badge-num">0</span>
             <span>سجل محدد</span>
         </div>
-        <div class="bulk-btns">
+        <div class="bulk-actions-row">
             <button type="button" id="bulkPrintBtn" class="btn-bulk-print">طباعة المحدد</button>
             <button type="button" id="bulkDeleteBtn" class="btn-bulk-delete">حذف المحدد</button>
         </div>
     </div>
 
     <!-- =====================================================================
-         4. ADD / EDIT RECORD MODAL (PITCH BLACK LABELS #000000)
+         4. SLIDE-OVER ADD / EDIT DRAWER
          ===================================================================== -->
-    <div id="formModalBackdrop" class="modal-backdrop">
-        <div class="modal-card">
-            <div class="modal-header">
+    <div id="formModalBackdrop" class="backdrop-overlay drawer-overlay">
+        <div class="drawer-panel">
+            <div class="drawer-header">
                 <h2 id="formModalTitle">إضافة سجل جديد</h2>
-                <button type="button" id="closeFormModalBtn" class="btn-close-x">✕</button>
+                <button type="button" id="closeFormModalBtn" class="close-circle-btn">✕</button>
             </div>
 
-            <div class="modal-body">
-                <div id="formErrorAlert" class="error-alert"></div>
+            <div class="drawer-body">
+                <div id="formErrorAlert" class="form-alert"></div>
 
                 <form id="citizenForm" onsubmit="return false;">
                     <input type="hidden" id="editingOriginalId">
 
-                    <div class="form-sec-heading">البيانات الأساسية</div>
-
-                    <div class="form-field">
-                        <label for="inpFullName">الاسم الكامل</label>
-                        <input type="text" id="inpFullName" placeholder="أدخل الاسم الكامل..." required>
-                    </div>
-
-                    <div class="form-field">
-                        <label for="inpNationalId">رقم الهوية</label>
-                        <input type="text" id="inpNationalId" inputmode="numeric" placeholder="أدخل رقم الهوية..." required>
-                    </div>
-
-                    <div class="form-row-2">
-                        <div class="form-field">
-                            <label for="inpGender">الجنس</label>
-                            <select id="inpGender">
-                                <option value="ذكر">ذكر</option>
-                                <option value="أنثى">أنثى</option>
-                            </select>
+                    <div class="form-group-card tone-teal">
+                        <div class="form-group-title">البيانات الأساسية</div>
+                        <div class="field-wrap">
+                            <label for="inpFullName">الاسم الكامل</label>
+                            <input type="text" id="inpFullName" placeholder="أدخل الاسم الكامل..." required>
                         </div>
-                        <div class="form-field">
-                            <label for="inpBirthDate">تاريخ الميلاد</label>
-                            <input type="date" id="inpBirthDate">
+                        <div class="field-wrap">
+                            <label for="inpNationalId">رقم الهوية</label>
+                            <input type="text" id="inpNationalId" inputmode="numeric" placeholder="أدخل رقم الهوية..." required>
                         </div>
-                    </div>
-
-                    <div class="form-row-2">
-                        <div class="form-field">
-                            <label for="inpMaritalStatus">الحالة الاجتماعية</label>
-                            <select id="inpMaritalStatus">
-                                <option value="أعزب">أعزب</option>
-                                <option value="متزوج">متزوج</option>
-                                <option value="مطلق">مطلق</option>
-                                <option value="أرمل">أرمل</option>
-                            </select>
+                        <div class="form-grid-2">
+                            <div class="field-wrap">
+                                <label for="inpGender">الجنس</label>
+                                <select id="inpGender">
+                                    <option value="ذكر">ذكر</option>
+                                    <option value="أنثى">أنثى</option>
+                                </select>
+                            </div>
+                            <div class="field-wrap">
+                                <label for="inpBirthDate">تاريخ الميلاد</label>
+                                <input type="date" id="inpBirthDate">
+                            </div>
                         </div>
-                        <div class="form-field">
-                            <label for="inpFamilyCount">عدد أفراد الأسرة</label>
-                            <input type="text" id="inpFamilyCount" inputmode="numeric" placeholder="0">
+                        <div class="form-grid-2">
+                            <div class="field-wrap">
+                                <label for="inpMaritalStatus">الحالة الاجتماعية</label>
+                                <select id="inpMaritalStatus">
+                                    <option value="أعزب">أعزب</option>
+                                    <option value="متزوج">متزوج</option>
+                                    <option value="مطلق">مطلق</option>
+                                    <option value="أرمل">أرمل</option>
+                                </select>
+                            </div>
+                            <div class="field-wrap">
+                                <label for="inpFamilyCount">عدد أفراد الأسرة</label>
+                                <input type="text" id="inpFamilyCount" inputmode="numeric" placeholder="0">
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-sec-heading">بيانات الأسرة</div>
-
-                    <div class="form-field">
-                        <label for="inpMotherName">اسم الأم</label>
-                        <input type="text" id="inpMotherName" placeholder="أدخل اسم الأم...">
-                    </div>
-
-                    <div class="form-row-2">
-                        <div class="form-field">
-                            <label for="inpWifeName">اسم الزوجة</label>
-                            <input type="text" id="inpWifeName" placeholder="أدخل اسم الزوجة...">
+                    <div class="form-group-card tone-indigo">
+                        <div class="form-group-title">بيانات الأسرة</div>
+                        <div class="field-wrap">
+                            <label for="inpMotherName">اسم الأم</label>
+                            <input type="text" id="inpMotherName" placeholder="أدخل اسم الأم...">
                         </div>
-                        <div class="form-field">
-                            <label for="inpWifeNationalId">رقم هوية الزوجة</label>
-                            <input type="text" id="inpWifeNationalId" inputmode="numeric" placeholder="رقم هوية الزوجة...">
-                        </div>
-                    </div>
-
-                    <div class="form-sec-heading">التواصل والعنوان</div>
-
-                    <div class="form-row-2">
-                        <div class="form-field">
-                            <label for="inpMobile">رقم الجوال</label>
-                            <input type="text" id="inpMobile" inputmode="numeric" placeholder="أدخل رقم الجوال...">
-                        </div>
-                        <div class="form-field">
-                            <label for="inpAltPhone">الهاتف البديل</label>
-                            <input type="text" id="inpAltPhone" inputmode="numeric" placeholder="أدخل الهاتف البديل...">
+                        <div class="form-grid-2">
+                            <div class="field-wrap">
+                                <label for="inpWifeName">اسم الزوجة</label>
+                                <input type="text" id="inpWifeName" placeholder="أدخل اسم الزوجة...">
+                            </div>
+                            <div class="field-wrap">
+                                <label for="inpWifeNationalId">رقم هوية الزوجة</label>
+                                <input type="text" id="inpWifeNationalId" inputmode="numeric" placeholder="رقم هوية الزوجة...">
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-field">
-                        <label for="inpAddress">العنوان التفصيلي</label>
-                        <input type="text" id="inpAddress" placeholder="أدخل العنوان...">
+                    <div class="form-group-card tone-emerald">
+                        <div class="form-group-title">التواصل والعنوان</div>
+                        <div class="form-grid-2">
+                            <div class="field-wrap">
+                                <label for="inpMobile">رقم الجوال</label>
+                                <input type="text" id="inpMobile" inputmode="numeric" placeholder="أدخل رقم الجوال...">
+                            </div>
+                            <div class="field-wrap">
+                                <label for="inpAltPhone">الهاتف البديل</label>
+                                <input type="text" id="inpAltPhone" inputmode="numeric" placeholder="أدخل الهاتف البديل...">
+                            </div>
+                        </div>
+                        <div class="field-wrap">
+                            <label for="inpAddress">العنوان التفصيلي</label>
+                            <input type="text" id="inpAddress" placeholder="أدخل العنوان...">
+                        </div>
                     </div>
 
-                    <div class="form-sec-heading">ملاحظات إضافية</div>
-
-                    <div class="form-field">
-                        <label for="inpNotes">ملاحظات</label>
-                        <textarea id="inpNotes" rows="2" placeholder="أدخل أي ملاحظات..."></textarea>
+                    <div class="form-group-card tone-amber">
+                        <div class="form-group-title">ملاحظات إضافية</div>
+                        <div class="field-wrap">
+                            <label for="inpNotes">ملاحظات</label>
+                            <textarea id="inpNotes" rows="2" placeholder="أدخل أي ملاحظات..."></textarea>
+                        </div>
                     </div>
                 </form>
             </div>
 
-            <div class="modal-footer">
-                <button type="button" id="saveFormBtn" class="btn-save">حفظ البيانات</button>
-                <button type="button" id="deleteSingleBtn" class="btn-delete-single">حذف</button>
-                <button type="button" id="cancelFormBtn" class="btn-cancel">إلغاء</button>
+            <div class="drawer-footer">
+                <button type="button" id="saveFormBtn" class="btn-save-record">حفظ البيانات</button>
+                <button type="button" id="deleteSingleBtn" class="btn-delete-record">حذف</button>
+                <button type="button" id="cancelFormBtn" class="btn-cancel-drawer">إلغاء</button>
             </div>
         </div>
     </div>
 
     <!-- =====================================================================
-         5. CENTRAL SYNC MODAL (3 STATS + DETAILED REPORT)
+         5. CENTRAL SYNC MODAL
          ===================================================================== -->
-    <div id="syncModalBackdrop" class="modal-backdrop">
-        <div class="sync-dialog">
-            <div class="sync-dialog-icon">
-                <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+    <div id="syncModalBackdrop" class="backdrop-overlay center-overlay">
+        <div class="dialog-card">
+            <div class="dialog-icon-ring">
+                <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path d="M4 12a8 8 0 0 1 14.9-3M20 4v5h-5"></path>
                     <path d="M20 12a8 8 0 0 1-14.9 3M4 20v-5h5"></path>
                 </svg>
             </div>
 
             <h3>مزامنة بيانات السجل</h3>
-            <p class="desc">جلب وتحديث البيانات من المصدر مع الحفاظ التام على السجلات المضافة أو المعدلة محلياً.</p>
+            <p class="sub">جلب وتحديث البيانات من المصدر مع حماية السجلات المضافة أو المعدلة محلياً.</p>
 
-            <!-- 3 Statistics Boxes -->
-            <div class="sync-stats-grid">
-                <div class="sync-stat-box">
-                    <div class="stat-label">إجمالي السجلات</div>
-                    <div id="syncStatTotal" class="stat-val">0</div>
+            <div class="sync-stats-row">
+                <div class="sync-stat-tile">
+                    <div class="lbl">إجمالي السجلات</div>
+                    <div id="syncStatTotal" class="val">0</div>
                 </div>
-                <div class="sync-stat-box highlight">
-                    <div class="stat-label">الأسماء المحملة</div>
-                    <div id="syncStatLoaded" class="stat-val">0</div>
+                <div class="sync-stat-tile teal">
+                    <div class="lbl">الأسماء المحملة</div>
+                    <div id="syncStatLoaded" class="val">0</div>
                 </div>
-                <div class="sync-stat-box gold">
-                    <div class="stat-label">المضافة أو المعدلة</div>
-                    <div id="syncStatChanged" class="stat-val">0</div>
+                <div class="sync-stat-tile amber">
+                    <div class="lbl">المعدلة محلياً</div>
+                    <div id="syncStatChanged" class="val">0</div>
                 </div>
             </div>
 
-            <!-- Detailed Sync Report Inside Card -->
-            <div id="syncReportBox" class="sync-report-box"></div>
+            <div id="syncReportBox" class="sync-report-panel"></div>
 
-            <div class="sync-dialog-actions">
-                <button type="button" id="startSyncBtn" class="btn-sync-start">
+            <div class="dialog-actions-2">
+                <button type="button" id="startSyncBtn" class="btn-dialog-primary">
                     <span id="syncSpinner" class="spinner"></span>
                     <span id="startSyncBtnText">المزامنة من المصدر</span>
                 </button>
-                <button type="button" id="closeSyncBtn" class="btn-sync-cancel">إلغاء الأمر</button>
+                <button type="button" id="closeSyncBtn" class="btn-dialog-cancel">إلغاء الأمر</button>
             </div>
         </div>
     </div>
 
     <!-- =====================================================================
-         6. CUSTOM CONFIRMATION MODAL
+         6. CUSTOM CONFIRMATION DIALOG
          ===================================================================== -->
-    <div id="confirmModalBackdrop" class="modal-backdrop">
-        <div class="confirm-box">
+    <div id="confirmModalBackdrop" class="backdrop-overlay center-overlay">
+        <div class="dialog-card">
             <h3 id="confirmModalTitle">تأكيد العملية</h3>
-            <p id="confirmModalMsg">هل أنت متأكد من تنفيذ هذا الإجراء؟</p>
-            <div class="confirm-actions">
-                <button type="button" id="confirmYesBtn" class="btn-confirm-yes">تأكيد</button>
-                <button type="button" id="confirmNoBtn" class="btn-confirm-no">إلغاء الأمر</button>
+            <p id="confirmModalMsg" class="sub">هل أنت متأكد من تنفيذ هذا الإجراء؟</p>
+            <div class="dialog-actions-2">
+                <button type="button" id="confirmYesBtn" class="btn-dialog-primary">تأكيد</button>
+                <button type="button" id="confirmNoBtn" class="btn-dialog-cancel">إلغاء الأمر</button>
             </div>
         </div>
     </div>
 
-    <!-- Floating Toast Notification -->
-    <div id="toastBanner" class="toast-msg"></div>
+    <!-- Toast Notification -->
+    <div id="toastBanner" class="toast-pill"></div>
 
     <!-- =====================================================================
-         7. A4 LANDSCAPE PRINT CONTAINER (14 COLUMNS)
+         7. A4 LANDSCAPE PRINT AREA (14 COLUMNS)
          ===================================================================== -->
     <div id="printArea">
         <div class="print-header">
@@ -1520,18 +1852,51 @@
     </div>
 
     <!-- =====================================================================
-         8. APPLICATION JAVASCRIPT ENGINE
+         8. APPLICATION ENGINE
          ===================================================================== -->
     <script>
         (function () {
             'use strict';
 
             // -----------------------------------------------------------------
-            // A. Offline Service Worker & Network Detection
+            // A. Theme Toggle (Light / Dark) with safe localStorage
+            // -----------------------------------------------------------------
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const themeIconSun = document.getElementById('themeIconSun');
+            const themeIconMoon = document.getElementById('themeIconMoon');
+
+            function applyTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                if (theme === 'dark') {
+                    themeIconSun.style.display = 'block';
+                    themeIconMoon.style.display = 'none';
+                } else {
+                    themeIconSun.style.display = 'none';
+                    themeIconMoon.style.display = 'block';
+                }
+                try {
+                    localStorage.setItem('civil_registry_theme', theme);
+                } catch (e) {}
+            }
+
+            try {
+                const savedTheme = localStorage.getItem('civil_registry_theme');
+                if (savedTheme === 'dark' || savedTheme === 'light') {
+                    applyTheme(savedTheme);
+                }
+            } catch (e) {}
+
+            themeToggleBtn.addEventListener('click', () => {
+                const current = document.documentElement.getAttribute('data-theme') || 'light';
+                applyTheme(current === 'light' ? 'dark' : 'light');
+            });
+
+            // -----------------------------------------------------------------
+            // B. Offline Service Worker & Network Detection
             // -----------------------------------------------------------------
             if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
                 const swScript = `
-                    const CACHE_NAME = 'civil-registry-offline-v3';
+                    const CACHE_NAME = 'civil-registry-offline-v4';
                     self.addEventListener('install', (e) => {
                         self.skipWaiting();
                         e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll([location.href]).catch(() => {})));
@@ -1561,7 +1926,7 @@
             checkOnlineState();
 
             // -----------------------------------------------------------------
-            // B. Helper Utilities (English Numerals & Arabic Normalization)
+            // C. Helpers: English Digits, Arabic Normalization & Clipboard
             // -----------------------------------------------------------------
             function toEnglishDigits(val) {
                 if (val === null || val === undefined) return '';
@@ -1594,11 +1959,36 @@
                 toast.textContent = toEnglishDigits(msg);
                 toast.classList.add('visible');
                 clearTimeout(toastTimeout);
-                toastTimeout = setTimeout(() => toast.classList.remove('visible'), 3400);
+                toastTimeout = setTimeout(() => toast.classList.remove('visible'), 3000);
+            }
+
+            function copyTextSafely(text, labelMsg) {
+                const clean = toEnglishDigits(text);
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(clean)
+                        .then(() => showToast(labelMsg))
+                        .catch(() => fallbackCopy(clean, labelMsg));
+                } else {
+                    fallbackCopy(clean, labelMsg);
+                }
+            }
+
+            function fallbackCopy(text, labelMsg) {
+                try {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    showToast(labelMsg);
+                } catch (e) {}
             }
 
             // -----------------------------------------------------------------
-            // C. Custom Confirmation Modal Promise
+            // D. Custom Confirmation Modal Promise
             // -----------------------------------------------------------------
             const confirmBackdrop = document.getElementById('confirmModalBackdrop');
             const confirmTitleEl = document.getElementById('confirmModalTitle');
@@ -1636,7 +2026,7 @@
             }
 
             // -----------------------------------------------------------------
-            // D. IndexedDB Storage & Automatic localStorage Migration
+            // E. IndexedDB Storage & Migration
             // -----------------------------------------------------------------
             const DB_NAME = 'CivilRegistryDB';
             const DB_VERSION = 1;
@@ -1749,7 +2139,7 @@
             }
 
             // -----------------------------------------------------------------
-            // E. Header Counters & "اضغط هنا" Callout Management
+            // F. KPI Counters & Callout Badge
             // -----------------------------------------------------------------
             const headerTotalCount = document.getElementById('headerTotalCount');
             const syncCalloutBadge = document.getElementById('syncCalloutBadge');
@@ -1760,6 +2150,7 @@
                 const localChangedCount = allRecords.filter(r => r.isLocal).length;
 
                 headerTotalCount.textContent = toEnglishDigits(total);
+
                 document.getElementById('syncStatTotal').textContent = toEnglishDigits(total);
                 document.getElementById('syncStatLoaded').textContent = toEnglishDigits(lastLoadedFromSync);
                 document.getElementById('syncStatChanged').textContent = toEnglishDigits(localChangedCount);
@@ -1778,10 +2169,12 @@
             });
 
             // -----------------------------------------------------------------
-            // F. Search, Filter & 20-Per-Page Pagination Engine
+            // G. Search, Bento Filter & 20-Per-Page Pagination
             // -----------------------------------------------------------------
             const searchNameInput = document.getElementById('searchNameInput');
             const searchIdInput = document.getElementById('searchIdInput');
+            const clearNameFieldBtn = document.getElementById('clearNameFieldBtn');
+            const clearIdFieldBtn = document.getElementById('clearIdFieldBtn');
             const resultsToolbar = document.getElementById('resultsToolbar');
             const resultsCountLabel = document.getElementById('resultsCountLabel');
             const selectPageCheckbox = document.getElementById('selectPageCheckbox');
@@ -1796,8 +2189,25 @@
             const bulkBar = document.getElementById('bulkBar');
             const bulkSelectedCount = document.getElementById('bulkSelectedCount');
 
+            searchNameInput.addEventListener('input', () => {
+                clearNameFieldBtn.classList.toggle('visible', searchNameInput.value.length > 0);
+            });
+
             searchIdInput.addEventListener('input', () => {
                 searchIdInput.value = toEnglishDigits(searchIdInput.value).replace(/[^\d]/g, '');
+                clearIdFieldBtn.classList.toggle('visible', searchIdInput.value.length > 0);
+            });
+
+            clearNameFieldBtn.addEventListener('click', () => {
+                searchNameInput.value = '';
+                clearNameFieldBtn.classList.remove('visible');
+                searchNameInput.focus();
+            });
+
+            clearIdFieldBtn.addEventListener('click', () => {
+                searchIdInput.value = '';
+                clearIdFieldBtn.classList.remove('visible');
+                searchIdInput.focus();
             });
 
             function applySearchAndFilter(resetPage = true, explicitSearch = false) {
@@ -1842,8 +2252,8 @@
                     resultsToolbar.classList.remove('visible');
                     paginationBar.classList.remove('visible');
                     emptyStateBox.style.display = 'block';
-                    emptyTitle.textContent = 'أدخل بيانات البحث أو اختر فلتراً';
-                    emptyDesc.textContent = 'يمكنك البحث بالاسم أو رقم الهوية، أو الضغط على أيقونة البطاقة الذهبية في الأعلى لمزامنة البيانات.';
+                    emptyTitle.textContent = 'ابدأ بالبحث أو اختر فلتراً';
+                    emptyDesc.textContent = 'أدخل الاسم أو رقم الهوية، أو اختر إحدى خيارات التصفية، أو اضغط على أيقونة المزامنة لجلب البيانات.';
                     updateBulkBar();
                     return;
                 }
@@ -1853,7 +2263,7 @@
                     paginationBar.classList.remove('visible');
                     emptyStateBox.style.display = 'block';
                     emptyTitle.textContent = 'لا توجد نتائج مطابقة';
-                    emptyDesc.textContent = 'تحقق من الاسم أو رقم الهوية المدخل أو جرّب تغيير خيار التصفية.';
+                    emptyDesc.textContent = 'تحقق من الاسم أو رقم الهوية المدخل أو جرّب بطاقة تصفية أخرى.';
                     updateBulkBar();
                     return;
                 }
@@ -1868,7 +2278,7 @@
                 const startIdx = (currentPage - 1) * PAGE_SIZE;
                 const pageSlice = currentFiltered.slice(startIdx, startIdx + PAGE_SIZE);
 
-                resultsCountLabel.textContent = `إجمالي النتائج: ${toEnglishDigits(totalMatches)} سجل`;
+                resultsCountLabel.textContent = `النتائج المطابقة: ${toEnglishDigits(totalMatches)} سجل`;
 
                 const frag = document.createDocumentFragment();
                 pageSlice.forEach(person => {
@@ -1876,26 +2286,44 @@
                     const idText = toEnglishDigits(person.nationalId);
                     const mobText = toEnglishDigits(person.mobile || '');
                     const famText = toEnglishDigits(person.familyCount || '0');
+                    const firstLetter = (person.fullName || 'س').trim().charAt(0);
 
                     const card = document.createElement('div');
-                    card.className = 'citizen-card' + (person.isLocal ? ' is-local' : '') + (isSelected ? ' selected' : '');
+                    card.className = 'id-pass-card' + (person.isLocal ? ' is-local' : (person.gender === 'أنثى' ? ' is-female' : '')) + (isSelected ? ' is-selected' : '');
 
                     card.innerHTML = `
-                        <div class="card-main">
-                            <div class="card-name-row">
-                                <span class="citizen-name">${escapeHtml(person.fullName)}</span>
-                                ${person.isLocal ? '<span class="local-tag">معدل محلياً</span>' : ''}
-                            </div>
-                            <div class="badges-row">
-                                <span class="badge-id">${escapeHtml(idText)}</span>
-                                ${mobText ? `<span class="badge-mobile">${escapeHtml(mobText)}</span>` : ''}
-                                <span class="badge-family">الأفراد: ${escapeHtml(famText)}</span>
+                        <div class="pass-stripe"></div>
+                        <div class="pass-left-cluster">
+                            <div class="avatar-squircle">${escapeHtml(firstLetter)}</div>
+                            <div class="pass-content">
+                                <div class="pass-title-row">
+                                    <span class="pass-name">${escapeHtml(person.fullName)}</span>
+                                    ${person.isLocal ? '<span class="local-badge">معدل محلياً</span>' : ''}
+                                </div>
+                                <div class="pass-chips-row">
+                                    <button type="button" class="chip-id copy-id-btn" title="نسخ رقم الهوية">
+                                        <span>${escapeHtml(idText)}</span>
+                                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                    </button>
+                                    ${mobText ? `<span class="chip-mobile">${escapeHtml(mobText)}</span>` : ''}
+                                    <span class="chip-neutral">الأفراد: ${escapeHtml(famText)}</span>
+                                    ${person.maritalStatus ? `<span class="chip-neutral">${escapeHtml(person.maritalStatus)}</span>` : ''}
+                                </div>
                             </div>
                         </div>
-                        <div class="checkbox-area">
-                            <input type="checkbox" class="custom-checkbox row-cb" ${isSelected ? 'checked' : ''} aria-label="تحديد">
+                        <div class="pass-actions-end">
+                            <input type="checkbox" class="modern-check row-cb" ${isSelected ? 'checked' : ''} aria-label="تحديد">
                         </div>
                     `;
+
+                    const copyBtn = card.querySelector('.copy-id-btn');
+                    copyBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        copyTextSafely(idText, `تم نسخ رقم الهوية: ${idText}`);
+                    });
 
                     const cb = card.querySelector('.row-cb');
                     cb.addEventListener('change', (e) => {
@@ -1909,7 +2337,7 @@
                     });
 
                     card.addEventListener('click', (e) => {
-                        if (e.target.closest('.checkbox-area')) return;
+                        if (e.target.closest('.row-cb') || e.target.closest('.copy-id-btn')) return;
                         openEditRecordModal(person.nationalId);
                     });
 
@@ -1918,7 +2346,6 @@
 
                 cardsList.appendChild(frag);
 
-                // Pagination Bar Update
                 if (totalPages > 1) {
                     paginationBar.classList.add('visible');
                     prevPageBtn.disabled = currentPage <= 1;
@@ -1928,7 +2355,6 @@
                     paginationBar.classList.remove('visible');
                 }
 
-                // Sync Select Page Checkbox
                 selectPageCheckbox.checked = pageSlice.length > 0 && pageSlice.every(p => selectedIds.has(p.nationalId));
                 updateBulkBar();
             }
@@ -1936,11 +2362,7 @@
             function updateBulkBar() {
                 const count = selectedIds.size;
                 bulkSelectedCount.textContent = toEnglishDigits(count);
-                if (count > 0) {
-                    bulkBar.classList.add('visible');
-                } else {
-                    bulkBar.classList.remove('visible');
-                }
+                bulkBar.classList.toggle('visible', count > 0);
             }
 
             prevPageBtn.addEventListener('click', () => {
@@ -1976,9 +2398,11 @@
             document.getElementById('clearSearchBtn').addEventListener('click', () => {
                 searchNameInput.value = '';
                 searchIdInput.value = '';
+                clearNameFieldBtn.classList.remove('visible');
+                clearIdFieldBtn.classList.remove('visible');
                 activeFilter = 'all';
-                document.querySelectorAll('.filter-pill').forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.filter === 'all');
+                document.querySelectorAll('.filter-pill').forEach(c => {
+                    c.classList.toggle('active', c.dataset.filter === 'all');
                 });
                 selectedIds.clear();
                 applySearchAndFilter(true, false);
@@ -1993,17 +2417,18 @@
                 });
             });
 
+            // Filter Pills
             document.querySelectorAll('.filter-pill').forEach(pill => {
                 pill.addEventListener('click', () => {
                     activeFilter = pill.dataset.filter;
-                    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
                     pill.classList.add('active');
                     applySearchAndFilter(true, activeFilter !== 'all');
                 });
             });
 
             // -----------------------------------------------------------------
-            // G. Add / Edit Record Modal & Strict Validation
+            // H. Slide-Over Add / Edit Record Drawer & Validation
             // -----------------------------------------------------------------
             const formModalBackdrop = document.getElementById('formModalBackdrop');
             const formModalTitle = document.getElementById('formModalTitle');
@@ -2093,7 +2518,6 @@
                     return;
                 }
 
-                // Strict Duplicate National ID Check in Both Add and Edit
                 const existingMatch = allRecords.find(p => p.nationalId === nationalId);
                 if (!isEdit && existingMatch) {
                     showFormAlert(`رقم الهوية (${nationalId}) مسجل مسبقاً باسم: ${existingMatch.fullName}`);
@@ -2154,7 +2578,6 @@
                 showToast(isEdit ? 'تم حفظ التعديلات محلياً بنجاح' : 'تمت إضافة السجل الجديد بنجاح');
             });
 
-            // Single Record Delete
             deleteSingleBtn.addEventListener('click', async () => {
                 const targetId = document.getElementById('editingOriginalId').value.trim();
                 const targetPerson = allRecords.find(p => p.nationalId === targetId);
@@ -2179,7 +2602,6 @@
                 showToast('تم حذف السجل بنجاح');
             });
 
-            // Bulk Delete
             document.getElementById('bulkDeleteBtn').addEventListener('click', async () => {
                 const count = selectedIds.size;
                 if (count === 0) return;
@@ -2205,7 +2627,7 @@
             });
 
             // -----------------------------------------------------------------
-            // H. A4 Landscape Printing Engine (Top Print Button + Bulk Print)
+            // I. A4 Landscape Printing Engine
             // -----------------------------------------------------------------
             async function triggerLandscapePrint(recordsToPrint) {
                 if (!recordsToPrint || recordsToPrint.length === 0) {
@@ -2255,7 +2677,6 @@
                 window.print();
             }
 
-            // Print Button next to "إضافة سجل جديد"
             document.getElementById('printTopBtn').addEventListener('click', () => {
                 if (selectedIds.size > 0) {
                     const chosen = allRecords.filter(p => selectedIds.has(p.nationalId));
@@ -2269,14 +2690,13 @@
                 }
             });
 
-            // Bulk Bar Print Button
             document.getElementById('bulkPrintBtn').addEventListener('click', () => {
                 const chosen = allRecords.filter(p => selectedIds.has(p.nationalId));
                 triggerLandscapePrint(chosen);
             });
 
             // -----------------------------------------------------------------
-            // I. Central Sync Modal & Protected Google Sheets Sync
+            // J. Central Sync Modal & Protected Google Sheets Sync
             // -----------------------------------------------------------------
             const syncModalBackdrop = document.getElementById('syncModalBackdrop');
             const syncReportBox = document.getElementById('syncReportBox');
@@ -2333,7 +2753,6 @@
                         const toPersist = [];
 
                         rows.forEach((row, index) => {
-                            // Strictly skip first row (Header Row)
                             if (index === 0) return;
 
                             const cell = (colIdx) => {
@@ -2436,7 +2855,7 @@
             });
 
             // -----------------------------------------------------------------
-            // J. Bootstrap Application
+            // K. Bootstrap Application
             // -----------------------------------------------------------------
             async function boot() {
                 try {
